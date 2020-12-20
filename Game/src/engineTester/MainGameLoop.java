@@ -8,13 +8,10 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 
 import renderEngine.*;
+import terrains.Terrain;
 import textures.ModelTexture;
 import entities.Camera;
 import entities.Entity;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class MainGameLoop {
 
@@ -25,32 +22,23 @@ public class MainGameLoop {
 		RawModel model = ObjLoader.loadObjModel("tree/Tree", loader);
 		TexturedModel staticModel = new TexturedModel(model, new ModelTexture(loader.loadTexture("tree/TreeTexture")));
 		ModelTexture texture = staticModel.getTexture();
-		texture.setShineDamper(10);
-		texture.setReflectivity(0);
 
-		Light light = new Light(new Vector3f(0, 0, -20), new Vector3f(1, 1, 1));
-		
+		Entity entity = new Entity(staticModel, new Vector3f(0, 0, -25), 0, 0, 0, 0.1f);
+		Light light = new Light(new Vector3f(3000, 2000, 2000), new Vector3f(1, 1, 1));
+
+		Terrain terrain = new Terrain(0, -1, loader, new ModelTexture(loader.loadTexture("grass")));
+		Terrain terrain2 = new Terrain(-1, -1, loader, new ModelTexture(loader.loadTexture("grass")));
+
 		Camera camera = new Camera();
-
-		Random random = new Random();
-		List<Entity> entities = new ArrayList<>();
-		for (int i = 0; i < 100; i++) {
-			int x = (int) (camera.getPosition().x + random.nextInt(100) - 50);
-			int y = (int) (camera.getPosition().y + random.nextInt(100) - 50);
-			int z = (int) (camera.getPosition().z + random.nextInt(50) - 100);
-			entities.add(new Entity(staticModel, new Vector3f(x,y,z),0,0,0,0.1f));
-		}
-
 		MasterRenderer renderer = new MasterRenderer();
 
 		while(!Display.isCloseRequested()) {
-
-			for (Entity entity : entities) {
-				renderer.processEntity(entity);
-				entity.increaseRotation(0, 1f, 0);
-			}
-
 			camera.move();
+
+			renderer.processTerrain(terrain);
+			renderer.processTerrain(terrain2);
+			renderer.processEntity(entity);
+
 			renderer.render(light, camera);
 			DisplayManager.updateDisplay();
 		}

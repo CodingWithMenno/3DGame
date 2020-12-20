@@ -12,7 +12,6 @@ import models.RawModel;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
@@ -46,7 +45,11 @@ public class Loader {
 			System.exit(-1);
 		}
 
-		textures.add(texture.getTextureID());
+		this.textures.add(texture.getTextureID());
+
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
+
 		return texture.getTextureID();
 	}
 	

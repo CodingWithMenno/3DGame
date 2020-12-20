@@ -1,4 +1,4 @@
-#version 150
+#version 400 core
 
 in vec2 pass_textureCoordinates;
 in vec3 surfaceNormal;
@@ -12,7 +12,7 @@ uniform vec3 lightColour;
 uniform float shineDamper;
 uniform float reflectivity;
 
-void main(void){
+void main(void) {
 
     vec3 unitNormal = normalize(surfaceNormal);
     vec3 unitLightVector = normalize(toLightVector);
