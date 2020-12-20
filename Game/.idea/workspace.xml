@@ -5,25 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1448daae-e5e5-4daf-966b-6006ecad8d18" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/renderEngine/TerrainRenderer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shaders/TerrainShader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/terrains/Terrain.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Game.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game/shaders/fragmentShader.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Game/shaders/fragmentShader.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game/shaders/vertexShader.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Game/shaders/vertexShader.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/house/GoodHouse.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/house/HouseTexture.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/tree/Tree.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/tree/TreeTexture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/grass.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/engineTester/MainGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/engineTester/MainGameLoop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Camera.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderEngine/Loader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/Loader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderEngine/EntityRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/EntityRenderer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderEngine/MasterRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/MasterRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderEngine/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/EntityRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shaders/ShaderProgram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shaders/ShaderProgram.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shaders/StaticShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shaders/StaticShader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shaders/fragmentShader.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/shaders/fragmentShader.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shaders/vertexShader.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/shaders/vertexShader.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/ModelTexture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/textures/ModelTexture.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,12 +35,15 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Tut 14" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15566503" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\res" />
     </key>
