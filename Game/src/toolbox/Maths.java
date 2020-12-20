@@ -35,4 +35,7 @@ public class Maths {
 		return Math.max(min, Math.min(max, val));
 	}
 
+	public static float lerp(float from, float to, float amount) {
+		return from + amount * (to - from);
+	}
 }
