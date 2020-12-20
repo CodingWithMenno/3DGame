@@ -1,7 +1,7 @@
 package engineTester;
 
 import entities.Light;
-import models.RawModel;
+import entities.Player;
 import models.TexturedModel;
 
 import org.lwjgl.opengl.Display;
@@ -22,13 +22,13 @@ public class MainGameLoop {
 	public static void main(String[] args) {
 		DisplayManager.createDisplay();
 		Loader loader = new Loader();
-
+		MasterRenderer renderer = new MasterRenderer();
 
 		TexturedModel treeModel = new TexturedModel(ObjLoader.loadObjModel("tree/Tree", loader),
 				new ModelTexture(loader.loadTexture("tree/TreeTexture")));
 
-		TexturedModel grassModel = new TexturedModel(ObjLoader.loadObjModel("grass/grassModel", loader),
-				new ModelTexture(loader.loadTexture("grass/grassTexture")));
+		TexturedModel grassModel = new TexturedModel(ObjLoader.loadObjModel("grass/GrassModel", loader),
+				new ModelTexture(loader.loadTexture("grass/GrassTexture")));
 		grassModel.getTexture().setHasTransparency(true);
 		grassModel.getTexture().setUseFakeLighting(true);
 
@@ -37,7 +37,7 @@ public class MainGameLoop {
 		List<Entity> grassList = new ArrayList<>();
 		for (int i = 0; i < 500; i++) {
 			trees.add(new Entity(treeModel, new Vector3f(random.nextFloat() * 800 - 400, 0,
-					random.nextFloat() * -600), 0, 0, 0, 0.2f));
+					random.nextFloat() * -600), 0, random.nextInt(360), 0, 0.2f));
 			grassList.add(new Entity(grassModel, new Vector3f(random.nextFloat() * 800 - 400, 0,
 					random.nextFloat() * -600), 0, 0, 0, 1));
 		}
@@ -46,15 +46,21 @@ public class MainGameLoop {
 		Light light = new Light(new Vector3f(3000, 2000, 2000), new Vector3f(1, 1, 1));
 
 
-		Terrain terrain = new Terrain(0, -1, loader, new ModelTexture(loader.loadTexture("ground")));
-		Terrain terrain2 = new Terrain(-1, -1, loader, new ModelTexture(loader.loadTexture("ground")));
+		Terrain terrain = new Terrain(0, -1, loader, new ModelTexture(loader.loadTexture("Ground")));
+		Terrain terrain2 = new Terrain(-1, -1, loader, new ModelTexture(loader.loadTexture("Ground")));
 
+		TexturedModel foxModel = new TexturedModel(ObjLoader.loadObjModel("fox/Fox", loader),
+				new ModelTexture(loader.loadTexture("fox/FoxTexture")));
+		Player player = new Player(foxModel, new Vector3f(100, 0, -50), 0, 0, 0, 0.4f);
 
-		Camera camera = new Camera();
-		MasterRenderer renderer = new MasterRenderer();
+		Camera camera = new Camera(player);
+
 
 		while(!Display.isCloseRequested()) {
 			camera.move();
+			player.move();
+
+			renderer.processEntity(player);
 
 			for (Entity tree : trees) {
 				renderer.processEntity(tree);
