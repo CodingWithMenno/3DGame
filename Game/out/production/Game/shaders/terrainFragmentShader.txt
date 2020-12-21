@@ -5,6 +5,7 @@ flat in vec3 surfaceNormal;
 in vec3 toLightVector;
 in vec3 toCameraVector;
 in float visibility;
+in float mapHeight;
 
 out vec4 out_Color;
 
@@ -19,18 +20,25 @@ uniform float shineDamper;
 uniform float reflectivity;
 uniform vec3 skyColour;
 
-void main(void){
+const float worldHeight = 60;
 
-    vec4 blendMapColour = texture(blendMap, pass_textureCoordinates);
+vec3 heightToRGB(in float height) {
+    vec3 terrain_colours[4];
+    terrain_colours[0] = vec3(0.34, 0.26, 0.37);
+    terrain_colours[1] = vec3(0.09, 0.6, 0.02);
+    terrain_colours[2] = vec3(1.0,1.0,1.0);
 
-    float backTextureAmount = 1 - (blendMapColour.r + blendMapColour.g + blendMapColour.b);
-    vec2 tiledCoords = pass_textureCoordinates * 40.0;
-    vec4 backgroundTextureColour = texture(backgroundTexture, tiledCoords) * backTextureAmount;
-    vec4 rTextureColour = texture(rTexture, tiledCoords) * blendMapColour.r;
-    vec4 gTextureColour = texture(gTexture, tiledCoords) * blendMapColour.g;
-    vec4 bTextureColour = texture(bTexture, tiledCoords) * blendMapColour.b;
+    if (height < 0.0) {
+        return mix(terrain_colours[0], terrain_colours[1], height / 10 + 1);
+    } else {
+        return mix(terrain_colours[1], terrain_colours[2], height / 15);
+    }
 
-    vec4 totalColour = backgroundTextureColour + rTextureColour + gTextureColour + bTextureColour;
+}
+
+void main(void) {
+
+    vec4 totalColour = vec4(heightToRGB(mapHeight), 1.0);
 
 	vec3 unitNormal = normalize(surfaceNormal);
 	vec3 unitLightVector = normalize(toLightVector);

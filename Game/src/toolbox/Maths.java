@@ -49,4 +49,9 @@ public class Maths {
 			return value1 - value2;
 		}
 	}
+
+	//Maps the value with the previous min and max values to the new min and max values
+	public static float map(float value, float pMin, float pMax, float nMin, float nMax) {
+		return (value - pMin) / (pMax - pMin) * (nMax - nMin) + nMin;
+	}
 }
