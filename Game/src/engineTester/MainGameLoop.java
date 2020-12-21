@@ -28,6 +28,8 @@ public class MainGameLoop {
 		Loader loader = new Loader();
 		MasterRenderer renderer = new MasterRenderer();
 
+		Terrain terrain = new Terrain(0, -1, loader, "HeightMap");
+
 		TexturedModel treeModel = new TexturedModel(ObjLoader.loadObjModel("tree/Tree", loader),
 				new ModelTexture(loader.loadTexture("tree/TreeTexture")));
 
@@ -40,17 +42,19 @@ public class MainGameLoop {
 		List<Entity> trees = new ArrayList<>();
 		List<Entity> grassList = new ArrayList<>();
 		for (int i = 0; i < 500; i++) {
-			trees.add(new Entity(treeModel, new Vector3f(random.nextFloat() * 800 - 400, 0,
-					random.nextFloat() * -600), 0, random.nextInt(360), 0, 0.2f));
-			grassList.add(new Entity(grassModel, new Vector3f(random.nextFloat() * 800 - 400, 0,
-					random.nextFloat() * -600), 0, 0, 0, 1));
+			float x = random.nextFloat() * 800;
+			float z = random.nextFloat() * -600;
+			float y = terrain.getHeightOfTerrain(x, z);
+			trees.add(new Entity(treeModel, new Vector3f(x, y, z), 0, random.nextInt(360), 0, 0.2f));
+		}
+		for (int i = 0; i < 500; i++) {
+			float x = random.nextFloat() * 800;
+			float z = random.nextFloat() * -600;
+			float y = terrain.getHeightOfTerrain(x, z);
+			grassList.add(new Entity(grassModel, new Vector3f(x, y, z), 0, random.nextInt(360), 0, 0.2f));
 		}
 
-
 		Light light = new Light(new Vector3f(3000, 2000, 2000), new Vector3f(1, 1, 1));
-
-		Terrain terrain = new Terrain(0, -1, loader, "HeightMap");
-		Terrain terrain2 = new Terrain(-1, -1, loader, "HeightMap");
 
 		TexturedModel foxModel = new TexturedModel(ObjLoader.loadObjModel("fox/Fox", loader),
 				new ModelTexture(loader.loadTexture("fox/FoxTexture")));
@@ -61,7 +65,7 @@ public class MainGameLoop {
 
 		while(!Display.isCloseRequested()) {
 			camera.move();
-			player.move();
+			player.move(terrain);
 
 			renderer.processEntity(player);
 
@@ -74,7 +78,6 @@ public class MainGameLoop {
 			}
 
 			renderer.processTerrain(terrain);
-			renderer.processTerrain(terrain2);
 			renderer.render(light, camera);
 			DisplayManager.updateDisplay();
 		}
