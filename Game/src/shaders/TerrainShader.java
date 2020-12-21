@@ -17,6 +17,11 @@ public class TerrainShader extends ShaderProgram {
     private int location_lightColour;
     private int location_shineDamper;
     private int location_reflectivity;
+    private int location_backgroundTexture;
+    private int location_rTexture;
+    private int location_gTexture;
+    private int location_bTexture;
+    private int location_blendMap;
 
     public TerrainShader() {
         super(VERTEX_FILE, FRAGMENT_FILE);
