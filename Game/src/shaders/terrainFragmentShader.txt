@@ -9,18 +9,11 @@ in float mapHeight;
 
 out vec4 out_Color;
 
-uniform sampler2D backgroundTexture;
-uniform sampler2D rTexture;
-uniform sampler2D gTexture;
-uniform sampler2D bTexture;
-uniform sampler2D blendMap;
-
 uniform vec3 lightColour;
 uniform float shineDamper;
 uniform float reflectivity;
 uniform vec3 skyColour;
 
-const float worldHeight = 60;
 
 vec3 heightToRGB(in float height) {
     vec3 terrain_colours[4];

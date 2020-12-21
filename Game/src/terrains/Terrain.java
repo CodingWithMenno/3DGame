@@ -3,9 +3,6 @@ package terrains;
 import models.RawModel;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.Loader;
-import textures.ModelTexture;
-import textures.TerrainTexture;
-import textures.TerrainTexturePack;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -21,12 +18,8 @@ public class Terrain {
     private float x;
     private float z;
     private RawModel model;
-    private TerrainTexturePack texturePack;
-    private TerrainTexture blendMap;
 
-    public Terrain(int gridX, int gridZ, Loader loader, TerrainTexturePack texturePack, TerrainTexture blendMap, String heightMap) {
-        this.texturePack = texturePack;
-        this.blendMap = blendMap;
+    public Terrain(int gridX, int gridZ, Loader loader, String heightMap) {
         this.x = gridX * SIZE;
         this.z = gridZ * SIZE;
         this.model = generateTerrain(loader, heightMap);
@@ -112,13 +105,5 @@ public class Terrain {
 
     public RawModel getModel() {
         return model;
-    }
-
-    public TerrainTexturePack getTexturePack() {
-        return texturePack;
-    }
-
-    public TerrainTexture getBlendMap() {
-        return blendMap;
     }
 }

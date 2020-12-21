@@ -12,14 +12,16 @@ import terrains.Terrain;
 import textures.ModelTexture;
 import entities.Camera;
 import entities.Entity;
-import textures.TerrainTexture;
-import textures.TerrainTexturePack;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class MainGameLoop {
+
+	//TODO :
+	//	-Het terrain meer low poly maken
+	//	-Automatisch de height map laten genereren
 
 	public static void main(String[] args) {
 		DisplayManager.createDisplay();
@@ -47,14 +49,8 @@ public class MainGameLoop {
 
 		Light light = new Light(new Vector3f(3000, 2000, 2000), new Vector3f(1, 1, 1));
 
-		TerrainTexture backgroundTexture = new TerrainTexture(loader.loadTexture("ground/GrassTexture"));
-		TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("ground/DirtTexture"));
-		TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("ground/StoneTexture"));
-		TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("ground/SnowTexture"));
-		TerrainTexturePack pack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
-		TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("BlendMap"));
-		Terrain terrain = new Terrain(0, -1, loader, pack, blendMap, "HeightMap");
-		Terrain terrain2 = new Terrain(-1, -1, loader, pack, blendMap, "HeightMap");
+		Terrain terrain = new Terrain(0, -1, loader, "HeightMap");
+		Terrain terrain2 = new Terrain(-1, -1, loader, "HeightMap");
 
 		TexturedModel foxModel = new TexturedModel(ObjLoader.loadObjModel("fox/Fox", loader),
 				new ModelTexture(loader.loadTexture("fox/FoxTexture")));
