@@ -24,6 +24,7 @@ public class TerrainRenderer {
         this.shader = shader;
         this.shader.start();
         this.shader.loadProjectionMatrix(projectionMatrix);
+        this.shader.connectTextureUnits();
         this.shader.stop();
     }
 

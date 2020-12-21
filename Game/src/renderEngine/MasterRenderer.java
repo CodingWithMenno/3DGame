@@ -69,6 +69,7 @@ public class MasterRenderer {
         this.shader.stop();
 
         this.terrainShader.start();
+        this.terrainShader.loadSkyColour(SKY_COLOR_RED, SKY_COLOR_GREEN, SKY_COLOR_BLUE);
         this.terrainShader.loadLight(sun);
         this.terrainShader.loadViewMatrix(camera);
         this.terrainRenderer.render(this.terrains);

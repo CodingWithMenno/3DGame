@@ -12,6 +12,8 @@ import terrains.Terrain;
 import textures.ModelTexture;
 import entities.Camera;
 import entities.Entity;
+import textures.TerrainTexture;
+import textures.TerrainTexturePack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,10 +47,14 @@ public class MainGameLoop {
 
 		Light light = new Light(new Vector3f(3000, 2000, 2000), new Vector3f(1, 1, 1));
 
-
-		ModelTexture groundTexture = new ModelTexture(loader.loadTexture("Ground"));
-		Terrain terrain = new Terrain(0, -1, loader, groundTexture, "HeightMap");
-		Terrain terrain2 = new Terrain(-1, -1, loader, groundTexture, "HeightMap");
+		TerrainTexture backgroundTexture = new TerrainTexture(loader.loadTexture("ground/GrassTexture"));
+		TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("ground/DirtTexture"));
+		TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("ground/StoneTexture"));
+		TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("ground/SnowTexture"));
+		TerrainTexturePack pack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
+		TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("BlendMap"));
+		Terrain terrain = new Terrain(0, -1, loader, pack, blendMap, "HeightMap");
+		Terrain terrain2 = new Terrain(-1, -1, loader, pack, blendMap, "HeightMap");
 
 		TexturedModel foxModel = new TexturedModel(ObjLoader.loadObjModel("fox/Fox", loader),
 				new ModelTexture(loader.loadTexture("fox/FoxTexture")));

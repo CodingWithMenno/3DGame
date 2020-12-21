@@ -3,6 +3,7 @@ package shaders;
 import entities.Camera;
 import entities.Light;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 import toolbox.Maths;
 
 public class TerrainShader extends ShaderProgram {
@@ -17,6 +18,7 @@ public class TerrainShader extends ShaderProgram {
     private int location_lightColour;
     private int location_shineDamper;
     private int location_reflectivity;
+    private int location_skyColour;
     private int location_backgroundTexture;
     private int location_rTexture;
     private int location_gTexture;
@@ -43,6 +45,24 @@ public class TerrainShader extends ShaderProgram {
         this.location_lightColour = super.getUniformLocation("lightColour");
         this.location_shineDamper = super.getUniformLocation("shineDamper");
         this.location_reflectivity = super.getUniformLocation("reflectivity");
+        this.location_skyColour = super.getUniformLocation("skyColour");
+        this.location_backgroundTexture = super.getUniformLocation("backgroundTexture");
+        this.location_rTexture = super.getUniformLocation("rTexture");
+        this.location_gTexture = super.getUniformLocation("gTexture");
+        this.location_bTexture = super.getUniformLocation("bTexture");
+        this.location_blendMap = super.getUniformLocation("blendMap");
+    }
+
+    public void connectTextureUnits() {
+        super.loadInt(this.location_backgroundTexture, 0);
+        super.loadInt(this.location_rTexture, 1);
+        super.loadInt(this.location_gTexture, 2);
+        super.loadInt(this.location_bTexture, 3);
+        super.loadInt(this.location_blendMap, 4);
+    }
+
+    public void loadSkyColour(float r, float g, float b) {
+        super.loadVector(this.location_skyColour, new Vector3f(r, g, b));
     }
 
     public void loadTransformationMatrix(Matrix4f matrix) {
