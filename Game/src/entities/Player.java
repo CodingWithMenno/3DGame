@@ -4,6 +4,7 @@ import models.TexturedModel;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.DisplayManager;
+import toolbox.Maths;
 
 public class Player extends Entity {
 
@@ -24,7 +25,7 @@ public class Player extends Entity {
         super(model, position, rotX, rotY, rotZ, scale);
     }
 
-    public void move(){
+    public void move() {
         checkInputs();
         super.increaseRotation(0, this.currentTurnSpeed * DisplayManager.getFrameTimeSeconds(), 0);
         float distance = this.currentSpeed * DisplayManager.getFrameTimeSeconds();
@@ -68,8 +69,8 @@ public class Player extends Entity {
             finalTurnSpeed += TURN_SPEED;
         }
 
-        this.currentSpeed = finalSpeed;
-        this.currentTurnSpeed = finalTurnSpeed;
+        this.currentSpeed = Maths.lerp(this.currentSpeed, finalSpeed, 0.04f);
+        this.currentTurnSpeed = Maths.lerp(this.currentTurnSpeed, finalTurnSpeed, 0.05f);
 
         if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
             jump();

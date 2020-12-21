@@ -1,6 +1,5 @@
 package entities;
 
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector3f;
 import toolbox.Maths;
@@ -8,14 +7,14 @@ import toolbox.Maths;
 public class Camera {
 
 	private static float MOUSE_SENSITIVITY = 0.05f;
-	private static float CAMERA_FOLLOW_SPEED = 0.2f;
-	private static float AUTO_ZOOM = 0.001f;
+	private static float AUTO_ZOOM = 0.005f;
 	private static float DEFAULT_PITCH = 12;
 	private static float MAX_ZOOM_IN = 8;
 	private static float MAX_ZOOM_OUT = 56;
 
 	private float distanceFromEntity = 20;
-	private float angleAroundPlayer = 0;
+	private float angleAroundEntity = 0;
+	private boolean entityIsMoving = false;
 	private Entity entityToFollow;
 
 	private Vector3f position;
@@ -37,16 +36,19 @@ public class Camera {
 		float horizontalDistance = calculateHorizontalDistance();
 		float verticalDistance = calculateVerticalDistance();
 
-		this.position = calculateCameraPosition(horizontalDistance, verticalDistance);
-//		this.position.x = Maths.lerp(this.position.x, newPos.x, CAMERA_FOLLOW_SPEED);
-//		this.position.z = Maths.lerp(this.position.z, newPos.z, CAMERA_FOLLOW_SPEED);
-//		this.position.y = Maths.lerp(this.position.y, newPos.y, CAMERA_FOLLOW_SPEED);
+		Vector3f newPos = calculateCameraPosition(horizontalDistance, verticalDistance);
+		if (Maths.difference(newPos.x, this.position.x) > 0.1f || Maths.difference(newPos.z, this.position.z) > 0.1f) {
+			this.entityIsMoving = true;
+		} else {
+			this.entityIsMoving = false;
+		}
+		this.position = newPos;
 
-		this.yaw = 180 - (this.entityToFollow.getRotY() + this.angleAroundPlayer);
+		this.yaw = 180 - (this.entityToFollow.getRotY() + this.angleAroundEntity);
 	}
 
 	private Vector3f calculateCameraPosition(float horizontalDistance, float verticalDistance) {
-		float theta = this.entityToFollow.getRotY() + this.angleAroundPlayer;
+		float theta = this.entityToFollow.getRotY() + this.angleAroundEntity;
 		float offsetX = (float) (horizontalDistance * Math.sin(Math.toRadians(theta)));
 		float offsetZ = (float) (horizontalDistance * Math.cos(Math.toRadians(theta)));
 		float toPosX = this.entityToFollow.getPosition().x - offsetX;
@@ -65,7 +67,7 @@ public class Camera {
 	}
 
 	private void calculateZoom() {
-		float zoomLevel = Mouse.getDWheel() * 0.05f;
+		float zoomLevel = Mouse.getDWheel() * 0.02f;
 		this.distanceFromEntity -= zoomLevel;
 		this.distanceFromEntity = Maths.clamp(this.distanceFromEntity, MAX_ZOOM_IN, MAX_ZOOM_OUT);
 	}
@@ -74,7 +76,7 @@ public class Camera {
 		float pitchChange = Mouse.getDY() * MOUSE_SENSITIVITY;
 		this.pitch -= pitchChange;
 
-		if (pitchChange == 0 && this.pitch != DEFAULT_PITCH) {
+		if (pitchChange == 0 && this.pitch != DEFAULT_PITCH && this.entityIsMoving) {
 			this.pitch = Maths.lerp(this.pitch, DEFAULT_PITCH, AUTO_ZOOM);
 		}
 
@@ -83,11 +85,13 @@ public class Camera {
 
 	private void calculateAngleAroundPlayer() {
 		float angleChange = Mouse.getDX() * MOUSE_SENSITIVITY * 3f;
-		this.angleAroundPlayer -= angleChange;
+		this.angleAroundEntity -= angleChange;
 
-		if (angleChange == 0 && this.angleAroundPlayer != 0) {
-			this.angleAroundPlayer = Maths.lerp(this.angleAroundPlayer, 0, AUTO_ZOOM);
+		if (angleChange == 0 && this.angleAroundEntity != 0 && this.entityIsMoving) {
+			this.angleAroundEntity = Maths.lerp(this.angleAroundEntity, 0, AUTO_ZOOM);
 		}
+
+		this.angleAroundEntity = Maths.clamp(this.angleAroundEntity, -180, 180);
 	}
 
 	public Vector3f getPosition() {

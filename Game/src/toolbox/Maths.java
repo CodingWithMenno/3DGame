@@ -31,11 +31,22 @@ public class Maths {
 		return viewMatrix;
 	}
 
+	//Clamps a value between the min and max
 	public static float clamp(float val, float min, float max) {
 		return Math.max(min, Math.min(max, val));
 	}
 
+	//Linear interpolation
 	public static float lerp(float from, float to, float amount) {
 		return from + amount * (to - from);
+	}
+
+	//returns the difference between the 2 values
+	public static float difference(float value1, float value2) {
+		if (value1 < value2) {
+			return value2 - value1;
+		} else {
+			return value1 - value2;
+		}
 	}
 }

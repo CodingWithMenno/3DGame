@@ -46,8 +46,9 @@ public class MainGameLoop {
 		Light light = new Light(new Vector3f(3000, 2000, 2000), new Vector3f(1, 1, 1));
 
 
-		Terrain terrain = new Terrain(0, -1, loader, new ModelTexture(loader.loadTexture("Ground")));
-		Terrain terrain2 = new Terrain(-1, -1, loader, new ModelTexture(loader.loadTexture("Ground")));
+		ModelTexture groundTexture = new ModelTexture(loader.loadTexture("Ground"));
+		Terrain terrain = new Terrain(0, -1, loader, groundTexture, "HeightMap");
+		Terrain terrain2 = new Terrain(-1, -1, loader, groundTexture, "HeightMap");
 
 		TexturedModel foxModel = new TexturedModel(ObjLoader.loadObjModel("fox/Fox", loader),
 				new ModelTexture(loader.loadTexture("fox/FoxTexture")));
