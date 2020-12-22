@@ -32,10 +32,9 @@ public class MainGameLoop {
 	 * 		OVERIG:
 	 * 			-Fog aan render distance laten aanpassen
 	 * 			-Collision detectie met entities
-	 * 			-UI library maken met animatie support
+	 * 			-Animatie support voor de GUI's maken
 	 * 			-Animations voor entities support maken
- * 				-Geluid toevoegen aan de game
-	 * 			-De game moet op elke resolutie werken
+	 * 			-Geluid toevoegen aan de game
 	 */
 
 	public static void main(String[] args) {
@@ -73,17 +72,20 @@ public class MainGameLoop {
 			grassList.add(new Entity(grassModel, random.nextInt(4), new Vector3f(x, y, z), 0, random.nextInt(360), 0, 1));
 		}
 
-		Light light = new Light(new Vector3f(3000, 2000, 2000), new Vector3f(1, 1, 1));
+		List<Light> lights = new ArrayList<>();
+		lights.add(new Light(new Vector3f(0, 10000, -7000), new Vector3f(0.4f, 0.4f, 0.4f)));
+		lights.add(new Light(new Vector3f(100, 5, -150), new Vector3f(1, 0, 0), new Vector3f(1, 0.01f, 0.002f)));
+		lights.add(new Light(new Vector3f(100, 5, -120), new Vector3f(0, 0, 1), new Vector3f(1, 0.01f, 0.002f)));
 		//endregion
 
 		TexturedModel foxModel = new TexturedModel(ObjLoader.loadObjModel("fox/Fox", loader),
 				new ModelTexture(loader.loadTexture("fox/FoxTexture")));
-		Player player = new Player(foxModel, new Vector3f(100, 0, -50), 0, 0, 0, 0.4f);
+		Player player = new Player(foxModel, new Vector3f(100, 5, -150), 0, 0, 0, 0.4f);
 
 		Camera camera = new Camera(player);
 
 		List<GuiTexture> guiTextures = new ArrayList<>();
-		GuiTexture gui = new GuiTexture(loader.loadTexture("Health"), new Vector2f(0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
+		GuiTexture gui = new GuiTexture(loader.loadTexture("Health"), new Vector2f(0f, -0.9f), new Vector2f(0.25f, 0.25f));
 		guiTextures.add(gui);
 
 		GuiRenderer guiRenderer = new GuiRenderer(loader);
@@ -103,7 +105,7 @@ public class MainGameLoop {
 			}
 
 			renderer.processTerrain(terrain);
-			renderer.render(light, camera);
+			renderer.render(lights, camera);
 			guiRenderer.render(guiTextures);
 			DisplayManager.updateDisplay();
 		}

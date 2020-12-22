@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class MasterRenderer {
 
-    private static final float FOV = 70;
+    private static final float FOV = 100;
     private static final float NEAR_PLANE = 0.1f;
     private static final float FAR_PLANE = 1000;
 
@@ -59,18 +59,18 @@ public class MasterRenderer {
         GL11.glDisable(GL11.GL_CULL_FACE);
     }
 
-    public void render(Light sun, Camera camera) {
+    public void render(List<Light> lights, Camera camera) {
         prepare();
         this.shader.start();
         this.shader.loadSkyColour(SKY_COLOR_RED, SKY_COLOR_GREEN, SKY_COLOR_BLUE);
-        this.shader.loadLight(sun);
+        this.shader.loadLights(lights);
         this.shader.loadViewMatrix(camera);
         this.entityRenderer.render(this.entities);
         this.shader.stop();
 
         this.terrainShader.start();
         this.terrainShader.loadSkyColour(SKY_COLOR_RED, SKY_COLOR_GREEN, SKY_COLOR_BLUE);
-        this.terrainShader.loadLight(sun);
+        this.terrainShader.loadLights(lights);
         this.terrainShader.loadViewMatrix(camera);
         this.terrainRenderer.render(this.terrains);
         this.terrainShader.stop();
