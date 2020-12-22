@@ -55,32 +55,34 @@ public class MainGameLoop {
 		grassModel.getTexture().setNumberOfRows(2);
 
 		Random random = new Random();
-		List<Entity> trees = new ArrayList<>();
-		List<Entity> grassList = new ArrayList<>();
+		List<Entity> entities = new ArrayList<>();
 		for (int i = 0; i < 750; i++) {
 			float x = random.nextFloat() * Terrain.getSIZE();
 			float z = random.nextFloat() * terrain.getZ();
 			float y = terrain.getHeightOfTerrain(x, z);
 			if (y > 10 || y < 0) {continue;}
-			trees.add(new Entity(treeModel, new Vector3f(x, y, z), 0, random.nextInt(360), 0, 0.2f));
+			entities.add(new Entity(treeModel, new Vector3f(x, y, z), 0, random.nextInt(360), 0, 0.2f));
 		}
 		for (int i = 0; i < 10000; i++) {
 			float x = random.nextFloat() * Terrain.getSIZE();
 			float z = random.nextFloat() * terrain.getZ();
 			float y = terrain.getHeightOfTerrain(x, z);
 			if (y > 10 || y < 0) {continue;}
-			grassList.add(new Entity(grassModel, random.nextInt(4), new Vector3f(x, y, z), 0, random.nextInt(360), 0, 1));
+			entities.add(new Entity(grassModel, random.nextInt(4), new Vector3f(x, y, z), 0, random.nextInt(360), 0, 1));
 		}
+
+		TexturedModel postModel = new TexturedModel(ObjLoader.loadObjModel("lamp/LampPost", loader),
+				new ModelTexture(loader.loadTexture("lamp/LampPostTexture")));
+		entities.add(new Entity(postModel, new Vector3f(100, 0, -150), 0, 0, 0, 1f));
 
 		List<Light> lights = new ArrayList<>();
 		lights.add(new Light(new Vector3f(0, 10000, -7000), new Vector3f(0.4f, 0.4f, 0.4f)));
-		lights.add(new Light(new Vector3f(100, 5, -150), new Vector3f(1, 0, 0), new Vector3f(1, 0.01f, 0.002f)));
-		lights.add(new Light(new Vector3f(100, 5, -120), new Vector3f(0, 0, 1), new Vector3f(1, 0.01f, 0.002f)));
+		lights.add(new Light(new Vector3f(103.2f, 4.5f, -150), new Vector3f(1f, 1f, 0), new Vector3f(1f, 0.01f, 0.002f)));
 		//endregion
 
 		TexturedModel foxModel = new TexturedModel(ObjLoader.loadObjModel("fox/Fox", loader),
 				new ModelTexture(loader.loadTexture("fox/FoxTexture")));
-		Player player = new Player(foxModel, new Vector3f(100, 5, -150), 0, 0, 0, 0.4f);
+		Player player = new Player(foxModel, new Vector3f(80, 5, -150), 0, 0, 0, 0.4f);
 
 		Camera camera = new Camera(player);
 
@@ -96,12 +98,8 @@ public class MainGameLoop {
 
 			renderer.processEntity(player);
 
-			for (Entity tree : trees) {
-				renderer.processEntity(tree);
-			}
-
-			for (Entity grass : grassList) {
-				renderer.processEntity(grass);
+			for (Entity entity : entities) {
+				renderer.processEntity(entity);
 			}
 
 			renderer.processTerrain(terrain);
