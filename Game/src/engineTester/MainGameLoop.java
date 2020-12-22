@@ -2,9 +2,12 @@ package engineTester;
 
 import entities.Light;
 import entities.Player;
+import guis.GuiRenderer;
+import guis.GuiTexture;
 import models.TexturedModel;
 
 import org.lwjgl.opengl.Display;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import renderEngine.*;
@@ -40,6 +43,7 @@ public class MainGameLoop {
 		Loader loader = new Loader();
 		MasterRenderer renderer = new MasterRenderer();
 
+		//region world thingies
 		Terrain terrain = new Terrain(0, -1, loader, "HeightMap");
 
 		TexturedModel treeModel = new TexturedModel(ObjLoader.loadObjModel("tree/Tree", loader),
@@ -70,6 +74,7 @@ public class MainGameLoop {
 		}
 
 		Light light = new Light(new Vector3f(3000, 2000, 2000), new Vector3f(1, 1, 1));
+		//endregion
 
 		TexturedModel foxModel = new TexturedModel(ObjLoader.loadObjModel("fox/Fox", loader),
 				new ModelTexture(loader.loadTexture("fox/FoxTexture")));
@@ -77,6 +82,11 @@ public class MainGameLoop {
 
 		Camera camera = new Camera(player);
 
+		List<GuiTexture> guiTextures = new ArrayList<>();
+		GuiTexture gui = new GuiTexture(loader.loadTexture("Health"), new Vector2f(0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
+		guiTextures.add(gui);
+
+		GuiRenderer guiRenderer = new GuiRenderer(loader);
 
 		while(!Display.isCloseRequested()) {
 			camera.move();
@@ -94,9 +104,11 @@ public class MainGameLoop {
 
 			renderer.processTerrain(terrain);
 			renderer.render(light, camera);
+			guiRenderer.render(guiTextures);
 			DisplayManager.updateDisplay();
 		}
 
+		guiRenderer.cleanUp();
 		renderer.cleanUp();
 		loader.cleanUp();
 		DisplayManager.closeDisplay();
