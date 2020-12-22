@@ -17,14 +17,14 @@ uniform vec3 skyColour;
 
 vec3 heightToRGB(in float height) {
     vec3 terrain_colours[4];
-    terrain_colours[0] = vec3(0.34, 0.26, 0.37);
+    terrain_colours[0] = vec3(0.2, 0.2, 0.2);
     terrain_colours[1] = vec3(0.09, 0.6, 0.02);
     terrain_colours[2] = vec3(1.0,1.0,1.0);
 
     if (height < 0.0) {
-        return mix(terrain_colours[0], terrain_colours[1], height / 10 + 1);
+        return mix(terrain_colours[1], terrain_colours[0], abs(height) / 15);
     } else {
-        return mix(terrain_colours[1], terrain_colours[2], height / 15);
+        return mix(terrain_colours[1], terrain_colours[2], height / 20);
     }
 
 }

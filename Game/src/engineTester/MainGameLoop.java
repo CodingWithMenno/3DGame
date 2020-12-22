@@ -19,9 +19,21 @@ import java.util.Random;
 
 public class MainGameLoop {
 
-	//TODO :
-	//	-Het terrain meer low poly maken
-	//	-Automatisch de height map laten genereren
+	/** TODO :
+	 * 		MAP:
+	 * 			-Het terrain meer low poly maken (verbeteren)
+	 * 			-Automatisch de height map laten genereren (noise generation)
+	 * 			-Fog aan render distance laten aanpassen
+	 * 			-Water toevoegen onder een bepaald y level
+	 * 			-Biomes toevoegen
+	 * 		OVERIG:
+	 * 			-Fog aan render distance laten aanpassen
+	 * 			-Collision detectie met entities
+	 * 			-UI library maken met animatie support
+	 * 			-Animations voor entities support maken
+ * 				-Geluid toevoegen aan de game
+	 * 			-De game moet op elke resolutie werken
+	 */
 
 	public static void main(String[] args) {
 		DisplayManager.createDisplay();
@@ -37,21 +49,24 @@ public class MainGameLoop {
 				new ModelTexture(loader.loadTexture("grass/GrassTexture")));
 		grassModel.getTexture().setHasTransparency(true);
 		grassModel.getTexture().setUseFakeLighting(true);
+		grassModel.getTexture().setNumberOfRows(2);
 
 		Random random = new Random();
 		List<Entity> trees = new ArrayList<>();
 		List<Entity> grassList = new ArrayList<>();
-		for (int i = 0; i < 500; i++) {
-			float x = random.nextFloat() * 800;
-			float z = random.nextFloat() * -600;
+		for (int i = 0; i < 750; i++) {
+			float x = random.nextFloat() * Terrain.getSIZE();
+			float z = random.nextFloat() * terrain.getZ();
 			float y = terrain.getHeightOfTerrain(x, z);
+			if (y > 10 || y < 0) {continue;}
 			trees.add(new Entity(treeModel, new Vector3f(x, y, z), 0, random.nextInt(360), 0, 0.2f));
 		}
-		for (int i = 0; i < 500; i++) {
-			float x = random.nextFloat() * 800;
-			float z = random.nextFloat() * -600;
+		for (int i = 0; i < 10000; i++) {
+			float x = random.nextFloat() * Terrain.getSIZE();
+			float z = random.nextFloat() * terrain.getZ();
 			float y = terrain.getHeightOfTerrain(x, z);
-			grassList.add(new Entity(grassModel, new Vector3f(x, y, z), 0, random.nextInt(360), 0, 0.2f));
+			if (y > 10 || y < 0) {continue;}
+			grassList.add(new Entity(grassModel, random.nextInt(4), new Vector3f(x, y, z), 0, random.nextInt(360), 0, 1));
 		}
 
 		Light light = new Light(new Vector3f(3000, 2000, 2000), new Vector3f(1, 1, 1));

@@ -9,11 +9,21 @@ public class ModelTexture {
 
 	private boolean hasTransparency = false;
 	private boolean useFakeLighting = false;
+
+	private int numberOfRows = 1;
 	
 	public ModelTexture(int texture){
 		this.textureID = texture;
 	}
-	
+
+	public int getNumberOfRows() {
+		return numberOfRows;
+	}
+
+	public void setNumberOfRows(int numberOfRows) {
+		this.numberOfRows = numberOfRows;
+	}
+
 	public int getID(){
 		return textureID;
 	}
