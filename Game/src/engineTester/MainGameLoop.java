@@ -26,7 +26,6 @@ public class MainGameLoop {
 	 * 		MAP:
 	 * 			-Het terrain meer low poly maken (verbeteren)
 	 * 			-Automatisch de height map laten genereren (noise generation)
-	 * 			-Fog aan render distance laten aanpassen
 	 * 			-Water toevoegen onder een bepaald y level
 	 * 			-Biomes toevoegen
 	 * 		OVERIG:

@@ -65,6 +65,7 @@ public class MasterRenderer {
         this.shader.loadSkyColour(SKY_COLOR_RED, SKY_COLOR_GREEN, SKY_COLOR_BLUE);
         this.shader.loadLights(lights);
         this.shader.loadViewMatrix(camera);
+        this.shader.loadDensity(FAR_PLANE);
         this.entityRenderer.render(this.entities);
         this.shader.stop();
 
@@ -72,6 +73,7 @@ public class MasterRenderer {
         this.terrainShader.loadSkyColour(SKY_COLOR_RED, SKY_COLOR_GREEN, SKY_COLOR_BLUE);
         this.terrainShader.loadLights(lights);
         this.terrainShader.loadViewMatrix(camera);
+        this.terrainShader.loadDensity(FAR_PLANE);
         this.terrainRenderer.render(this.terrains);
         this.terrainShader.stop();
 

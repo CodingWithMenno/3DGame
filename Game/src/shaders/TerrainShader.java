@@ -24,6 +24,7 @@ public class TerrainShader extends ShaderProgram {
     private int location_shineDamper;
     private int location_reflectivity;
     private int location_skyColour;
+    private int location_density;
 
     public TerrainShader() {
         super(VERTEX_FILE, FRAGMENT_FILE);
@@ -44,6 +45,7 @@ public class TerrainShader extends ShaderProgram {
         this.location_shineDamper = super.getUniformLocation("shineDamper");
         this.location_reflectivity = super.getUniformLocation("reflectivity");
         this.location_skyColour = super.getUniformLocation("skyColour");
+        this.location_density = super.getUniformLocation("density");
 
         this.location_lightPosition = new int[MAX_LIGHTS];
         this.location_lightColour = new int[MAX_LIGHTS];
@@ -53,6 +55,10 @@ public class TerrainShader extends ShaderProgram {
             this.location_lightColour[i] = super.getUniformLocation("lightColour[" + i + "]");
             this.location_attenuation[i] = super.getUniformLocation("attenuation[" + i + "]");
         }
+    }
+
+    public void loadDensity(float density) {
+        super.loadFloat(this.location_density, 2 / density);
     }
 
     public void loadSkyColour(float r, float g, float b) {

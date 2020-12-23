@@ -30,6 +30,7 @@ public class StaticShader extends ShaderProgram{
 	private int location_skyColour;
 	private int location_numberOfRows;
 	private int location_offset;
+	private int location_density;
 
 
 	public StaticShader() {
@@ -54,6 +55,7 @@ public class StaticShader extends ShaderProgram{
 		this.location_skyColour = super.getUniformLocation("skyColour");
 		this.location_numberOfRows = super.getUniformLocation("numberOfRows");
 		this.location_offset = super.getUniformLocation("offset");
+		this.location_density = super.getUniformLocation("density");
 
 		this.location_lightPosition = new int[MAX_LIGHTS];
 		this.location_lightColour = new int[MAX_LIGHTS];
@@ -67,6 +69,10 @@ public class StaticShader extends ShaderProgram{
 	
 	public void loadTransformationMatrix(Matrix4f matrix) {
 		super.loadMatrix(this.location_transformationMatrix, matrix);
+	}
+
+	public void loadDensity(float density) {
+		super.loadFloat(this.location_density, 2 / density);
 	}
 
 	public void loadNumberOfRows(int numberOfRows) {
