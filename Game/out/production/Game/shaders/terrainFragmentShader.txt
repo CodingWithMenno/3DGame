@@ -9,6 +9,12 @@ in float mapHeight;
 
 out vec4 out_Color;
 
+uniform sampler2D backgroundTexture;
+uniform sampler2D rTexture;
+uniform sampler2D gTexture;
+uniform sampler2D bTexture;
+uniform sampler2D blendMap;
+
 uniform vec3 lightColour[5];
 uniform vec3 attenuation[5];
 uniform float shineDamper;
@@ -18,21 +24,32 @@ uniform vec3 skyColour;
 
 vec3 heightToRGB(in float height) {
     vec3 terrain_colours[4];
-    terrain_colours[0] = vec3(0.2, 0.2, 0.2);
-    terrain_colours[1] = vec3(0.09, 0.6, 0.02);
-    terrain_colours[2] = vec3(1.0,1.0,1.0);
+    terrain_colours[0] = vec3(0.0, 0.0, 0.0);
+    terrain_colours[1] = vec3(0.0, 1, 0.0);
+    terrain_colours[2] = vec3(10.0,10.0,10.0);
 
     if (height < 0.0) {
         return mix(terrain_colours[1], terrain_colours[0], abs(height) / 15);
     } else {
-        return mix(terrain_colours[1], terrain_colours[2], height / 20);
+        return mix(terrain_colours[1], terrain_colours[2], height / 30);
     }
 
 }
 
 void main(void) {
 
-    vec4 totalColour = vec4(heightToRGB(mapHeight), 1.0);
+    vec4 blendMapColour = texture(blendMap, pass_textureCoordinates);
+    float backTextureAmount = 1 - (blendMapColour.r + blendMapColour.g + blendMapColour.b);
+    vec2 tiledCoords = pass_textureCoordinates * 40.0;
+    vec4 backgroundTextureColour = texture(backgroundTexture, tiledCoords) * backTextureAmount;
+    vec4 rTextureColour = texture(rTexture, tiledCoords) * blendMapColour.r;
+    vec4 gTextureColour = texture(gTexture, tiledCoords) * blendMapColour.g;
+    vec4 bTextureColour = texture(bTexture, tiledCoords) * blendMapColour.b;
+
+    vec4 heightColour = vec4(heightToRGB(mapHeight), 1.0);
+    vec4 finalBlendMapColour = backgroundTextureColour + rTextureColour + gTextureColour + bTextureColour;
+    vec4 totalColour = mix(finalBlendMapColour, heightColour, 0.2);
+
 
 	vec3 unitNormal = normalize(surfaceNormal);
     vec3 unitVectorToCamera = normalize(toCameraVector);

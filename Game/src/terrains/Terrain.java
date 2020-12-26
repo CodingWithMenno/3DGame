@@ -4,6 +4,8 @@ import models.RawModel;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.Loader;
+import textures.TerrainTexture;
+import textures.TerrainTexturePack;
 import toolbox.Maths;
 
 import javax.imageio.ImageIO;
@@ -20,10 +22,14 @@ public class Terrain {
     private float x;
     private float z;
     private RawModel model;
+    private TerrainTexturePack texturePack;
+    private TerrainTexture blendMap;
 
     private float[][] heights;
 
-    public Terrain(int gridX, int gridZ, Loader loader, String heightMap) {
+    public Terrain(int gridX, int gridZ, Loader loader, String heightMap, TerrainTexturePack texturePack, TerrainTexture blendMap) {
+        this.texturePack = texturePack;
+        this.blendMap = blendMap;
         this.x = gridX * SIZE;
         this.z = gridZ * SIZE;
         this.model = generateTerrain(loader, heightMap);
@@ -141,5 +147,13 @@ public class Terrain {
 
     public static float getSIZE() {
         return SIZE;
+    }
+
+    public TerrainTexturePack getTexturePack() {
+        return texturePack;
+    }
+
+    public TerrainTexture getBlendMap() {
+        return blendMap;
     }
 }

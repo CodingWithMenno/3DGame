@@ -15,6 +15,8 @@ import terrains.Terrain;
 import textures.ModelTexture;
 import entities.Camera;
 import entities.Entity;
+import textures.TerrainTexture;
+import textures.TerrainTexturePack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +43,15 @@ public class MainGameLoop {
 		MasterRenderer renderer = new MasterRenderer();
 
 		//region world thingies
-		Terrain terrain = new Terrain(0, -1, loader, "HeightMap");
+		TerrainTexture backgroundTexture = new TerrainTexture(loader.loadTexture("ground/GrassTexture"));
+		TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("ground/DirtTexture"));
+		TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("ground/StoneTexture"));
+		TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("ground/PathTexture"));
+		TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
+
+		TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("BlendMap"));
+
+		Terrain terrain = new Terrain(0, -1, loader, "HeightMap", texturePack, blendMap);
 
 		TexturedModel treeModel = new TexturedModel(ObjLoader.loadObjModel("tree/Tree", loader),
 				new ModelTexture(loader.loadTexture("tree/TreeTexture")));
