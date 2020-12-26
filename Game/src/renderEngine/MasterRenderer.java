@@ -60,12 +60,13 @@ public class MasterRenderer {
     }
 
     public void render(List<Light> lights, Camera camera) {
+        float fogDensity = calculateDensity(FAR_PLANE);
         prepare();
         this.shader.start();
         this.shader.loadSkyColour(SKY_COLOR_RED, SKY_COLOR_GREEN, SKY_COLOR_BLUE);
         this.shader.loadLights(lights);
         this.shader.loadViewMatrix(camera);
-        this.shader.loadDensity(FAR_PLANE);
+        this.shader.loadDensity(fogDensity);
         this.entityRenderer.render(this.entities);
         this.shader.stop();
 
@@ -73,12 +74,16 @@ public class MasterRenderer {
         this.terrainShader.loadSkyColour(SKY_COLOR_RED, SKY_COLOR_GREEN, SKY_COLOR_BLUE);
         this.terrainShader.loadLights(lights);
         this.terrainShader.loadViewMatrix(camera);
-        this.terrainShader.loadDensity(FAR_PLANE);
+        this.terrainShader.loadDensity(fogDensity);
         this.terrainRenderer.render(this.terrains);
         this.terrainShader.stop();
 
         this.terrains.clear();
         this.entities.clear();
+    }
+
+    private float calculateDensity(float renderDistance) {
+        return 1.6f / renderDistance;
     }
 
     public void processTerrain(Terrain terrain) {

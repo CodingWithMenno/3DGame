@@ -58,7 +58,7 @@ public class TerrainShader extends ShaderProgram {
     }
 
     public void loadDensity(float density) {
-        super.loadFloat(this.location_density, 2 / density);
+        super.loadFloat(this.location_density, density);
     }
 
     public void loadSkyColour(float r, float g, float b) {

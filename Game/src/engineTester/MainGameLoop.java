@@ -24,16 +24,15 @@ public class MainGameLoop {
 
 	/** TODO :
 	 * 		MAP:
-	 * 			-Het terrain meer low poly maken (verbeteren)
-	 * 			-Automatisch de height map laten genereren (noise generation)
-	 * 			-Water toevoegen onder een bepaald y level
-	 * 			-Biomes toevoegen
+	 * 			-Het terrain beter low poly maken (verbeteren)
+	 * 			-Blendmap toevoegen
+	 * 			-Water toevoegen
 	 * 		OVERIG:
-	 * 			-Fog aan render distance laten aanpassen
 	 * 			-Collision detectie met entities
 	 * 			-Animatie support voor de GUI's maken
 	 * 			-Animations voor entities support maken
 	 * 			-Geluid toevoegen aan de game
+	 * 			-Support voor meer dan 5 lampen in de wereld (alle lampen in de MasterRenderer opslaan en alleen de 5 dichtstbijzijnde opslaan)
 	 */
 
 	public static void main(String[] args) {
@@ -55,18 +54,18 @@ public class MainGameLoop {
 
 		Random random = new Random();
 		List<Entity> entities = new ArrayList<>();
-		for (int i = 0; i < 750; i++) {
+		for (int i = 0; i < 4000; i++) {
 			float x = random.nextFloat() * Terrain.getSIZE();
 			float z = random.nextFloat() * terrain.getZ();
 			float y = terrain.getHeightOfTerrain(x, z);
-			if (y > 10 || y < 0) {continue;}
+			if (y > 10 || y < -5) {continue;}
 			entities.add(new Entity(treeModel, new Vector3f(x, y, z), 0, random.nextInt(360), 0, 0.2f));
 		}
 		for (int i = 0; i < 10000; i++) {
 			float x = random.nextFloat() * Terrain.getSIZE();
 			float z = random.nextFloat() * terrain.getZ();
 			float y = terrain.getHeightOfTerrain(x, z);
-			if (y > 10 || y < 0) {continue;}
+			if (y > 10 || y < -5) {continue;}
 			entities.add(new Entity(grassModel, random.nextInt(4), new Vector3f(x, y, z), 0, random.nextInt(360), 0, 1));
 		}
 

@@ -72,7 +72,7 @@ public class StaticShader extends ShaderProgram{
 	}
 
 	public void loadDensity(float density) {
-		super.loadFloat(this.location_density, 2 / density);
+		super.loadFloat(this.location_density, density);
 	}
 
 	public void loadNumberOfRows(int numberOfRows) {
