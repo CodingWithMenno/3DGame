@@ -27,7 +27,7 @@ public class MainGameLoop {
 	/** TODO :
 	 * 		MAP:
 	 * 			-Het terrain beter low poly maken (verbeteren)
-	 * 			-Blendmap toevoegen
+	 * 			-Blendmap en heightMap maken
 	 * 			-Water toevoegen
 	 * 		OVERIG:
 	 * 			-Collision detectie met entities
@@ -51,7 +51,7 @@ public class MainGameLoop {
 
 		TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("BlendMap"));
 
-		Terrain terrain = new Terrain(0, -1, loader, "HeightMap", texturePack, blendMap);
+		Terrain terrain = new Terrain(0, -1, loader, "noiseTexture", texturePack, blendMap);
 
 		TexturedModel treeModel = new TexturedModel(ObjLoader.loadObjModel("tree/Tree", loader),
 				new ModelTexture(loader.loadTexture("tree/TreeTexture")));
@@ -84,7 +84,7 @@ public class MainGameLoop {
 		entities.add(new Entity(postModel, new Vector3f(100, 0, -150), 0, 0, 0, 1f));
 
 		List<Light> lights = new ArrayList<>();
-		lights.add(new Light(new Vector3f(0, 10000, -7000), new Vector3f(0.4f, 0.4f, 0.4f)));
+		lights.add(new Light(new Vector3f(0, 10000, -7000), new Vector3f(1f, 1f, 1f)));
 		lights.add(new Light(new Vector3f(103.2f, 4.5f, -150), new Vector3f(1f, 1f, 0), new Vector3f(1f, 0.01f, 0.002f)));
 		//endregion
 
@@ -92,7 +92,7 @@ public class MainGameLoop {
 				new ModelTexture(loader.loadTexture("fox/FoxTexture")));
 		Player player = new Player(foxModel, new Vector3f(80, 5, -150), 0, 0, 0, 0.4f);
 
-		Camera camera = new Camera(player);
+		Camera camera = new Camera(player, terrain);
 
 		List<GuiTexture> guiTextures = new ArrayList<>();
 		GuiTexture gui = new GuiTexture(loader.loadTexture("Health"), new Vector2f(0f, -0.9f), new Vector2f(0.25f, 0.25f));

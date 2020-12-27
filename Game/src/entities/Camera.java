@@ -2,6 +2,7 @@ package entities;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector3f;
+import terrains.Terrain;
 import toolbox.Maths;
 
 public class Camera {
@@ -22,7 +23,10 @@ public class Camera {
 	private float yaw;
 	private float roll;
 
-	public Camera(Entity entityToFollow) {
+	private Terrain terrain;
+
+	public Camera(Entity entityToFollow, Terrain terrain) {
+		this.terrain = terrain;
 		this.entityToFollow = entityToFollow;
 		Vector3f pos = this.entityToFollow.getPosition();
 		this.position = new Vector3f(pos.x, pos.y + 8, pos.z - 20);
@@ -37,11 +41,18 @@ public class Camera {
 		float verticalDistance = calculateVerticalDistance();
 
 		Vector3f newPos = calculateCameraPosition(horizontalDistance, verticalDistance);
+
 		if (Maths.difference(newPos.x, this.position.x) > 0.1f || Maths.difference(newPos.z, this.position.z) > 0.1f) {
 			this.entityIsMoving = true;
 		} else {
 			this.entityIsMoving = false;
 		}
+
+		float terrainHeight = this.terrain.getHeightOfTerrain(newPos.x, newPos.z);
+		if (newPos.y < terrainHeight + 0.5f) {
+			newPos.y = terrainHeight + 0.5f;
+		}
+
 		this.position = newPos;
 
 		this.yaw = 180 - (this.entityToFollow.getRotY() + this.angleAroundEntity);
