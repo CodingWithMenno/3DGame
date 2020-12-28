@@ -26,7 +26,6 @@ public class MainGameLoop {
 
 	/** TODO :
 	 * 		MAP:
-	 * 			-Het terrain beter low poly maken (verbeteren)
 	 * 			-Blendmap en heightMap maken
 	 * 			-Water toevoegen
 	 * 		OVERIG:
@@ -51,7 +50,7 @@ public class MainGameLoop {
 
 		TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("BlendMap"));
 
-		Terrain terrain = new Terrain(0, -1, loader, "noiseTexture", texturePack, blendMap);
+		Terrain terrain = new Terrain(0, -1, loader, "HeightMap", texturePack, blendMap);
 
 		TexturedModel treeModel = new TexturedModel(ObjLoader.loadObjModel("tree/Tree", loader),
 				new ModelTexture(loader.loadTexture("tree/TreeTexture")));

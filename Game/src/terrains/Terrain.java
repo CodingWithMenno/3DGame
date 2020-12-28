@@ -15,8 +15,8 @@ import java.io.IOException;
 
 public class Terrain {
 
-    private static final float SIZE = 800;
-    private static final float MAX_HEIGHT = 40;
+    private static final float SIZE = 1200;
+    private static final float MAX_HEIGHT = 200;
     private static final float MAX_PIXEL_COLOUR = 256 * 256 * 256;
 
     private float x;
@@ -70,7 +70,7 @@ public class Terrain {
             e.printStackTrace();
         }
 
-        int vertexCount = image.getHeight();
+        int vertexCount = image.getHeight() / 3;
         this.heights = new float[vertexCount][vertexCount];
         int count = vertexCount * vertexCount;
         float[] vertices = new float[count * 3];
@@ -97,19 +97,40 @@ public class Terrain {
         int pointer = 0;
         for(int gz = 0; gz < vertexCount - 1; gz++) {
             for(int gx = 0; gx < vertexCount - 1; gx++) {
-                int topLeft = (gz * vertexCount) + gx;
+                int topLeft = (gx * vertexCount) + gz;
                 int topRight = topLeft + 1;
-                int bottomLeft = ((gz + 1) * vertexCount) + gx;
+                int bottomLeft = ((gx + 1) * vertexCount) + gz;
                 int bottomRight = bottomLeft + 1;
-                indices[pointer++] = topLeft;
-                indices[pointer++] = bottomLeft;
-                indices[pointer++] = topRight;
-                indices[pointer++] = topRight;
-                indices[pointer++] = bottomLeft;
-                indices[pointer++] = bottomRight;
+                if (gx % 2 == 0) {
+                    pointer = storeQuad1(indices, pointer, topLeft, topRight, bottomLeft, bottomRight, true);
+                } else {
+                    pointer = storeQuad2(indices, pointer, topLeft, topRight, bottomLeft, bottomRight, false);
+                }
             }
         }
         return loader.loadToVAO(vertices, textureCoords, normals, indices);
+    }
+
+    private int storeQuad1(int[] indices, int pointer, int topLeft, int topRight, int bottomLeft, int bottomRight,
+                           boolean mixed) {
+        indices[pointer++] = topLeft;
+        indices[pointer++] = bottomLeft;
+        indices[pointer++] = mixed ? topRight : bottomRight;
+        indices[pointer++] = bottomRight;
+        indices[pointer++] = topRight;
+        indices[pointer++] = mixed ? bottomLeft : topLeft;
+        return pointer;
+    }
+
+    private int storeQuad2(int[] indices, int pointer, int topLeft, int topRight, int bottomLeft, int bottomRight,
+                           boolean mixed) {
+        indices[pointer++] = topRight;
+        indices[pointer++] = topLeft;
+        indices[pointer++] = mixed ? bottomRight : bottomLeft;
+        indices[pointer++] = bottomLeft;
+        indices[pointer++] = bottomRight;
+        indices[pointer++] = mixed ? topLeft : topRight;
+        return pointer;
     }
 
     private Vector3f calculateNormal(int x, int y, BufferedImage image) {

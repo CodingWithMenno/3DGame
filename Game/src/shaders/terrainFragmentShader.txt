@@ -1,8 +1,8 @@
 #version 400 core
 
 in vec2 pass_textureCoordinates;
-in vec3 surfaceNormal;
-in vec3 toLightVector[5];
+flat in vec3 surfaceNormal;
+flat in vec3 toLightVector[5];
 in vec3 toCameraVector;
 in float visibility;
 in float mapHeight;
@@ -43,13 +43,13 @@ void main(void) {
 
     vec4 blendMapColour = texture(blendMap, pass_textureCoordinates);
     float backTextureAmount = 1 - (blendMapColour.r + blendMapColour.g + blendMapColour.b);
-    vec2 tiledCoords = pass_textureCoordinates * 40.0;
+    vec2 tiledCoords = pass_textureCoordinates * 100.0;
     vec4 backgroundTextureColour = texture(backgroundTexture, tiledCoords) * backTextureAmount;
     vec4 rTextureColour = texture(rTexture, tiledCoords) * blendMapColour.r;
     vec4 gTextureColour = texture(gTexture, tiledCoords) * blendMapColour.g;
     vec4 bTextureColour = texture(bTexture, tiledCoords) * blendMapColour.b;
 
-    vec4 heightColour = vec4(heightToRGB(mapHeight), 1.0);
+//    vec4 heightColour = vec4(heightToRGB(mapHeight), 1.0);
     vec4 finalBlendMapColour = backgroundTextureColour + rTextureColour + gTextureColour + bTextureColour;
     vec4 totalColour = finalBlendMapColour;
 
