@@ -15,8 +15,8 @@ import java.io.IOException;
 
 public class Terrain {
 
-    private static final float SIZE = 1000;
-    private static final float MAX_HEIGHT = 70;
+    private static final float SIZE = 800;
+    private static final float MAX_HEIGHT = 40;
     private static final float MAX_PIXEL_COLOUR = 256 * 256 * 256;
 
     private float x;
@@ -75,7 +75,7 @@ public class Terrain {
         int count = vertexCount * vertexCount;
         float[] vertices = new float[count * 3];
         float[] normals = new float[count * 3];
-        float[] textureCoords = new float[count*2];
+        float[] textureCoords = new float[count * 2];
         int[] indices = new int[6 * (vertexCount - 1) * (vertexCount - 1)];
         int vertexPointer = 0;
         for(int i = 0; i < vertexCount; i++) {

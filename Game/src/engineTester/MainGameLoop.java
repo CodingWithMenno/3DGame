@@ -81,11 +81,11 @@ public class MainGameLoop {
 
 		TexturedModel postModel = new TexturedModel(ObjLoader.loadObjModel("lamp/LampPost", loader),
 				new ModelTexture(loader.loadTexture("lamp/LampPostTexture")));
-		entities.add(new Entity(postModel, new Vector3f(100, 0, -150), 0, 0, 0, 1f));
+		entities.add(new Entity(postModel, new Vector3f(100, terrain.getHeightOfTerrain(100, -150), -150), 0, 0, 0, 1f));
 
 		List<Light> lights = new ArrayList<>();
 		lights.add(new Light(new Vector3f(0, 10000, -7000), new Vector3f(1f, 1f, 1f)));
-		lights.add(new Light(new Vector3f(103.2f, 4.5f, -150), new Vector3f(1f, 1f, 0), new Vector3f(1f, 0.01f, 0.002f)));
+		lights.add(new Light(new Vector3f(103.2f, terrain.getHeightOfTerrain(100, -150) + 4.5f, -150), new Vector3f(1f, 1f, 0), new Vector3f(1f, 0.01f, 0.002f)));
 		//endregion
 
 		TexturedModel foxModel = new TexturedModel(ObjLoader.loadObjModel("fox/Fox", loader),

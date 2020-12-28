@@ -1,7 +1,7 @@
 #version 400 core
 
 in vec2 pass_textureCoordinates;
-flat in vec3 surfaceNormal;
+in vec3 surfaceNormal;
 in vec3 toLightVector[5];
 in vec3 toCameraVector;
 in float visibility;
@@ -32,7 +32,7 @@ vec3 heightToRGB(in float height) {
     terrain_colours[1] = vec3(1, 3, 1);
     terrain_colours[2] = vec3(1000,1000,1000);
 
-    if (height < 20) {
+    if (height < 0) {
         return terrain_colours[1];
     } else {
         return mix(terrain_colours[1], terrain_colours[2], map(clamp(height - 20, 0, 70), 0, 70, 0, 1));
@@ -51,7 +51,7 @@ void main(void) {
 
     vec4 heightColour = vec4(heightToRGB(mapHeight), 1.0);
     vec4 finalBlendMapColour = backgroundTextureColour + rTextureColour + gTextureColour + bTextureColour;
-    vec4 totalColour = mix(finalBlendMapColour, heightColour, 0.05);
+    vec4 totalColour = finalBlendMapColour;
 
 
 	vec3 unitNormal = normalize(surfaceNormal);

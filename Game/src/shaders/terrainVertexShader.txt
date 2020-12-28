@@ -5,7 +5,7 @@ in vec2 textureCoordinates;
 in vec3 normal;
 
 out vec2 pass_textureCoordinates;
-flat out vec3 surfaceNormal;
+out vec3 surfaceNormal;
 out vec3 toLightVector[5];
 out vec3 toCameraVector;
 out float visibility;
@@ -32,7 +32,7 @@ void main(void) {
 	for(int i = 0; i < 5; i++) {
 	    toLightVector[i] = lightPosition[i] - worldPosition.xyz;
 	}
-	toCameraVector = (inverse(viewMatrix) * vec4(0.0,0.0,0.0,1.0)).xyz - worldPosition.xyz;
+	toCameraVector = (inverse(viewMatrix) * vec4(0.0, 0.0 ,0.0, 1.0)).xyz - worldPosition.xyz;
 
     float distance = length(positionRelativeToCam.xyz);
     visibility = exp(-pow((distance * density), gradient));
