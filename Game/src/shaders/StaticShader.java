@@ -5,6 +5,7 @@ import org.lwjgl.util.vector.Matrix4f;
 
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 import toolbox.Maths;
 
 import entities.Camera;
@@ -31,6 +32,7 @@ public class StaticShader extends ShaderProgram{
 	private int location_numberOfRows;
 	private int location_offset;
 	private int location_density;
+	private int location_plane;
 
 
 	public StaticShader() {
@@ -56,6 +58,7 @@ public class StaticShader extends ShaderProgram{
 		this.location_numberOfRows = super.getUniformLocation("numberOfRows");
 		this.location_offset = super.getUniformLocation("offset");
 		this.location_density = super.getUniformLocation("density");
+		this.location_plane = super.getUniformLocation("plane");
 
 		this.location_lightPosition = new int[MAX_LIGHTS];
 		this.location_lightColour = new int[MAX_LIGHTS];
@@ -69,6 +72,10 @@ public class StaticShader extends ShaderProgram{
 	
 	public void loadTransformationMatrix(Matrix4f matrix) {
 		super.loadMatrix(this.location_transformationMatrix, matrix);
+	}
+
+	public void loadClipPlane(Vector4f plane) {
+		super.loadVector(this.location_plane, plane);
 	}
 
 	public void loadDensity(float density) {

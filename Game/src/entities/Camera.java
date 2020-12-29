@@ -49,8 +49,8 @@ public class Camera {
 		}
 
 		float terrainHeight = this.terrain.getHeightOfTerrain(newPos.x, newPos.z);
-		if (newPos.y < terrainHeight + 0.5f) {
-			newPos.y = terrainHeight + 0.5f;
+		if (newPos.y < terrainHeight + 1f) {
+			newPos.y = terrainHeight + 1f;
 		}
 
 		this.position = newPos;
@@ -103,6 +103,10 @@ public class Camera {
 		}
 
 		this.angleAroundEntity = Maths.clamp(this.angleAroundEntity, -180, 180);
+	}
+
+	public void invertPitch() {
+		this.pitch = -pitch;
 	}
 
 	public Vector3f getPosition() {

@@ -4,6 +4,7 @@ import entities.Camera;
 import entities.Light;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 import toolbox.Maths;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class TerrainShader extends ShaderProgram {
     private int location_gTexture;
     private int location_bTexture;
     private int location_blendMap;
+    private int location_plane;
 
     public TerrainShader() {
         super(VERTEX_FILE, FRAGMENT_FILE);
@@ -56,6 +58,7 @@ public class TerrainShader extends ShaderProgram {
         this.location_gTexture = super.getUniformLocation("gTexture");
         this.location_bTexture = super.getUniformLocation("bTexture");
         this.location_blendMap = super.getUniformLocation("blendMap");
+        this.location_plane = super.getUniformLocation("plane");
 
         this.location_lightPosition = new int[MAX_LIGHTS];
         this.location_lightColour = new int[MAX_LIGHTS];
@@ -73,6 +76,10 @@ public class TerrainShader extends ShaderProgram {
         super.loadInt(this.location_gTexture, 2);
         super.loadInt(this.location_bTexture, 3);
         super.loadInt(this.location_blendMap, 4);
+    }
+
+    public void loadClipPlane(Vector4f plane) {
+        super.loadVector(this.location_plane, plane);
     }
 
     public void loadDensity(float density) {

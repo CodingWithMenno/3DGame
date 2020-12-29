@@ -13,7 +13,7 @@ public class DisplayManager {
 	
 	private static final int WIDTH = 1920;
 	private static final int HEIGHT = 1080;
-	private static final int FPS_CAP = 144;
+	private static final int FPS_CAP = 250;
 
 	private static long lastFrameTime;
 	private static float delta;
@@ -25,7 +25,7 @@ public class DisplayManager {
 
 		try {
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
-			Display.create(new PixelFormat(), attribs);
+			Display.create(new PixelFormat().withDepthBits(24), attribs);
 			Display.setTitle("3D Game Engine");
 		} catch (LWJGLException e) {
 			e.printStackTrace();
@@ -51,7 +51,7 @@ public class DisplayManager {
 		lastFrameTime = currentFrameTime;
 	}
 
-	public static float getFrameTimeSeconds() {
+	public static float getDelta() {
 		return delta;
 	}
 	

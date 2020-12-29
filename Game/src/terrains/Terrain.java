@@ -15,8 +15,8 @@ import java.io.IOException;
 
 public class Terrain {
 
-    private static final float SIZE = 1200;
-    private static final float MAX_HEIGHT = 200;
+    private static final float SIZE = 1500;
+    private static final float MAX_HEIGHT = 120;
     private static final float MAX_PIXEL_COLOUR = 256 * 256 * 256;
 
     private float x;
@@ -70,7 +70,7 @@ public class Terrain {
             e.printStackTrace();
         }
 
-        int vertexCount = image.getHeight() / 3;
+        int vertexCount = image.getHeight();
         this.heights = new float[vertexCount][vertexCount];
         int count = vertexCount * vertexCount;
         float[] vertices = new float[count * 3];
@@ -102,9 +102,9 @@ public class Terrain {
                 int bottomLeft = ((gx + 1) * vertexCount) + gz;
                 int bottomRight = bottomLeft + 1;
                 if (gx % 2 == 0) {
-                    pointer = storeQuad1(indices, pointer, topLeft, topRight, bottomLeft, bottomRight, true);
+                    pointer = storeQuad1(indices, pointer, topLeft, topRight, bottomLeft, bottomRight, gz % 2 == 0);
                 } else {
-                    pointer = storeQuad2(indices, pointer, topLeft, topRight, bottomLeft, bottomRight, false);
+                    pointer = storeQuad2(indices, pointer, topLeft, topRight, bottomLeft, bottomRight, gz %  2 == 0);
                 }
             }
         }
@@ -151,6 +151,7 @@ public class Terrain {
         height += MAX_PIXEL_COLOUR / 2f;
         height /= MAX_PIXEL_COLOUR / 2f;
         height *= MAX_HEIGHT;
+
         return height;
     }
 
@@ -168,6 +169,10 @@ public class Terrain {
 
     public static float getSIZE() {
         return SIZE;
+    }
+
+    public static float getMaxHeight() {
+        return MAX_HEIGHT;
     }
 
     public TerrainTexturePack getTexturePack() {

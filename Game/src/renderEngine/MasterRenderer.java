@@ -8,6 +8,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL32;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector4f;
 import shaders.StaticShader;
 import shaders.TerrainShader;
 import terrains.Terrain;
@@ -20,8 +21,8 @@ import java.util.Map;
 public class MasterRenderer {
 
     private static final float FOV = 100;
-    private static final float NEAR_PLANE = 0.1f;
-    private static final float FAR_PLANE = 1000;
+    public static final float NEAR_PLANE = 0.01f;
+    public static final float FAR_PLANE = 700;
 
     private static final float SKY_COLOR_RED = 0.005f;
     private static final float SKY_COLOR_GREEN = 0.4f;
@@ -50,6 +51,14 @@ public class MasterRenderer {
         this.terrainRenderer = new TerrainRenderer(this.terrainShader, this.projectionMatrix);
     }
 
+    public void renderScene(List<Entity> entities, Terrain terrain, List<Light> lights, Camera camera, Vector4f clipPlane) {
+        for (Entity entity : entities) {
+            processEntity(entity);
+        }
+        processTerrain(terrain);
+        render(lights, camera, clipPlane);
+    }
+
     public static void enableCulling() {
         GL11.glEnable(GL11.GL_CULL_FACE);
         GL11.glCullFace(GL11.GL_BACK);
@@ -59,10 +68,12 @@ public class MasterRenderer {
         GL11.glDisable(GL11.GL_CULL_FACE);
     }
 
-    public void render(List<Light> lights, Camera camera) {
+    public void render(List<Light> lights, Camera camera, Vector4f clipPlane) {
         float fogDensity = calculateDensity(FAR_PLANE);
         prepare();
         this.shader.start();
+
+        this.shader.loadClipPlane(clipPlane);
         this.shader.loadSkyColour(SKY_COLOR_RED, SKY_COLOR_GREEN, SKY_COLOR_BLUE);
         this.shader.loadLights(lights);
         this.shader.loadViewMatrix(camera);
@@ -71,6 +82,7 @@ public class MasterRenderer {
         this.shader.stop();
 
         this.terrainShader.start();
+        this.terrainShader.loadClipPlane(clipPlane);
         this.terrainShader.loadSkyColour(SKY_COLOR_RED, SKY_COLOR_GREEN, SKY_COLOR_BLUE);
         this.terrainShader.loadLights(lights);
         this.terrainShader.loadViewMatrix(camera);
@@ -104,7 +116,7 @@ public class MasterRenderer {
     }
 
     public void prepare() {
-        GL32.glProvokingVertex(GL32.GL_LAST_VERTEX_CONVENTION);
+        GL32.glProvokingVertex(GL32.GL_FIRST_VERTEX_CONVENTION);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
         GL11.glClearColor(SKY_COLOR_RED, SKY_COLOR_GREEN, SKY_COLOR_BLUE, 1);
@@ -128,5 +140,9 @@ public class MasterRenderer {
     public void cleanUp() {
         this.shader.cleanUp();
         this.terrainShader.cleanUp();
+    }
+
+    public Matrix4f getProjectionMatrix() {
+        return projectionMatrix;
     }
 }
