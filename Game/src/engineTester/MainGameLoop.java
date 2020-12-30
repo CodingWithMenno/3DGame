@@ -33,9 +33,7 @@ public class MainGameLoop {
 
 	/** TODO :
 	 * 		MAP:
-	 * 			-Low poly textures maken (niet egaal)
 	 * 			-Blendmap en heightMap maken
-	 * 			-Water toevoegen
 	 * 		OVERIG:
 	 * 			-Collision detectie met entities
 	 * 			-Animatie support voor de GUI's maken
@@ -81,7 +79,7 @@ public class MainGameLoop {
 			if (y <= -13) {continue;}
 			entities.add(new Entity(treeModel, new Vector3f(x, y, z), 0, random.nextInt(360), 0, 0.2f));
 		}
-		for (int i = 0; i < 10000; i++) {
+		for (int i = 0; i < 1000; i++) {
 			float x = random.nextFloat() * Terrain.getSIZE();
 			float z = random.nextFloat() * terrain.getZ();
 			float y = terrain.getHeightOfTerrain(x, z);
@@ -110,7 +108,7 @@ public class MainGameLoop {
 		WaterShader waterShader = new WaterShader();
 		WaterRenderer waterRenderer = new WaterRenderer(loader, waterShader, renderer.getProjectionMatrix(), buffers);
 		List<WaterTile> waterTiles = new ArrayList<>();
-		WaterTile water = new WaterTile(120, -195, -13);
+		WaterTile water = new WaterTile(Terrain.getSIZE() / 2, -Terrain.getSIZE() / 2, -13);
 		waterTiles.add(water);
 
 

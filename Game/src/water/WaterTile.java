@@ -1,8 +1,10 @@
 package water;
 
+import terrains.Terrain;
+
 public class WaterTile {
 	
-	public static final float TILE_SIZE = 60;
+	public static final float TILE_SIZE = Terrain.getSIZE() / 2;
 	
 	private float height;
 	private float x,z;

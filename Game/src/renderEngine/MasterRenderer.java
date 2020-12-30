@@ -8,10 +8,12 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL32;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 import shaders.StaticShader;
 import shaders.TerrainShader;
 import terrains.Terrain;
+import toolbox.Maths;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +29,10 @@ public class MasterRenderer {
     private static final float SKY_COLOR_RED = 0.005f;
     private static final float SKY_COLOR_GREEN = 0.4f;
     private static final float SKY_COLOR_BLUE = 0.6f;
+
+    private static final float TIME_SPEED = 100;
+    private float gameTime = 12000;
+    private boolean isNight = true;
 
     private Matrix4f projectionMatrix;
 
@@ -52,11 +58,30 @@ public class MasterRenderer {
     }
 
     public void renderScene(List<Entity> entities, Terrain terrain, List<Light> lights, Camera camera, Vector4f clipPlane) {
+        updateTime();
+
         for (Entity entity : entities) {
             processEntity(entity);
         }
         processTerrain(terrain);
         render(lights, camera, clipPlane);
+    }
+
+    private void updateTime() {
+        if (this.isNight) {
+            this.gameTime += DisplayManager.getDelta() * TIME_SPEED;
+
+            if (this.gameTime >= 24000) {
+                this.isNight = false;
+            }
+
+        } else {
+            this.gameTime -= DisplayManager.getDelta() * TIME_SPEED;
+
+            if (this.gameTime <= 0) {
+                this.isNight = true;
+            }
+        }
     }
 
     public static void enableCulling() {
@@ -70,6 +95,10 @@ public class MasterRenderer {
 
     public void render(List<Light> lights, Camera camera, Vector4f clipPlane) {
         float fogDensity = calculateDensity(FAR_PLANE);
+        Light sun = lights.get(0);
+        float lightColour = Maths.map(this.gameTime, 0, 24000, 0.3f, 1);
+        sun.setColour(new Vector3f(lightColour, lightColour, lightColour));
+
         prepare();
         this.shader.start();
 
