@@ -20,6 +20,7 @@ import entities.Camera;
 import entities.Entity;
 import textures.TerrainTexture;
 import textures.TerrainTexturePack;
+import toolbox.Maths;
 import water.WaterFrameBuffers;
 import water.WaterRenderer;
 import water.WaterShader;
@@ -39,7 +40,6 @@ public class MainGameLoop {
 	 * 			-Animatie support voor de GUI's maken
 	 * 			-Animations voor entities support maken
 	 * 			-Geluid toevoegen aan de game
-	 * 			-Support voor meer dan 5 lampen in de wereld (alle lampen in de MasterRenderer opslaan en alleen de 5 dichtstbijzijnde opslaan)
 	 * 			-Shaduwen toevoegen (ook voor het terrein)
 	 */
 

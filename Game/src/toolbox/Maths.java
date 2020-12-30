@@ -71,4 +71,9 @@ public class Maths {
 	public static float map(float value, float pMin, float pMax, float nMin, float nMax) {
 		return (value - pMin) / (pMax - pMin) * (nMax - nMin) + nMin;
 	}
+
+	//Returns the distance between 2 3D points
+	public static float getDistanceBetween(Vector3f point1, Vector3f point2) {
+		return (float) Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point2.y, 2) + Math.pow(point2.z - point1.z, 2));
+	}
 }

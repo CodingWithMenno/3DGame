@@ -3,6 +3,7 @@ package renderEngine;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
+import javafx.collections.transformation.SortedList;
 import models.TexturedModel;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -15,10 +16,7 @@ import shaders.TerrainShader;
 import terrains.Terrain;
 import toolbox.Maths;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MasterRenderer {
 
@@ -45,6 +43,8 @@ public class MasterRenderer {
     private Map<TexturedModel, List<Entity>> entities;
     private List<Terrain> terrains;
 
+    private List<Light> lightsToRender = new ArrayList();
+
     public MasterRenderer() {
         enableCulling();
         createProjectionMatrix();
@@ -58,13 +58,51 @@ public class MasterRenderer {
     }
 
     public void renderScene(List<Entity> entities, Terrain terrain, List<Light> lights, Camera camera, Vector4f clipPlane) {
+        getClosestLights(lights, camera);
+
         updateTime();
 
         for (Entity entity : entities) {
             processEntity(entity);
         }
+
         processTerrain(terrain);
-        render(lights, camera, clipPlane);
+        render(this.lightsToRender, camera, clipPlane);
+    }
+
+    private void getClosestLights(List<Light> lights, Camera camera) {
+        this.lightsToRender.clear();
+        Vector3f cameraPosition = camera.getPosition();
+        Map<Light, Float> differences = new HashMap<>();
+
+        for (Light light : lights) {
+            differences.put(light, Maths.getDistanceBetween(cameraPosition, light.getPosition()));
+        }
+
+        List<Map.Entry<Light, Float> > list =
+                new LinkedList<Map.Entry<Light, Float> >(differences.entrySet());
+
+        Collections.sort(list, new Comparator<Map.Entry<Light, Float> >() {
+            public int compare(Map.Entry<Light, Float> o1,
+                               Map.Entry<Light, Float> o2)
+            {
+                return (o1.getValue()).compareTo(o2.getValue());
+            }
+        });
+
+        HashMap<Light, Float> temp = new LinkedHashMap<Light, Float>();
+        for (Map.Entry<Light, Float> aa : list) {
+            temp.put(aa.getKey(), aa.getValue());
+        }
+
+        this.lightsToRender.add(lights.get(0));
+        for (Light light : temp.keySet()) {
+            if (this.lightsToRender.size() == 5) {
+                return;
+            }
+
+            this.lightsToRender.add(light);
+        }
     }
 
     private void updateTime() {
