@@ -13,7 +13,7 @@ public class Camera {
 	private static float MAX_ZOOM_IN = 8;
 	private static float MAX_ZOOM_OUT = 56;
 
-	private float distanceFromEntity = 20;
+	private float distanceFromEntity = 14;
 	private float angleAroundEntity = 0;
 	private boolean entityIsMoving = false;
 	private Entity entityToFollow;
@@ -49,8 +49,17 @@ public class Camera {
 		}
 
 		float terrainHeight = this.terrain.getHeightOfTerrain(newPos.x, newPos.z);
+		float heightDifference = Maths.difference(newPos.y, terrainHeight + 1);
 		if (newPos.y < terrainHeight + 1f) {
 			newPos.y = terrainHeight + 1f;
+
+			this.pitch += heightDifference;
+		}
+
+		heightDifference = Maths.difference(newPos.y, -12);
+		if (newPos.y < -12) { //Zodat de camera niet onder het water komt
+			newPos.y = -12;
+			this.pitch += heightDifference;
 		}
 
 		this.position = newPos;
