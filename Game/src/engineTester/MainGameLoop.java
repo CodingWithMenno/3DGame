@@ -20,7 +20,6 @@ import entities.Camera;
 import entities.Entity;
 import textures.TerrainTexture;
 import textures.TerrainTexturePack;
-import toolbox.Maths;
 import water.WaterFrameBuffers;
 import water.WaterRenderer;
 import water.WaterShader;
@@ -33,20 +32,33 @@ import java.util.Random;
 public class MainGameLoop {
 
 	/** TODO :
-	 * 		MAP:
-	 * 			-Blendmap en heightMap maken
-	 * 		OVERIG:
+	 * 		Entities:
 	 * 			-Collision detectie met entities
-	 * 			-Animatie support voor de GUI's maken
-	 * 			-Animations voor entities support maken
-	 * 			-Geluid toevoegen aan de game
-	 * 			-Shaduwen toevoegen (ook voor het terrein)
+	 * 			-Animatie support voor entities
+	 * 			-Normal mapping
+	 * 		.
+	 * 		Overig:
+	 * 			-Goede GUI library maken (met animatie support & het resizen van het display)
+	 * 			-Geluid toevoegen
+	 * 			-Eigen blendmap maken & heightmap de randen aanpassen
+	 * 			-Particle systeem maken
+	 * 			-Zon en wolken toevoegen
+	 * 			-Effecten toepassen (Post-Processing, Bloom, Lens flare, etc.)
+	 * 		.
+	 * 		Optioneel:
+	 * 			-Water low poly maken
+	 * 		.
+	 * 		Voor betere performance:
+	 * 			-Nieuwe objLoader gebruiken (zie normal mapping filmpje)
+	 * 			-De vertexen/fragments van het water alleen renderen als ze hoger zijn dan het terrein
+	 * 			-Minder lichten tegelijk inladen (van 5 naar 4)
 	 */
+
+	public static float WATER_HEIGHT = -13;
 
 	public static void main(String[] args) {
 		DisplayManager.createDisplay();
 		Loader loader = new Loader();
-		MasterRenderer renderer = new MasterRenderer();
 
 		//*************WORLD SETUP**************
 		TerrainTexture backgroundTexture = new TerrainTexture(loader.loadTexture("ground/GrassTexture"));
@@ -60,6 +72,18 @@ public class MainGameLoop {
 		Terrain terrain = new Terrain(0, -1, loader, "HeightMap", texturePack, blendMap);
 
 
+		//**********PLAYER SETUP*******************
+		List<Entity> entities = new ArrayList<>();
+		TexturedModel foxModel = new TexturedModel(ObjLoader.loadObjModel("fox/Fox", loader),
+				new ModelTexture(loader.loadTexture("fox/FoxTexture")));
+		Player player = new Player(foxModel, new Vector3f(80, 5, -150), 0, 0, 0, 0.4f);
+		entities.add(player);
+
+		Camera camera = new Camera(player, terrain);
+
+		MasterRenderer renderer = new MasterRenderer(camera);
+
+
 		//***********ENTITIES SETUP****************
 		TexturedModel treeModel = new TexturedModel(ObjLoader.loadObjModel("tree/Tree", loader),
 				new ModelTexture(loader.loadTexture("tree/TreeTexture")));
@@ -71,7 +95,6 @@ public class MainGameLoop {
 		grassModel.getTexture().setNumberOfRows(2);
 
 		Random random = new Random();
-		List<Entity> entities = new ArrayList<>();
 		for (int i = 0; i < 1000; i++) {
 			float x = random.nextFloat() * Terrain.getSIZE();
 			float z = random.nextFloat() * terrain.getZ();
@@ -92,15 +115,8 @@ public class MainGameLoop {
 		entities.add(new Entity(postModel, new Vector3f(100, terrain.getHeightOfTerrain(100, -150), -150), 0, 0, 0, 1f));
 
 		List<Light> lights = new ArrayList<>();
-		lights.add(new Light(new Vector3f(0, 10000, -1000), new Vector3f(1f, 1f, 1f)));
+		lights.add(new Light(new Vector3f(1000, 300000, -100000), new Vector3f(1f, 1f, 1f)));
 		lights.add(new Light(new Vector3f(103.2f, terrain.getHeightOfTerrain(100, -150) + 4.5f, -150), new Vector3f(1f, 1f, 0), new Vector3f(1f, 0.01f, 0.002f)));
-
-		TexturedModel foxModel = new TexturedModel(ObjLoader.loadObjModel("fox/Fox", loader),
-				new ModelTexture(loader.loadTexture("fox/FoxTexture")));
-		Player player = new Player(foxModel, new Vector3f(80, 5, -150), 0, 0, 0, 0.4f);
-		entities.add(player);
-
-		Camera camera = new Camera(player, terrain);
 
 
 		//**********WATER SETUP****************
@@ -108,24 +124,26 @@ public class MainGameLoop {
 		WaterShader waterShader = new WaterShader();
 		WaterRenderer waterRenderer = new WaterRenderer(loader, waterShader, renderer.getProjectionMatrix(), buffers);
 		List<WaterTile> waterTiles = new ArrayList<>();
-		WaterTile water = new WaterTile(Terrain.getSIZE() / 2, -Terrain.getSIZE() / 2, -13);
+		WaterTile water = new WaterTile(Terrain.getSIZE() / 2, -Terrain.getSIZE() / 2, WATER_HEIGHT);
 		waterTiles.add(water);
 
 
 		//**************GUI SETUP****************
-//		List<GuiTexture> guiTextures = new ArrayList<>();
-//		GuiTexture refraction = new GuiTexture(buffers.getRefractionTexture(), new Vector2f(0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
+		List<GuiTexture> guiTextures = new ArrayList<>();
+		GuiTexture shadowMap = new GuiTexture(renderer.getShadowMapTexture(), new Vector2f(0.5f, 0.5f), new Vector2f(0.5f, 0.5f));
 //		GuiTexture reflection = new GuiTexture(buffers.getReflectionTexture(), new Vector2f(-0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
-//		guiTextures.add(refraction);
+//		guiTextures.add(shadowMap);
 //		guiTextures.add(reflection);
 //
-//		GuiRenderer guiRenderer = new GuiRenderer(loader);
+		GuiRenderer guiRenderer = new GuiRenderer(loader);
 
 
 		//**********GAME LOOP**************
 		while(!Display.isCloseRequested()) {
 			camera.move();
 			player.move(terrain);
+
+			renderer.renderShadowMap(entities, lights.get(0));
 
 			GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
 
@@ -144,7 +162,7 @@ public class MainGameLoop {
 			buffers.unbindCurrentFrameBuffer();
 			renderer.renderScene(entities, terrain, lights, camera, new Vector4f(0, -1, 0, 100000));
 			waterRenderer.render(waterTiles, camera, lights.get(0));
-//			guiRenderer.render(guiTextures);
+			guiRenderer.render(guiTextures);
 
 			DisplayManager.updateDisplay();
 		}
@@ -152,7 +170,7 @@ public class MainGameLoop {
 		//********CLEAN UP***************
 		buffers.cleanUp();
 		waterShader.cleanUp();
-//		guiRenderer.cleanUp();
+		guiRenderer.cleanUp();
 		renderer.cleanUp();
 		loader.cleanUp();
 		DisplayManager.closeDisplay();

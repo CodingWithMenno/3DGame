@@ -1,5 +1,6 @@
 package entities;
 
+import engineTester.MainGameLoop;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector3f;
 import terrains.Terrain;
@@ -57,8 +58,8 @@ public class Camera {
 		}
 
 		heightDifference = Maths.difference(newPos.y, -12);
-		if (newPos.y < -12) { //Zodat de camera niet onder het water komt
-			newPos.y = -12;
+		if (newPos.y < MainGameLoop.WATER_HEIGHT + 1) {
+			newPos.y = MainGameLoop.WATER_HEIGHT + 1;
 			this.pitch += heightDifference;
 		}
 

@@ -13,8 +13,8 @@ public class TerrainShader extends ShaderProgram {
 
     private static final int MAX_LIGHTS = 5;
 
-    private static final String VERTEX_FILE = "src/shaders/terrainVertexShader.txt";
-    private static final String FRAGMENT_FILE = "src/shaders/terrainFragmentShader.txt";
+    private static final String VERTEX_FILE = "src/shaders/terrainVertexShader.glsl";
+    private static final String FRAGMENT_FILE = "src/shaders/terrainFragmentShader.glsl";
 
     private int location_transformationMatrix;
     private int location_projectionMatrix;
@@ -32,6 +32,10 @@ public class TerrainShader extends ShaderProgram {
     private int location_bTexture;
     private int location_blendMap;
     private int location_plane;
+    private int location_toShadowMapSpace;
+    private int location_shadowMap;
+    private int location_shadowDistance;
+    private int location_shadowMapSize;
 
     public TerrainShader() {
         super(VERTEX_FILE, FRAGMENT_FILE);
@@ -59,6 +63,10 @@ public class TerrainShader extends ShaderProgram {
         this.location_bTexture = super.getUniformLocation("bTexture");
         this.location_blendMap = super.getUniformLocation("blendMap");
         this.location_plane = super.getUniformLocation("plane");
+        this.location_toShadowMapSpace = super.getUniformLocation("toShadowMapSpace");
+        this.location_shadowMap = super.getUniformLocation("shadowMap");
+        this.location_shadowDistance = super.getUniformLocation("shadowDistance");
+        this.location_shadowMapSize = super.getUniformLocation("shadowMapSize");
 
         this.location_lightPosition = new int[MAX_LIGHTS];
         this.location_lightColour = new int[MAX_LIGHTS];
@@ -76,6 +84,16 @@ public class TerrainShader extends ShaderProgram {
         super.loadInt(this.location_gTexture, 2);
         super.loadInt(this.location_bTexture, 3);
         super.loadInt(this.location_blendMap, 4);
+        super.loadInt(this.location_shadowMap, 5);
+    }
+
+    public void loadShadowDistanceAndSize(float distance, float size) {
+        super.loadFloat(this.location_shadowDistance, distance);
+        super.loadFloat(this.location_shadowMapSize, size);
+    }
+
+    public void loadToShadowSpaceMatrix(Matrix4f matrix) {
+        super.loadMatrix(this.location_toShadowMapSpace, matrix);
     }
 
     public void loadClipPlane(Vector4f plane) {

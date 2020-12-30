@@ -3,17 +3,15 @@ package renderEngine;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.ContextAttribs;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.PixelFormat;
+import org.lwjgl.opengl.*;
 
 public class DisplayManager {
 	
 	private static final int WIDTH = 1920;
 	private static final int HEIGHT = 1080;
 	private static final int FPS_CAP = 1000;
+
+	private static final int ANTIALIASING_AMOUNT = 8;
 
 	private static long lastFrameTime;
 	private static float delta;
@@ -25,8 +23,9 @@ public class DisplayManager {
 
 		try {
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
-			Display.create(new PixelFormat().withDepthBits(24), attribs);
+			Display.create(new PixelFormat().withDepthBits(24).withSamples(ANTIALIASING_AMOUNT), attribs);
 			Display.setTitle("3D Game");
+			GL11.glEnable(GL13.GL_MULTISAMPLE);
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}

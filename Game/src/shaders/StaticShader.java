@@ -16,8 +16,8 @@ public class StaticShader extends ShaderProgram{
 
 	private static final int MAX_LIGHTS = 5;
 
-	private static final String VERTEX_FILE = "src/shaders/vertexShader.txt";
-	private static final String FRAGMENT_FILE = "src/shaders/fragmentShader.txt";
+	private static final String VERTEX_FILE = "src/shaders/vertexShader.glsl";
+	private static final String FRAGMENT_FILE = "src/shaders/fragmentShader.glsl";
 	
 	private int location_transformationMatrix;
 	private int location_projectionMatrix;
@@ -33,6 +33,10 @@ public class StaticShader extends ShaderProgram{
 	private int location_offset;
 	private int location_density;
 	private int location_plane;
+	private int location_toShadowMapSpace;
+	private int location_shadowMap;
+	private int location_shadowDistance;
+	private int location_shadowMapSize;
 
 
 	public StaticShader() {
@@ -59,6 +63,10 @@ public class StaticShader extends ShaderProgram{
 		this.location_offset = super.getUniformLocation("offset");
 		this.location_density = super.getUniformLocation("density");
 		this.location_plane = super.getUniformLocation("plane");
+		this.location_toShadowMapSpace = super.getUniformLocation("toShadowMapSpace");
+		this.location_shadowMap = super.getUniformLocation("shadowMap");
+		this.location_shadowDistance = super.getUniformLocation("shadowDistance");
+		this.location_shadowMapSize = super.getUniformLocation("shadowMapSize");
 
 		this.location_lightPosition = new int[MAX_LIGHTS];
 		this.location_lightColour = new int[MAX_LIGHTS];
@@ -69,9 +77,22 @@ public class StaticShader extends ShaderProgram{
 			this.location_attenuation[i] = super.getUniformLocation("attenuation[" + i + "]");
 		}
 	}
+
+	public void connectTextureUnits() {
+		super.loadInt(this.location_shadowMap, 5);
+	}
+
+	public void loadShadowDistanceAndSize(float distance, float size) {
+		super.loadFloat(this.location_shadowDistance, distance);
+		super.loadFloat(this.location_shadowMapSize, size);
+	}
 	
 	public void loadTransformationMatrix(Matrix4f matrix) {
 		super.loadMatrix(this.location_transformationMatrix, matrix);
+	}
+
+	public void loadToShadowSpaceMatrix(Matrix4f matrix) {
+		super.loadMatrix(this.location_toShadowMapSpace, matrix);
 	}
 
 	public void loadClipPlane(Vector4f plane) {

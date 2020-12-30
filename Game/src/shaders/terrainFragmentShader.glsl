@@ -6,6 +6,7 @@ in vec3 toLightVector[5];
 in vec3 toCameraVector;
 in float visibility;
 in float mapHeight;
+in vec4 shadowCoords;
 
 out vec4 out_Color;
 
@@ -14,6 +15,7 @@ uniform sampler2D rTexture;
 uniform sampler2D gTexture;
 uniform sampler2D bTexture;
 uniform sampler2D blendMap;
+uniform sampler2D shadowMap;
 
 uniform vec3 lightColour[5];
 uniform vec3 attenuation[5];
@@ -21,11 +23,11 @@ uniform float shineDamper;
 uniform float reflectivity;
 uniform vec3 skyColour;
 
-const float tiling = 100;
+uniform float shadowMapSize;
+const int pcfCount = 2;
+const float totalTexels = (pcfCount * 2.0 + 1.0) * (pcfCount * 2.0 + 1.0);
 
-float map(float value, float min1, float max1, float min2, float max2) {
-  return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
-}
+const float tiling = 100;
 
 vec3 heightToRGB(in float height) {
     vec3 terrain_colours[3];
@@ -41,6 +43,20 @@ vec3 heightToRGB(in float height) {
 }
 
 void main(void) {
+
+    float texelSize = 1.0 / shadowMapSize;
+    float total = 0.0;
+    for(int x = -pcfCount; x <= pcfCount; x++) {
+        for(int y = -pcfCount; y <= pcfCount; y++) {
+            float objectNearestLight = texture(shadowMap, shadowCoords.xy + vec2(x, y) * texelSize).r;
+            if(shadowCoords.z > objectNearestLight) {
+                total += 1.0;
+            }
+        }
+    }
+
+    total /= totalTexels;
+    float lightFactor = 1.0 - (total * shadowCoords.w);
 
     vec4 blendMapColour = texture(blendMap, pass_textureCoordinates);
     float backTextureAmount = 1 - (blendMapColour.r + blendMapColour.g + blendMapColour.b);
@@ -76,7 +92,7 @@ void main(void) {
         totalDiffuse = totalDiffuse + (brightness * lightColour[i]) / attFactor;
         totalSpecular = totalSpecular + (dampedFactor * reflectivity * lightColour[i]) / attFactor;
     }
-    totalDiffuse = max(totalDiffuse, 0.15);
+    totalDiffuse = max(totalDiffuse * lightFactor, 0.1);
 
 	out_Color = vec4(totalDiffuse, 1.0) * totalColour + vec4(totalSpecular, 1.0);
     out_Color = mix(vec4(skyColour, 1.0), out_Color, visibility);

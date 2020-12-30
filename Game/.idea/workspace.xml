@@ -6,9 +6,33 @@
   <component name="ChangeListManager">
     <list default="true" id="1448daae-e5e5-4daf-966b-6006ecad8d18" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game/guis/guiFragmentShader.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game/guis/guiVertexShader.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game/shaders/fragmentShader.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game/shaders/terrainFragmentShader.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game/shaders/terrainVertexShader.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game/shaders/vertexShader.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game/water/waterFragmentShader.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game/water/waterVertexShader.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/engineTester/MainGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/engineTester/MainGameLoop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Camera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guis/GuiShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/guis/GuiShader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guis/guiFragmentShader.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/guis/guiFragmentShader.glsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guis/guiVertexShader.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/guis/guiVertexShader.glsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderEngine/DisplayManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/DisplayManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderEngine/EntityRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/EntityRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderEngine/Loader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/Loader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderEngine/MasterRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/MasterRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/toolbox/Maths.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/toolbox/Maths.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderEngine/TerrainRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/TerrainRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shaders/StaticShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shaders/StaticShader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shaders/TerrainShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shaders/TerrainShader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shaders/fragmentShader.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/shaders/fragmentShader.glsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shaders/terrainFragmentShader.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/shaders/terrainFragmentShader.glsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shaders/terrainVertexShader.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/shaders/terrainVertexShader.glsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shaders/vertexShader.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/shaders/vertexShader.glsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/water/WaterShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/water/WaterShader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/water/waterFragmentShader.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/water/waterFragmentShader.glsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/water/waterVertexShader.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/water/waterVertexShader.glsl" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,6 +58,7 @@
     <property name="project.structure.proportion" value="0.15566503" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
