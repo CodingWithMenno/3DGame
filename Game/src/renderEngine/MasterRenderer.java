@@ -65,7 +65,7 @@ public class MasterRenderer {
     public void renderScene(List<Entity> entities, Terrain terrain, List<Light> lights, Camera camera, Vector4f clipPlane) {
         getClosestLights(lights, camera);
 
-        updateTime();
+        //updateTime();
 
         for (Entity entity : entities) {
             processEntity(entity);
@@ -104,22 +104,22 @@ public class MasterRenderer {
         }
     }
 
-    private void updateTime() {
-        if (this.isNight) {
-            this.gameTime += DisplayManager.getDelta() * TIME_SPEED;
-
-            if (this.gameTime >= 24000) {
-                this.isNight = false;
-            }
-
-        } else {
-            this.gameTime -= DisplayManager.getDelta() * TIME_SPEED;
-
-            if (this.gameTime <= 0) {
-                this.isNight = true;
-            }
-        }
-    }
+//    private void updateTime() {
+//        if (this.isNight) {
+//            this.gameTime += DisplayManager.getDelta() * TIME_SPEED;
+//
+//            if (this.gameTime >= 24000) {
+//                this.isNight = false;
+//            }
+//
+//        } else {
+//            this.gameTime -= DisplayManager.getDelta() * TIME_SPEED;
+//
+//            if (this.gameTime <= 0) {
+//                this.isNight = true;
+//            }
+//        }
+//    }
 
     public static void enableCulling() {
         GL11.glEnable(GL11.GL_CULL_FACE);
@@ -132,9 +132,9 @@ public class MasterRenderer {
 
     public void render(List<Light> lights, Camera camera, Vector4f clipPlane) {
         float fogDensity = calculateDensity(FAR_PLANE);
-        Light sun = lights.get(0);
-        float lightColour = Maths.map(this.gameTime, 0, 24000, 0.2f, 1);
-        sun.setColour(new Vector3f(lightColour, lightColour, lightColour));
+        //Light sun = lights.get(0);
+        //float lightColour = Maths.map(this.gameTime, 0, 24000, 0.2f, 1);
+        //sun.setColour(new Vector3f(lightColour, lightColour, lightColour));
 
         prepare();
         this.shader.start();

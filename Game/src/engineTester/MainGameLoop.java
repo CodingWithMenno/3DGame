@@ -33,20 +33,23 @@ public class MainGameLoop {
 
 	/** TODO :
 	 * 		Entities:
-	 * 			-Collision detectie met entities
+	 * 			-Collision detectie met entities (alleen checken voor entities die bewegen)
 	 * 			-Animatie support voor entities
 	 * 			-Normal mapping
+	 * 			-Vissen maken met boids algoritme
 	 * 		.
 	 * 		Overig:
 	 * 			-Goede GUI library maken (met animatie support & het resizen van het display)
 	 * 			-Geluid toevoegen
-	 * 			-Eigen blendmap maken & heightmap de randen aanpassen
+	 * 			-Blendmap & Heightmap verbeteren
 	 * 			-Particle systeem maken
-	 * 			-Zon en wolken toevoegen
+	 * 			-Zon en wolken toevoegen (goede day-night cycle maken)
 	 * 			-Effecten toepassen (Post-Processing, Bloom, Lens flare, etc.)
 	 * 		.
-	 * 		Optioneel:
+	 * 		Optioneel / Verbeteren:
+	 * 			-Camera & Player controls verbeteren
 	 * 			-Water low poly maken
+	 * 			-Lampen die ingerendered/uitgerendered worden laten in/uit faden
 	 * 		.
 	 * 		Voor betere performance:
 	 * 			-Nieuwe objLoader gebruiken (zie normal mapping filmpje)
@@ -54,7 +57,7 @@ public class MainGameLoop {
 	 * 			-Minder lichten tegelijk inladen (van 5 naar 4)
 	 */
 
-	public static float WATER_HEIGHT = -13;
+	public static float WATER_HEIGHT = -15;
 
 	public static void main(String[] args) {
 		DisplayManager.createDisplay();
@@ -64,10 +67,10 @@ public class MainGameLoop {
 		TerrainTexture backgroundTexture = new TerrainTexture(loader.loadTexture("ground/GrassTexture"));
 		TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("ground/DirtTexture"));
 		TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("ground/StoneTexture"));
-		TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("ground/path"));
+		TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("ground/PathTexture"));
 		TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
 
-		TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("BlendMap"));
+		TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("BlendMapNew"));
 
 		Terrain terrain = new Terrain(0, -1, loader, "HeightMap", texturePack, blendMap);
 
@@ -99,14 +102,14 @@ public class MainGameLoop {
 			float x = random.nextFloat() * Terrain.getSIZE();
 			float z = random.nextFloat() * terrain.getZ();
 			float y = terrain.getHeightOfTerrain(x, z);
-			if (y <= -13) {continue;}
+			if (y <= WATER_HEIGHT) {continue;}
 			entities.add(new Entity(treeModel, new Vector3f(x, y, z), 0, random.nextInt(360), 0, 0.2f));
 		}
 		for (int i = 0; i < 1000; i++) {
 			float x = random.nextFloat() * Terrain.getSIZE();
 			float z = random.nextFloat() * terrain.getZ();
 			float y = terrain.getHeightOfTerrain(x, z);
-			if (y <= -13) {continue;}
+			if (y <= WATER_HEIGHT) {continue;}
 			entities.add(new Entity(grassModel, random.nextInt(4), new Vector3f(x, y, z), 0, random.nextInt(360), 0, 1));
 		}
 
@@ -115,7 +118,7 @@ public class MainGameLoop {
 		entities.add(new Entity(postModel, new Vector3f(100, terrain.getHeightOfTerrain(100, -150), -150), 0, 0, 0, 1f));
 
 		List<Light> lights = new ArrayList<>();
-		lights.add(new Light(new Vector3f(1000, 300000, -100000), new Vector3f(1f, 1f, 1f)));
+		lights.add(new Light(new Vector3f(1000, 300000, -100000), new Vector3f(0.7f, 0.7f, 0.7f)));
 		lights.add(new Light(new Vector3f(103.2f, terrain.getHeightOfTerrain(100, -150) + 4.5f, -150), new Vector3f(1f, 1f, 0), new Vector3f(1f, 0.01f, 0.002f)));
 
 
@@ -129,13 +132,13 @@ public class MainGameLoop {
 
 
 		//**************GUI SETUP****************
-		List<GuiTexture> guiTextures = new ArrayList<>();
-		GuiTexture shadowMap = new GuiTexture(renderer.getShadowMapTexture(), new Vector2f(0.5f, 0.5f), new Vector2f(0.5f, 0.5f));
+//		List<GuiTexture> guiTextures = new ArrayList<>();
+//		GuiTexture shadowMap = new GuiTexture(renderer.getShadowMapTexture(), new Vector2f(0.5f, 0.5f), new Vector2f(0.5f, 0.5f));
 //		GuiTexture reflection = new GuiTexture(buffers.getReflectionTexture(), new Vector2f(-0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
 //		guiTextures.add(shadowMap);
 //		guiTextures.add(reflection);
 //
-		GuiRenderer guiRenderer = new GuiRenderer(loader);
+//		GuiRenderer guiRenderer = new GuiRenderer(loader);
 
 
 		//**********GAME LOOP**************
@@ -162,7 +165,7 @@ public class MainGameLoop {
 			buffers.unbindCurrentFrameBuffer();
 			renderer.renderScene(entities, terrain, lights, camera, new Vector4f(0, -1, 0, 100000));
 			waterRenderer.render(waterTiles, camera, lights.get(0));
-			guiRenderer.render(guiTextures);
+//			guiRenderer.render(guiTextures);
 
 			DisplayManager.updateDisplay();
 		}
@@ -170,7 +173,7 @@ public class MainGameLoop {
 		//********CLEAN UP***************
 		buffers.cleanUp();
 		waterShader.cleanUp();
-		guiRenderer.cleanUp();
+//		guiRenderer.cleanUp();
 		renderer.cleanUp();
 		loader.cleanUp();
 		DisplayManager.closeDisplay();

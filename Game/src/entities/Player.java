@@ -38,7 +38,7 @@ public class Player extends Entity {
         if (super.getPosition().y < terrainHeight) {
             this.upwardsSpeed = 0;
             this.isInAir = false;
-            super.getPosition().y = terrainHeight;
+            super.getPosition().y = Maths.lerp(super.getPosition().y, terrainHeight, 0.5f);
         }
     }
 

@@ -9,7 +9,7 @@ public class DisplayManager {
 	
 	private static final int WIDTH = 1920;
 	private static final int HEIGHT = 1080;
-	private static final int FPS_CAP = 1000;
+	private static final int FPS_CAP = 250;
 
 	private static final int ANTIALIASING_AMOUNT = 8;
 
@@ -25,6 +25,7 @@ public class DisplayManager {
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 			Display.create(new PixelFormat().withDepthBits(24).withSamples(ANTIALIASING_AMOUNT), attribs);
 			Display.setTitle("3D Game");
+			Display.setVSyncEnabled(true);
 			GL11.glEnable(GL13.GL_MULTISAMPLE);
 		} catch (LWJGLException e) {
 			e.printStackTrace();
