@@ -1,15 +1,14 @@
 package engineTester;
 
+import collisions.AABB;
+import collisions.CollisionHandler;
 import entities.Light;
 import entities.Player;
-import guis.GuiRenderer;
-import guis.GuiTexture;
 import models.TexturedModel;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
-import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import org.lwjgl.util.vector.Vector4f;
@@ -33,7 +32,7 @@ public class MainGameLoop {
 
 	/** TODO :
 	 * 		Entities:
-	 * 			-Collision detectie met entities (alleen checken voor entities die bewegen)
+	 * 			-Collision detectie verbeteren
 	 * 			-Animatie support voor entities
 	 * 			-Normal mapping
 	 * 			-Vissen maken met boids algoritme
@@ -60,6 +59,30 @@ public class MainGameLoop {
 	public static float WATER_HEIGHT = -15;
 
 	public static void main(String[] args) {
+//		DisplayManager.createDisplay();
+//		Loader loader = new Loader();
+//
+//		TerrainTexture backgroundTexture = new TerrainTexture(loader.loadTexture("ground/GrassTexture"));
+//		TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("ground/DirtTexture"));
+//		TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("ground/StoneTexture"));
+//		TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("ground/PathTexture"));
+//		TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
+//
+//		TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("BlendMapNew"));
+//
+//		Terrain terrain = new Terrain(0, -1, loader, "HeightMap", texturePack, blendMap);
+//
+//		List<Entity> entities = new ArrayList<>();
+//		TexturedModel foxModel = new TexturedModel(ObjLoader.loadObjModel("fox/Fox", loader),
+//				new ModelTexture(loader.loadTexture("fox/FoxTexture")));
+//		Player player = new Player(foxModel, new Vector3f(0, 0, 0), 0, 0, 0, 0.4f, new AABB(new Vector3f(0, 0, 0), new Vector3f(10, 20, 10)));
+//		entities.add(player);
+//		entities.add(new Entity(foxModel, new Vector3f(0, 0, 0), 0, 0, 0, 0.2f, new AABB(new Vector3f(0, 0, 0), new Vector3f(10, 30, 10))));
+//
+//		CollisionHandler collisionHandler = new CollisionHandler(entities);
+//		player.moveEntity(terrain);
+//		collisionHandler.checkCollisions();
+
 		DisplayManager.createDisplay();
 		Loader loader = new Loader();
 
@@ -79,7 +102,8 @@ public class MainGameLoop {
 		List<Entity> entities = new ArrayList<>();
 		TexturedModel foxModel = new TexturedModel(ObjLoader.loadObjModel("fox/Fox", loader),
 				new ModelTexture(loader.loadTexture("fox/FoxTexture")));
-		Player player = new Player(foxModel, new Vector3f(80, 5, -150), 0, 0, 0, 0.4f);
+//		Player player = new Player(foxModel, new Vector3f(80, 5, -150), 0, 0, 0, 0.4f);
+		Player player = new Player(foxModel, new Vector3f(200, 0, -200), 0, 0, 0, 0.4f, new AABB(new Vector3f(200, 0, -200), new Vector3f(1, 1, 1)));
 		entities.add(player);
 
 		Camera camera = new Camera(player, terrain);
@@ -103,7 +127,7 @@ public class MainGameLoop {
 			float z = random.nextFloat() * terrain.getZ();
 			float y = terrain.getHeightOfTerrain(x, z);
 			if (y <= WATER_HEIGHT) {continue;}
-			entities.add(new Entity(treeModel, new Vector3f(x, y, z), 0, random.nextInt(360), 0, 0.2f));
+			entities.add(new Entity(treeModel, new Vector3f(x, y, z), 0, random.nextInt(360), 0, 0.2f, new AABB(new Vector3f(x, y, z), new Vector3f(1, 1, 1))));
 		}
 		for (int i = 0; i < 1000; i++) {
 			float x = random.nextFloat() * Terrain.getSIZE();
@@ -142,9 +166,13 @@ public class MainGameLoop {
 
 
 		//**********GAME LOOP**************
+
+		CollisionHandler collisionHandler = new CollisionHandler(entities);
+
 		while(!Display.isCloseRequested()) {
 			camera.move();
-			player.move(terrain);
+			player.moveEntity(terrain);
+			collisionHandler.checkCollisions();
 
 			renderer.renderShadowMap(entities, lights.get(0));
 
@@ -177,7 +205,6 @@ public class MainGameLoop {
 		renderer.cleanUp();
 		loader.cleanUp();
 		DisplayManager.closeDisplay();
-
 	}
 
 }

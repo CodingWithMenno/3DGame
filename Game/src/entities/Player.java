@@ -1,5 +1,6 @@
 package entities;
 
+import collisions.AABB;
 import models.TexturedModel;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector3f;
@@ -7,7 +8,7 @@ import renderEngine.DisplayManager;
 import terrains.Terrain;
 import toolbox.Maths;
 
-public class Player extends Entity {
+public class Player extends MovableEntity {
 
     private static final float RUN_SPEED = 100;
     private static final float TURN_SPEED = 160;
@@ -20,11 +21,12 @@ public class Player extends Entity {
 
     private boolean isInAir = false;
 
-    public Player(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
-        super(model, position, rotX, rotY, rotZ, scale);
+    public Player(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale, AABB... collisionBoxes) {
+        super(model, position, rotX, rotY, rotZ, scale, collisionBoxes);
     }
 
-    public void move(Terrain terrain) {
+    @Override
+    protected void move(Terrain terrain) {
         checkInputs();
         super.increaseRotation(0, this.currentTurnSpeed * DisplayManager.getDelta(), 0);
         float distance = this.currentSpeed * DisplayManager.getDelta();

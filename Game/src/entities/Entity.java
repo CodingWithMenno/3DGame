@@ -1,8 +1,12 @@
 package entities;
 
+import collisions.AABB;
 import models.TexturedModel;
 
 import org.lwjgl.util.vector.Vector3f;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class Entity {
 
@@ -11,20 +15,23 @@ public class Entity {
 	private float rotX, rotY, rotZ;
 	private float scale;
 
+	private List<AABB> collisionBoxes;
+
 	private int textureIndex = 0;
 
 	public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ,
-			float scale) {
+			float scale, AABB... collisionBoxes) {
 		this.model = model;
 		this.position = position;
 		this.rotX = rotX;
 		this.rotY = rotY;
 		this.rotZ = rotZ;
 		this.scale = scale;
+		this.collisionBoxes = Arrays.asList(collisionBoxes);
 	}
 
 	public Entity(TexturedModel model, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ,
-				  float scale) {
+				  float scale, AABB... collisionBoxes) {
 		this.textureIndex = textureIndex;
 		this.model = model;
 		this.position = position;
@@ -32,6 +39,7 @@ public class Entity {
 		this.rotY = rotY;
 		this.rotZ = rotZ;
 		this.scale = scale;
+		this.collisionBoxes = Arrays.asList(collisionBoxes);
 	}
 
 	public float getTextureXOffset() {
@@ -102,6 +110,14 @@ public class Entity {
 
 	public void setScale(float scale) {
 		this.scale = scale;
+	}
+
+	public List<AABB> getCollisionBoxes() {
+		return collisionBoxes;
+	}
+
+	public boolean hasCollisions() {
+		return !this.collisionBoxes.isEmpty();
 	}
 
 }
