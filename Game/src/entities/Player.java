@@ -10,10 +10,10 @@ import toolbox.Maths;
 
 public class Player extends MovableEntity {
 
-    private static final float RUN_SPEED = 100;
-    private static final float TURN_SPEED = 160;
+    private static final float RUN_SPEED = 80;
+    private static final float TURN_SPEED = 200;
     private static final float GRAVITY = -50;
-    private static final float JUMP_POWER = 40;
+    private static final float JUMP_POWER = 30;
 
     private float currentSpeed = 0;
     private float currentTurnSpeed = 0;
@@ -21,12 +21,13 @@ public class Player extends MovableEntity {
 
     private boolean isInAir = true;
 
-    public Player(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale, AABB... collisionBoxes) {
+    public Player(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ,
+                  float scale, Vector3f... collisionBoxes) {
         super(model, position, rotX, rotY, rotZ, scale, collisionBoxes);
     }
 
     @Override
-    protected void move(Terrain terrain) {
+    protected void update(Terrain terrain) {
         checkInputs();
         super.increaseRotation(0, this.currentTurnSpeed * DisplayManager.getDelta(), 0);
         float distance = this.currentSpeed * DisplayManager.getDelta();

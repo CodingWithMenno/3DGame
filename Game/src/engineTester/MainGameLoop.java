@@ -2,8 +2,7 @@ package engineTester;
 
 import collisions.AABB;
 import collisions.CollisionHandler;
-import entities.Light;
-import entities.Player;
+import entities.*;
 import models.TexturedModel;
 
 import org.lwjgl.opengl.Display;
@@ -15,8 +14,6 @@ import org.lwjgl.util.vector.Vector4f;
 import renderEngine.*;
 import terrains.Terrain;
 import textures.ModelTexture;
-import entities.Camera;
-import entities.Entity;
 import textures.TerrainTexture;
 import textures.TerrainTexturePack;
 import water.WaterFrameBuffers;
@@ -79,7 +76,8 @@ public class MainGameLoop {
 		TexturedModel foxModel = new TexturedModel(ObjLoader.loadObjModel("fox/Fox", loader),
 				new ModelTexture(loader.loadTexture("fox/FoxTexture")));
 		Vector3f dimensions = ObjLoader.getLastDimensions();
-		Player player = new Player(foxModel, new Vector3f(200, 0, -200), 0, 0, 0, 0.4f, new AABB(new Vector3f(200, 0, -200), dimensions, true));
+
+		Player player = new Player(foxModel, new Vector3f(200, 0, -200), 0, 0, 0, 0.4f, dimensions);
 		entities.add(player);
 
 		Camera camera = new Camera(player, terrain);
@@ -99,12 +97,12 @@ public class MainGameLoop {
 		grassModel.getTexture().setNumberOfRows(2);
 
 		Random random = new Random();
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 10; i++) {
 			float x = random.nextFloat() * Terrain.getSIZE();
 			float z = random.nextFloat() * terrain.getZ();
 			float y = terrain.getHeightOfTerrain(x, z);
 			if (y <= WATER_HEIGHT) {continue;}
-			entities.add(new Entity(treeModel, new Vector3f(x, y, z), 0, 0, 0, 0.2f, new AABB(new Vector3f(x, y, z), dimensions, true)));
+			entities.add(new Entity(treeModel, new Vector3f(x, y, z), 0, 0, 0, 0.2f, dimensions));
 		}
 		for (int i = 0; i < 1000; i++) {
 			float x = random.nextFloat() * Terrain.getSIZE();
@@ -127,7 +125,9 @@ public class MainGameLoop {
 				new ModelTexture(loader.loadTexture("fish/FishTexture")));
 		fishModel.getTexture().setNumberOfRows(2);
 
-		entities.add(new Entity(fishModel, random.nextInt(5), new Vector3f(230, 0, -200), 0, 0, 0, 1f));
+		dimensions = ObjLoader.getLastDimensions();
+		Fish fish = new Fish(fishModel, random.nextInt(5), new Vector3f(230, 5, -200), 0, 0, 0, 1f, dimensions);
+		entities.add(fish);
 
 
 		//**********WATER SETUP****************
@@ -158,6 +158,7 @@ public class MainGameLoop {
 		while(!Display.isCloseRequested()) {
 			camera.move();
 			player.moveEntity(terrain);
+			fish.moveEntity(terrain);
 			collisionHandler.checkCollisions();
 
 			renderer.renderShadowMap(entities, lights.get(0));

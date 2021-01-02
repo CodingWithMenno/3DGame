@@ -10,19 +10,21 @@ public abstract class MovableEntity extends Entity {
     protected Vector3f velocity;
 
 
-    public MovableEntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale, AABB... collisionBoxes) {
+    public MovableEntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ,
+                         float scale, Vector3f... collisionBoxes) {
         super(model, position, rotX, rotY, rotZ, scale, collisionBoxes);
         this.velocity = new Vector3f(0, 0, 0);
     }
 
-    public MovableEntity(TexturedModel model, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ, float scale, AABB... collisionBoxes) {
+    public MovableEntity(TexturedModel model, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ,
+                         float scale, Vector3f... collisionBoxes) {
         super(model, textureIndex, position, rotX, rotY, rotZ, scale, collisionBoxes);
         this.velocity = new Vector3f(0, 0, 0);
     }
 
     public void moveEntity(Terrain terrain) {
         Vector3f oldPos = new Vector3f(super.getPosition());
-        move(terrain);
+        update(terrain);
         this.velocity = Vector3f.sub(super.getPosition(), oldPos, null);
 
         for (AABB collisionBox : super.getCollisionBoxes()) {
@@ -30,7 +32,7 @@ public abstract class MovableEntity extends Entity {
         }
     }
 
-    protected abstract void move(Terrain terrain);
+    protected abstract void update(Terrain terrain);
 
 
     public boolean isMoving() {

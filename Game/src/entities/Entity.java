@@ -3,8 +3,10 @@ package entities;
 import collisions.AABB;
 import models.TexturedModel;
 
+import org.lwjgl.util.vector.ReadableVector3f;
 import org.lwjgl.util.vector.Vector3f;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,18 +22,30 @@ public class Entity {
 	private int textureIndex = 0;
 
 	public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ,
-			float scale, AABB... collisionBoxes) {
+			float scale, Vector3f... collisionBoxes) {
 		this.model = model;
 		this.position = position;
 		this.rotX = rotX;
 		this.rotY = rotY;
 		this.rotZ = rotZ;
 		this.scale = scale;
-		this.collisionBoxes = Arrays.asList(collisionBoxes);
+
+		this.collisionBoxes = new ArrayList<>();
+		if (collisionBoxes.length == 0) {
+			return;
+		}
+
+		for (Vector3f collisionBox : collisionBoxes) {
+			Vector3f box = new Vector3f(collisionBox);
+			box.x *= scale;
+			box.y *= scale;
+			box.z *= scale;
+			this.collisionBoxes.add(new AABB(this.position, box));
+		}
 	}
 
 	public Entity(TexturedModel model, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ,
-				  float scale, AABB... collisionBoxes) {
+				  float scale, Vector3f... collisionBoxes) {
 		this.textureIndex = textureIndex;
 		this.model = model;
 		this.position = position;
@@ -39,7 +53,19 @@ public class Entity {
 		this.rotY = rotY;
 		this.rotZ = rotZ;
 		this.scale = scale;
-		this.collisionBoxes = Arrays.asList(collisionBoxes);
+
+		this.collisionBoxes = new ArrayList<>();
+		if (collisionBoxes.length == 0) {
+			return;
+		}
+
+		for (Vector3f collisionBox : collisionBoxes) {
+			Vector3f box = new Vector3f(collisionBox);
+			box.x *= scale;
+			box.y *= scale;
+			box.z *= scale;
+			this.collisionBoxes.add(new AABB(this.position, box));
+		}
 	}
 
 	public float getTextureXOffset() {
