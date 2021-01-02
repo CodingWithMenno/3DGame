@@ -111,7 +111,7 @@ public class MainGameLoop {
 			float z = random.nextFloat() * terrain.getZ();
 			float y = terrain.getHeightOfTerrain(x, z);
 			if (y <= WATER_HEIGHT) {continue;}
-			entities.add(new Entity(grassModel, random.nextInt(4), new Vector3f(x, y, z), 0, random.nextInt(360), 0, 1));
+			entities.add(new Entity(grassModel, random.nextInt(5), new Vector3f(x, y, z), 0, random.nextInt(360), 0, 1));
 		}
 
 		TexturedModel postModel = new TexturedModel(ObjLoader.loadObjModel("lamp/LampPost", loader),
@@ -121,6 +121,13 @@ public class MainGameLoop {
 		List<Light> lights = new ArrayList<>();
 		lights.add(new Light(new Vector3f(1000, 300000, -100000), new Vector3f(0.7f, 0.7f, 0.7f)));
 		lights.add(new Light(new Vector3f(103.2f, terrain.getHeightOfTerrain(100, -150) + 4.5f, -150), new Vector3f(1f, 1f, 0), new Vector3f(1f, 0.01f, 0.002f)));
+
+
+		TexturedModel fishModel = new TexturedModel(ObjLoader.loadObjModel("fish/Fish", loader),
+				new ModelTexture(loader.loadTexture("fish/FishTexture")));
+		fishModel.getTexture().setNumberOfRows(2);
+
+		entities.add(new Entity(fishModel, random.nextInt(5), new Vector3f(230, 0, -200), 0, 0, 0, 1f));
 
 
 		//**********WATER SETUP****************
