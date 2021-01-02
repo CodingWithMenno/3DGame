@@ -13,13 +13,13 @@ public class Player extends MovableEntity {
     private static final float RUN_SPEED = 100;
     private static final float TURN_SPEED = 160;
     private static final float GRAVITY = -50;
-    private static final float JUMP_POWER = 20;
+    private static final float JUMP_POWER = 40;
 
     private float currentSpeed = 0;
     private float currentTurnSpeed = 0;
     private float upwardsSpeed = 0;
 
-    private boolean isInAir = false;
+    private boolean isInAir = true;
 
     public Player(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale, AABB... collisionBoxes) {
         super(model, position, rotX, rotY, rotZ, scale, collisionBoxes);
@@ -42,6 +42,12 @@ public class Player extends MovableEntity {
             this.isInAir = false;
             super.getPosition().y = Maths.lerp(super.getPosition().y, terrainHeight, 0.5f);
         }
+    }
+
+    @Override
+    protected void resetGravity() {
+        this.upwardsSpeed = 0;
+        this.isInAir = false;
     }
 
     private void jump() {

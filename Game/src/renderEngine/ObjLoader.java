@@ -13,6 +13,8 @@ import java.util.List;
 
 public class ObjLoader {
 
+    private static Vector3f lastDimensions;
+
     public static RawModel loadObjModel(String fileName, Loader loader) {
         FileReader fileReader = null;
         try {
@@ -92,6 +94,9 @@ public class ObjLoader {
             indicesArray[i] = indices.get(i);
         }
 
+
+        calculateDimensions(verticesArray);
+
         return loader.loadToVAO(verticesArray, textureArray, normalsArray, indicesArray);
     }
 
@@ -107,5 +112,55 @@ public class ObjLoader {
         normalsArray[currentVertexPointer * 3] = currentNorm.x;
         normalsArray[currentVertexPointer * 3 + 1] = currentNorm.y;
         normalsArray[currentVertexPointer * 3 + 2] = currentNorm.z;
+    }
+
+    private static void calculateDimensions(float[] verticesArray) {
+        Vector3f lastMinDimensions = new Vector3f(0, 0, 0);
+        Vector3f lastMaxDimensions = new Vector3f(0, 0, 0);
+
+        lastMaxDimensions.x = verticesArray[0];
+        lastMinDimensions.x = verticesArray[0];
+        for (int x = 0; x < (verticesArray.length / 3); x += 3) {
+            if (verticesArray[x] > lastMaxDimensions.x) {
+                lastMaxDimensions.x = verticesArray[x];
+                continue;
+            }
+
+            if (verticesArray[x] < lastMinDimensions.x) {
+                lastMinDimensions.x = verticesArray[x];
+            }
+        }
+
+        lastMaxDimensions.y = verticesArray[0];
+        lastMinDimensions.y = verticesArray[0];
+        for (int y = 1; y < (verticesArray.length / 3); y += 3) {
+            if (verticesArray[y] > lastMaxDimensions.y) {
+                lastMaxDimensions.y = verticesArray[y];
+                continue;
+            }
+
+            if (verticesArray[y] < lastMinDimensions.y) {
+                lastMinDimensions.y = verticesArray[y];
+            }
+        }
+
+        lastMaxDimensions.z = verticesArray[0];
+        lastMinDimensions.z = verticesArray[0];
+        for (int z = 2; z < (verticesArray.length / 3); z += 3) {
+            if (verticesArray[z] > lastMaxDimensions.z) {
+                lastMaxDimensions.z = verticesArray[z];
+                continue;
+            }
+
+            if (verticesArray[z] < lastMinDimensions.z) {
+                lastMinDimensions.z = verticesArray[z];
+            }
+        }
+
+        lastDimensions = Vector3f.sub(lastMaxDimensions, lastMinDimensions, null);
+    }
+
+    public static Vector3f getLastDimensions() {
+        return lastDimensions;
     }
 }

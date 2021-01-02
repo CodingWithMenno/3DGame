@@ -36,9 +36,10 @@ public class CollisionHandler {
 
                 for (AABB box1 : movableEntity.getCollisionBoxes()) {
                     for (AABB box2 : entity.getCollisionBoxes()) {
-                        if (box1.isIntersecting(box2)) {
-                            System.out.println("is intersecting");
-                            movableEntity.revertPosition();
+                        if (box1.isOnTopOf(box2)) {
+                            movableEntity.revertVerticalDown();
+                        } else if (box1.isStandingAgainst(box2)) {
+                            movableEntity.revertHorizontal();
                         }
                     }
                 }

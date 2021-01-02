@@ -10,10 +10,10 @@ import java.util.List;
 
 public class Entity {
 
-	private TexturedModel model;
-	private Vector3f position;
-	private float rotX, rotY, rotZ;
-	private float scale;
+	protected TexturedModel model;
+	protected Vector3f position;
+	protected float rotX, rotY, rotZ;
+	protected float scale;
 
 	private List<AABB> collisionBoxes;
 
@@ -50,18 +50,6 @@ public class Entity {
 	public float getTextureYOffset() {
 		int row = this.textureIndex / this.model.getTexture().getNumberOfRows();
 		return (float) row / (float) this.model.getTexture().getNumberOfRows();
-	}
-
-	public void increasePosition(float dx, float dy, float dz) {
-		this.position.x += dx;
-		this.position.y += dy;
-		this.position.z += dz;
-	}
-
-	public void increaseRotation(float dx, float dy, float dz) {
-		this.rotX += dx;
-		this.rotY += dy;
-		this.rotZ += dz;
 	}
 
 	public TexturedModel getModel() {
