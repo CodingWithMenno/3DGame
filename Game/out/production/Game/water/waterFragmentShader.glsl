@@ -19,7 +19,7 @@ uniform float far;
 uniform float moveFactor;
 
 const float waveStrength = 0.01;
-const float shineDamper = 200.0;
+const float shineDamper = 100.0;
 const float reflectivity = 1;
 const vec4 waterColour = vec4(0.0, 0.3, 0.5, 1.0);
 

@@ -37,11 +37,11 @@ public class Player extends MovableEntity {
 
         this.upwardsSpeed += GRAVITY * DisplayManager.getDelta();
         super.increasePosition(0, this.upwardsSpeed * DisplayManager.getDelta(), 0);
-        float terrainHeight = terrain.getHeightOfTerrain(super.getPosition().x, super.getPosition().z);
-        if (super.getPosition().y < terrainHeight) {
+        float terrainHeight = terrain.getHeightOfTerrain(super.position.x, super.position.z);
+        if (super.position.y < terrainHeight) {
             this.upwardsSpeed = 0;
             this.isInAir = false;
-            super.getPosition().y = Maths.lerp(super.getPosition().y, terrainHeight, 0.5f);
+            super.position.y = Maths.lerp(super.position.y, terrainHeight, 0.5f);
         }
     }
 

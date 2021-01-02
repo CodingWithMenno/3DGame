@@ -97,12 +97,12 @@ public class MainGameLoop {
 		grassModel.getTexture().setNumberOfRows(2);
 
 		Random random = new Random();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 100; i++) {
 			float x = random.nextFloat() * Terrain.getSIZE();
 			float z = random.nextFloat() * terrain.getZ();
 			float y = terrain.getHeightOfTerrain(x, z);
 			if (y <= WATER_HEIGHT) {continue;}
-			entities.add(new Entity(treeModel, new Vector3f(x, y, z), 0, 0, 0, 0.2f, dimensions));
+			entities.add(new Entity(treeModel, new Vector3f(x, y, z), 0, random.nextInt(360), 0, 0.2f, dimensions));
 		}
 		for (int i = 0; i < 1000; i++) {
 			float x = random.nextFloat() * Terrain.getSIZE();
@@ -126,7 +126,7 @@ public class MainGameLoop {
 		fishModel.getTexture().setNumberOfRows(2);
 
 		dimensions = ObjLoader.getLastDimensions();
-		Fish fish = new Fish(fishModel, random.nextInt(5), new Vector3f(230, 5, -200), 0, 0, 0, 1f, dimensions);
+		Fish fish = new Fish(fishModel, random.nextInt(5), new Vector3f(200, 5, -200), 0, 0, 0, 1f, dimensions);
 		entities.add(fish);
 
 
