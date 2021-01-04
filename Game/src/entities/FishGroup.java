@@ -38,7 +38,7 @@ public class FishGroup {
             }
         }
 
-        if (closestDistance < 10) {
+        if (closestDistance < 15) {
             generateNewDestination(terrain);
         }
     }

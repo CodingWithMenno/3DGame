@@ -12,10 +12,17 @@ import java.util.Random;
 
 public class Fish extends MovableEntity {
 
-    private static final float SPEED = 50f;
-    private static final float VIEW_DISTANCE = 25;
+    private static final float SPEED = 0.07f;
+    private static final float MAX_SPEED = 1f;
 
-    private Random random;
+    private static final float VIEW_DISTANCE = 10;
+
+    private static final float MAX_HEIGHT = MainGameLoop.WATER_HEIGHT - 10f;
+
+    private static final float separationFactor = 2f;
+    private static final float alignmentFactor = 1f;
+    private static final float cohesionFactor = 1f;
+    private static final float destinationFactor = 15f;
 
     private Vector3f destination;
     private List<Fish> allFish;
@@ -24,15 +31,13 @@ public class Fish extends MovableEntity {
                 float scale, Vector3f... collisionBoxes) {
         super(model, position, rotX, rotY, rotZ, scale, collisionBoxes);
 
-        this.random = new Random();
         this.destination = new Vector3f(position);
     }
 
     public Fish(TexturedModel model, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ,
                 float scale, Vector3f... collisionBoxes) {
         super(model, textureIndex, position, rotX, rotY, rotZ, scale, collisionBoxes);
-
-        this.random = new Random();
+        
         this.destination = new Vector3f(position);
     }
 
@@ -43,75 +48,36 @@ public class Fish extends MovableEntity {
     }
 
     private void doFishBehaviour() {
-        Vector3f v1 = goToCenterOfMass();
-        Vector3f v2 = keepDistance();
-        Vector3f v3 = averageVelocity();
+        lookForward();
 
-        Vector3f v4 = Vector3f.add(v1, v2, null);
-        Vector3f v5 = Vector3f.add(v4, v3, null);
-        Vector3f v6 = goToDestination();
+        Vector3f separation = separation();
+        separation.scale(separationFactor);
 
-        Vector3f v7 = Vector3f.add(v5, v6, null);
+        Vector3f alignment = alignment();
+        alignment.scale(alignmentFactor);
 
-        Vector3f v8 = Vector3f.add(super.velocity, v7, null);
+        Vector3f cohesion = cohesion();
+        cohesion.scale(cohesionFactor);
 
-        float delta = DisplayManager.getDelta();
-        Vector3f finalVelocity = new Vector3f(v8.x * SPEED * delta, v8.y * SPEED * delta, v8.z * SPEED * delta);
-        finalVelocity.x = Maths.clamp(finalVelocity.x, -0.1f, 0.1f);
-        finalVelocity.y = Maths.clamp(finalVelocity.y, -0.1f, 0.1f);
-        finalVelocity.z = Maths.clamp(finalVelocity.z, -0.1f, 0.1f);
+        Vector3f destination = goToDestination();
+        destination.scale(destinationFactor);
 
-        lookToDestination();
+        Vector3f finalDirection = Maths.add(separation, alignment, cohesion, destination);
+        finalDirection.scale(DisplayManager.getDelta());
+        finalDirection.x = Math.min(MAX_SPEED, finalDirection.x);
+        finalDirection.y = Math.min(MAX_SPEED, finalDirection.y);
+        finalDirection.z = Math.min(MAX_SPEED, finalDirection.z);
 
-        Vector3f goToVelocity = Vector3f.add(super.position, finalVelocity, null);
-        super.position = Maths.lerp(super.position, goToVelocity, SPEED / 150);
+        Vector3f goToVector = Vector3f.add(super.position, finalDirection, null);
+        super.position = Maths.lerp(super.position, goToVector, SPEED);
     }
 
     private Vector3f goToDestination() {
-        Vector3f sub = Vector3f.sub(this.destination, super.getPosition(), null);
-        return sub;
+        return Vector3f.sub(this.destination, super.getPosition(), null);
     }
 
-    private Vector3f goToCenterOfMass() {
-        Vector3f c = new Vector3f(0, 0, 0);
-
-        for (Fish fish : this.allFish) {
-            if (fish == this) {
-                continue;
-            }
-
-            Vector3f sub = Vector3f.sub(fish.position, super.position, null);
-            sub.negate();
-            if (Maths.getDistanceBetween(fish.position, super.position) < VIEW_DISTANCE * 2) {
-                c = Vector3f.sub(c, sub, null);
-            }
-        }
-
-        return c;
-    }
-
-    private Vector3f keepDistance() {
-        Vector3f c = new Vector3f(0, 0, 0);
-
-        for (Fish fish : this.allFish) {
-            if (fish == this) {
-                continue;
-            }
-
-            if (Maths.getDistanceBetween(fish.position, super.position) < VIEW_DISTANCE / 10) {
-                Vector3f sub = Vector3f.sub(fish.position, super.position, null);
-                sub.scale(25);
-                sub.y /= 7;
-                c = Vector3f.sub(c, sub, null);
-            }
-        }
-
-        return c;
-    }
-
-    private Vector3f averageVelocity() {
-        Vector3f allVelocitiesCombined = new Vector3f(0, 0, 0);
-        int fishCounter = 0;
+    private Vector3f cohesion() {
+        Vector3f steering = new Vector3f(0, 0, 0);
 
         for (Fish fish : this.allFish) {
             if (fish == this) {
@@ -119,35 +85,60 @@ public class Fish extends MovableEntity {
             }
 
             if (Maths.getDistanceBetween(fish.position, super.position) < VIEW_DISTANCE) {
-                Vector3f fishVelocity = fish.getVelocity();
-
-                allVelocitiesCombined = Vector3f.add(allVelocitiesCombined, fishVelocity, null);
-                fishCounter++;
+                steering = Vector3f.add(steering, fish.position, null);
             }
         }
 
-        allVelocitiesCombined.x =  allVelocitiesCombined.x / fishCounter;
-        allVelocitiesCombined.y =  allVelocitiesCombined.y / fishCounter;
-        allVelocitiesCombined.z =  allVelocitiesCombined.z / fishCounter;
-
-//        allVelocitiesCombined = Vector3f.sub(allVelocitiesCombined, super.velocity, null);
-//        allVelocitiesCombined.x = (allVelocitiesCombined.x /  2) + this.random.nextInt(5);
-//        allVelocitiesCombined.y = (allVelocitiesCombined.y /  2) + this.random.nextInt(5);
-//        allVelocitiesCombined.z = (allVelocitiesCombined.z /  2) + this.random.nextInt(5);
-
-        return allVelocitiesCombined;
+        return steering;
     }
 
-    private void lookToDestination() {
+    private Vector3f separation() {
+        Vector3f steering = new Vector3f(0, 0, 0);
+
+        for (Fish fish : this.allFish) {
+            if (fish == this) {
+                continue;
+            }
+
+            float distance = Maths.getDistanceBetween(fish.position, super.position);
+            if (distance < VIEW_DISTANCE) {
+                Vector3f sub = Vector3f.sub(super.position, fish.position, null);
+                sub.x /= (distance * distance);
+                sub.y /= (distance * distance);
+                sub.z /= (distance * distance);
+                steering = Vector3f.sub(steering, sub, null);
+            }
+        }
+
+        return steering;
+    }
+
+    private Vector3f alignment() {
+        Vector3f steering = new Vector3f(0, 0, 0);
+
+        for (Fish fish : this.allFish) {
+            if (fish == this) {
+                continue;
+            }
+
+            if (Maths.getDistanceBetween(fish.position, super.position) < VIEW_DISTANCE) {
+                steering = Vector3f.add(steering, fish.velocity, null);
+            }
+        }
+
+        return steering;
+    }
+
+    private void lookForward() {
         Vector3f vector = Vector3f.sub(super.getPosition(), this.destination, null);
 
         float rotX = (float) Math.toDegrees(-Math.atan2(vector.y, vector.z));
-        float rotY = (float) Math.toDegrees(Math.atan2(vector.x, Math.sqrt(vector.y * vector.y + vector.z * vector.z))) - 180;
+        float rotY = (float) Math.toDegrees(Math.atan2(vector.x, Math.sqrt(vector.y * vector.y + vector.z * vector.z))) + 180;
 
-        if (rotX < -90) {
-            super.rotZ = Maths.lerp(super.rotZ, 180, 0.05f);
+        if (rotX < 90) {
+            super.rotZ = Maths.lerp(super.rotZ, 0, 0.05f);
         } else {
-            super.rotZ = Maths.lerp(super.rotZ, 0, 0.05f);;
+            super.rotZ = Maths.lerp(super.rotZ, -180, 0.05f);;
         }
 
         super.rotX = Maths.lerp(super.rotX, rotX, 0.01f);
@@ -155,12 +146,11 @@ public class Fish extends MovableEntity {
     }
 
     private void stayInWater(Terrain terrain) {
-        float waterHeight = MainGameLoop.WATER_HEIGHT - 3.5f;
         int terrainSize = (int) Terrain.getSIZE() / 2;
         float terrainHeight = terrain.getHeightOfTerrain(super.position.x, super.position.z) + 2;
 
-        if (super.position.y > waterHeight) {
-            super.position.y = waterHeight;
+        if (super.position.y > MAX_HEIGHT) {
+            super.position.y = MAX_HEIGHT;
         } else if (super.position.y < terrainHeight) {
             super.position.y = terrainHeight;
         }

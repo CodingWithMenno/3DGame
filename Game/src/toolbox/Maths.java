@@ -6,6 +6,8 @@ import org.lwjgl.util.vector.Vector3f;
 
 import entities.Camera;
 
+import java.util.List;
+
 public class Maths {
 
 	public static float barryCentric(Vector3f p1, Vector3f p2, Vector3f p3, Vector2f pos) {
@@ -81,5 +83,14 @@ public class Maths {
 	//Returns the distance between 2 3D points
 	public static float getDistanceBetween(Vector3f point1, Vector3f point2) {
 		return (float) Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point2.y, 2) + Math.pow(point2.z - point1.z, 2));
+	}
+
+	//Returns the vector of all the vectors added
+	public static Vector3f add(Vector3f... vectors) {
+		Vector3f finalVector = new Vector3f(0, 0, 0);
+		for (Vector3f vector : vectors) {
+			finalVector = Vector3f.add(finalVector, vector, null);
+		}
+		return finalVector;
 	}
 }

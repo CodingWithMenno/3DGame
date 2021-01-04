@@ -127,7 +127,7 @@ public class MainGameLoop {
 
 		dimensions = ObjLoader.getLastDimensions();
 		for (int i = 0; i < 30; i += 3) {
-			Fish fish = new Fish(fishModel, random.nextInt(5), new Vector3f(150 - random.nextInt(100), 5 - i, -200 + random.nextInt(5)), 0, 0, 0, 1f, dimensions);
+			Fish fish = new Fish(fishModel, random.nextInt(5), new Vector3f(150 - random.nextInt(100), 5 - i, -200 + i * 2), 0, 0, 0, 1f, dimensions);
 			allFish.add(fish);
 			entities.add(fish);
 		}
