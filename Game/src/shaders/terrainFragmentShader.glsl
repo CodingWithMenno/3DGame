@@ -92,7 +92,7 @@ void main(void) {
         totalDiffuse = totalDiffuse + (brightness * lightColour[i]) / attFactor;
         totalSpecular = totalSpecular + (dampedFactor * reflectivity * lightColour[i]) / attFactor;
     }
-    totalDiffuse = max(totalDiffuse * lightFactor, 0.1);
+    totalDiffuse = max(totalDiffuse * lightFactor, 0.15);
 
 	out_Color = vec4(totalDiffuse, 1.0) * totalColour + vec4(totalSpecular, 1.0);
     out_Color = mix(vec4(skyColour, 1.0), out_Color, visibility);

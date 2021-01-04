@@ -58,13 +58,19 @@ public class Maths {
 		return from + amount * (to - from);
 	}
 
+	//Linear interpolation but for vector3f
+	public static Vector3f lerp(Vector3f from, Vector3f to, float amount) {
+		Vector3f fromVector = new Vector3f(from);
+		fromVector.x = lerp(fromVector.x, to.x, amount);
+		fromVector.y = lerp(fromVector.y, to.y, amount);
+		fromVector.z = lerp(fromVector.z, to.z, amount);
+
+		return fromVector;
+	}
+
 	//returns the difference between the 2 values
 	public static float difference(float value1, float value2) {
-		if (value1 < value2) {
-			return value2 - value1;
-		} else {
-			return value1 - value2;
-		}
+		return Math.abs(value1 - value2);
 	}
 
 	//Maps the value with the previous min and max values to the new min and max values

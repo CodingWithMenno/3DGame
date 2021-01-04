@@ -22,7 +22,7 @@ public abstract class MovableEntity extends Entity {
         this.velocity = new Vector3f(0, 0, 0);
     }
 
-    public void moveEntity(Terrain terrain) {
+    public void updateEntity(Terrain terrain) {
         Vector3f oldPos = new Vector3f(super.getPosition());
         update(terrain);
         this.velocity = Vector3f.sub(super.getPosition(), oldPos, null);

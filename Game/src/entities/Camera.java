@@ -12,7 +12,7 @@ public class Camera {
 	private static float AUTO_ZOOM = 0.005f;
 	private static float DEFAULT_PITCH = 12;
 	private static float MAX_ZOOM_IN = 8;
-	private static float MAX_ZOOM_OUT = 56;
+	private static float MAX_ZOOM_OUT = 100;
 
 	private float distanceFromEntity = 14;
 	private float angleAroundEntity = 0;
@@ -98,7 +98,7 @@ public class Camera {
 		this.pitch -= pitchChange;
 
 		if (pitchChange == 0 && this.pitch != DEFAULT_PITCH && this.entityIsMoving) {
-			this.pitch = Maths.lerp(this.pitch, DEFAULT_PITCH, AUTO_ZOOM);
+			//this.pitch = Maths.lerp(this.pitch, DEFAULT_PITCH, AUTO_ZOOM);
 		}
 
 		this.pitch = Maths.clamp(this.pitch, -6, 85);
@@ -109,7 +109,7 @@ public class Camera {
 		this.angleAroundEntity -= angleChange;
 
 		if (angleChange == 0 && this.angleAroundEntity != 0 && this.entityIsMoving) {
-			this.angleAroundEntity = Maths.lerp(this.angleAroundEntity, 0, AUTO_ZOOM);
+			//this.angleAroundEntity = Maths.lerp(this.angleAroundEntity, 0, AUTO_ZOOM);
 		}
 
 		this.angleAroundEntity = Maths.clamp(this.angleAroundEntity, -180, 180);

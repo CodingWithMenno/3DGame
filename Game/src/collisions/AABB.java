@@ -30,7 +30,7 @@ public class AABB {
         distance.y -= (this.dimensions.y + box2.dimensions.y);
         distance.z -= (this.dimensions.z + box2.dimensions.z);
 
-        return (distance.x < 0 && distance.y < 0 && distance.z < 0);
+        return  (distance.x < 0 && distance.y < 0 && distance.z < 0);
     }
 
     public boolean isOnTopOf(AABB box2) {

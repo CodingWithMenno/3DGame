@@ -19,7 +19,7 @@ public class Entity {
 
 	private List<AABB> collisionBoxes;
 
-	private int textureIndex = 0;
+	protected int textureIndex = 0;
 
 	public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ,
 			float scale, Vector3f... collisionBoxes) {

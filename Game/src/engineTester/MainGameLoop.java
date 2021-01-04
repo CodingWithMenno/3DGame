@@ -1,6 +1,5 @@
 package engineTester;
 
-import collisions.AABB;
 import collisions.CollisionHandler;
 import entities.*;
 import models.TexturedModel;
@@ -44,7 +43,7 @@ public class MainGameLoop {
 	 * 			-Camera & Player controls verbeteren
 	 * 			-Water low poly maken
 	 * 			-Lampen die ingerendered/uitgerendered worden laten in/uit faden
-	 * 			-Collision detectie verbeteren / physics verbeteren
+	 * 			-Collision detectie verbeteren / physics verbeteren (AABB word aangepast als een entity word gedraaid & je kan worden geduwd door andere entities)
 	 * 			-Blendmap & Heightmap verbeteren
 	 * 		.
 	 * 		Voor betere performance:
@@ -77,7 +76,7 @@ public class MainGameLoop {
 				new ModelTexture(loader.loadTexture("fox/FoxTexture")));
 		Vector3f dimensions = ObjLoader.getLastDimensions();
 
-		Player player = new Player(foxModel, new Vector3f(200, 0, -200), 0, 0, 0, 0.4f, dimensions);
+		Player player = new Player(foxModel, new Vector3f(150, -18.5f, -200), 0, 0, 0, 0.4f, dimensions);
 		entities.add(player);
 
 		Camera camera = new Camera(player, terrain);
@@ -121,13 +120,18 @@ public class MainGameLoop {
 		lights.add(new Light(new Vector3f(103.2f, terrain.getHeightOfTerrain(100, -150) + 4.5f, -150), new Vector3f(1f, 1f, 0), new Vector3f(1f, 0.01f, 0.002f)));
 
 
+		List<Fish> allFish = new ArrayList<>();
 		TexturedModel fishModel = new TexturedModel(ObjLoader.loadObjModel("fish/Fish", loader),
 				new ModelTexture(loader.loadTexture("fish/FishTexture")));
 		fishModel.getTexture().setNumberOfRows(2);
 
 		dimensions = ObjLoader.getLastDimensions();
-		Fish fish = new Fish(fishModel, random.nextInt(5), new Vector3f(200, 5, -200), 0, 0, 0, 1f, dimensions);
-		entities.add(fish);
+		for (int i = 0; i < 30; i += 3) {
+			Fish fish = new Fish(fishModel, random.nextInt(5), new Vector3f(150 - random.nextInt(100), 5 - i, -200 + random.nextInt(5)), 0, 0, 0, 1f, dimensions);
+			allFish.add(fish);
+			entities.add(fish);
+		}
+		FishGroup fishGroup = new FishGroup(allFish);
 
 
 		//**********WATER SETUP****************
@@ -157,8 +161,9 @@ public class MainGameLoop {
 
 		while(!Display.isCloseRequested()) {
 			camera.move();
-			player.moveEntity(terrain);
-			fish.moveEntity(terrain);
+			player.updateEntity(terrain);
+			fishGroup.updateAllFish(terrain);
+
 			collisionHandler.checkCollisions();
 
 			renderer.renderShadowMap(entities, lights.get(0));
