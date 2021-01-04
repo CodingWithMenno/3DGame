@@ -55,6 +55,7 @@ public class FishGroup {
         }
 
         int waterDifference = (int) Maths.difference(terrainHeight, MainGameLoop.WATER_HEIGHT - 3.5f);
+
         int y = terrainHeight + this.random.nextInt(waterDifference);
 
         this.destination = new Vector3f(x, y, z);

@@ -96,7 +96,7 @@ public class MainGameLoop {
 		grassModel.getTexture().setNumberOfRows(2);
 
 		Random random = new Random();
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 300; i++) {
 			float x = random.nextFloat() * Terrain.getSIZE();
 			float z = random.nextFloat() * terrain.getZ();
 			float y = terrain.getHeightOfTerrain(x, z);

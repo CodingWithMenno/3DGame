@@ -13,32 +13,38 @@ import java.util.Random;
 public class Fish extends MovableEntity {
 
     private static final float SPEED = 0.07f;
-    private static final float MAX_SPEED = 1f;
+    private static final float MAX_SPEED = 0.5f;
 
     private static final float VIEW_DISTANCE = 10;
 
     private static final float MAX_HEIGHT = MainGameLoop.WATER_HEIGHT - 10f;
 
-    private static final float separationFactor = 2f;
-    private static final float alignmentFactor = 1f;
-    private static final float cohesionFactor = 1f;
-    private static final float destinationFactor = 15f;
+    private static final float separationFactor = 1f;
+    private static final float alignmentFactor = 0.5f;
+    private static final float cohesionFactor = 2f;
+    private static final float destinationFactor = 10f;
 
     private Vector3f destination;
     private List<Fish> allFish;
+
+    private Random random;
 
     public Fish(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ,
                 float scale, Vector3f... collisionBoxes) {
         super(model, position, rotX, rotY, rotZ, scale, collisionBoxes);
 
-        this.destination = new Vector3f(position);
+       //this.destination = new Vector3f(position);
+        this.destination = new Vector3f(super.getPosition());
+        this.random = new Random();
     }
 
     public Fish(TexturedModel model, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ,
                 float scale, Vector3f... collisionBoxes) {
         super(model, textureIndex, position, rotX, rotY, rotZ, scale, collisionBoxes);
-        
-        this.destination = new Vector3f(position);
+
+        //this.destination = new Vector3f(position);
+        this.destination = new Vector3f(super.getPosition());
+        this.random = new Random();
     }
 
     @Override
@@ -48,8 +54,6 @@ public class Fish extends MovableEntity {
     }
 
     private void doFishBehaviour() {
-        lookForward();
-
         Vector3f separation = separation();
         separation.scale(separationFactor);
 
@@ -69,6 +73,9 @@ public class Fish extends MovableEntity {
         finalDirection.z = Math.min(MAX_SPEED, finalDirection.z);
 
         Vector3f goToVector = Vector3f.add(super.position, finalDirection, null);
+
+        lookTo(Vector3f.sub(super.position, goToVector, null));
+
         super.position = Maths.lerp(super.position, goToVector, SPEED);
     }
 
@@ -129,16 +136,14 @@ public class Fish extends MovableEntity {
         return steering;
     }
 
-    private void lookForward() {
-        Vector3f vector = Vector3f.sub(super.getPosition(), this.destination, null);
+    private void lookTo(Vector3f lookTo) {
+        float rotX = (float) Math.toDegrees(-Math.atan2(lookTo.y, lookTo.z));
+        float rotY = (float) Math.toDegrees(Math.atan2(lookTo.x, Math.sqrt(lookTo.y * lookTo.y + lookTo.z * lookTo.z))) - 180;
 
-        float rotX = (float) Math.toDegrees(-Math.atan2(vector.y, vector.z));
-        float rotY = (float) Math.toDegrees(Math.atan2(vector.x, Math.sqrt(vector.y * vector.y + vector.z * vector.z))) + 180;
-
-        if (rotX < 90) {
-            super.rotZ = Maths.lerp(super.rotZ, 0, 0.05f);
+        if (rotX < -90) {
+            super.rotZ = Maths.lerp(super.rotZ, 180, 0.05f);
         } else {
-            super.rotZ = Maths.lerp(super.rotZ, -180, 0.05f);;
+            super.rotZ = Maths.lerp(super.rotZ, 0, 0.05f);;
         }
 
         super.rotX = Maths.lerp(super.rotX, rotX, 0.01f);
@@ -146,13 +151,18 @@ public class Fish extends MovableEntity {
     }
 
     private void stayInWater(Terrain terrain) {
-        int terrainSize = (int) Terrain.getSIZE() / 2;
+        int terrainSize = (int) Terrain.getSIZE();
         float terrainHeight = terrain.getHeightOfTerrain(super.position.x, super.position.z) + 2;
 
         if (super.position.y > MAX_HEIGHT) {
             super.position.y = MAX_HEIGHT;
         } else if (super.position.y < terrainHeight) {
-            super.position.y = terrainHeight;
+            if (terrainHeight <= MAX_HEIGHT) {
+                super.position.y = terrainHeight;
+            } else {
+                super.position.x -= 1;
+                super.position.z -= 1;
+            }
         }
 
         if (super.position.x < 2) {
