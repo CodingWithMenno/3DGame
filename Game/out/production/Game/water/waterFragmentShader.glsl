@@ -18,6 +18,8 @@ uniform float far;
 
 uniform float moveFactor;
 
+//const vec4 murkyWaterColour = vec4(0.2, 0.16, 0.16, 1.0);
+
 const float waveStrength = 0.01;
 const float shineDamper = 100.0;
 const float reflectivity = 1;
@@ -49,6 +51,7 @@ void main(void) {
 
     vec4 reflectColour = texture(reflectionTexture, reflectTexCoords);
     vec4 refractColour = texture(refractionTexture, refractTexCoords);
+    //refractColour = mix(refractColour, murkyWaterColour, clamp(waterDepth / 250.0, 0.0, 1.0));
 
     vec4 normalMapColour = texture(normalMap, distortedTexCoords);
     vec3 normal = vec3(normalMapColour.r * 2.0 - 1.0, normalMapColour.b * 5.0, normalMapColour.g * 2.0 - 1.0);

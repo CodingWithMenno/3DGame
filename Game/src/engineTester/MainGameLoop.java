@@ -28,7 +28,7 @@ public class MainGameLoop {
 
 	/** TODO :
 	 * 		Entities:
-	 * 			-Animatie support voor entities
+	 * 			-Animatie support voor entities (https://github.com/TheThinMatrix/OpenGL-Animation)
 	 * 			-Normal mapping
 	 * 			-Vissen maken met boids algoritme
 	 * 		.
@@ -43,13 +43,12 @@ public class MainGameLoop {
 	 * 			-Camera & Player controls verbeteren
 	 * 			-Water low poly maken
 	 * 			-Lampen die ingerendered/uitgerendered worden laten in/uit faden
-	 * 			-Collision detectie verbeteren / physics verbeteren (AABB word aangepast als een entity word gedraaid & je kan worden geduwd door andere entities)
+	 * 			-Collision detectie verbeteren / physics verbeteren (AABB word aangepast als een entity word gedraaid & je kan worden geduwd door andere entities) (of OBB implementeren)
 	 * 			-Blendmap & Heightmap verbeteren
 	 * 		.
 	 * 		Voor betere performance:
 	 * 			-Nieuwe objLoader gebruiken (zie normal mapping filmpje)
 	 * 			-De vertexen/fragments van het water alleen renderen als ze hoger zijn dan het terrein
-	 * 			-Minder lichten tegelijk inladen (van 5 naar 4)
 	 */
 
 	public static float WATER_HEIGHT = -15;
@@ -174,7 +173,7 @@ public class MainGameLoop {
 			float distance = 2 * (camera.getPosition().y - water.getHeight());
 			camera.getPosition().y -= distance;
 			camera.invertPitch();
-			renderer.renderScene(entities, terrain, lights, camera, new Vector4f(0, 1, 0, -water.getHeight() + 0.5f));
+			renderer.renderScene(entities, terrain, lights, camera, new Vector4f(0, 1, 0, -water.getHeight()));
 			camera.getPosition().y += distance;
 			camera.invertPitch();
 
