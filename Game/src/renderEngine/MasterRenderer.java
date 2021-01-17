@@ -3,7 +3,6 @@ package renderEngine;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
-import javafx.collections.transformation.SortedList;
 import models.TexturedModel;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -169,7 +168,7 @@ public class MasterRenderer {
     }
 
     public void processEntity(Entity entity) {
-        TexturedModel entityModel = entity.getModel();
+        TexturedModel entityModel = entity.getStaticModel();
         List<Entity> batch = this.entities.get(entityModel);
 
         if (batch != null) {

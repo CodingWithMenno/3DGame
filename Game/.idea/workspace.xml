@@ -5,15 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1448daae-e5e5-4daf-966b-6006ecad8d18" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/audio/AudioMaster.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/audio/AudioTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/audio/Bounce.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/audio/Source.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/animation/AnimatedModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/animation/Animation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game/water/waterFragmentShader.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Game/water/waterFragmentShader.glsl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/engineTester/MainGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/engineTester/MainGameLoop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/TexturedModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/TexturedModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/water/waterFragmentShader.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/src/water/waterFragmentShader.glsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderEngine/MasterRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/MasterRenderer.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -66,7 +63,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.AudioTest">
+  <component name="RunManager" selected="Application.MainGameLoop">
     <configuration name="AudioTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="audio.AudioTest" />
       <module name="Game" />
@@ -101,8 +98,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.AudioTest" />
         <item itemvalue="Application.MainGameLoop" />
+        <item itemvalue="Application.AudioTest" />
       </list>
     </recent_temporary>
   </component>

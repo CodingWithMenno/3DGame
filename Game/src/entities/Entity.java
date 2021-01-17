@@ -1,18 +1,20 @@
 package entities;
 
+import animation.AnimatedModel;
 import collisions.AABB;
 import models.TexturedModel;
 
-import org.lwjgl.util.vector.ReadableVector3f;
 import org.lwjgl.util.vector.Vector3f;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Entity {
 
-	protected TexturedModel model;
+	private TexturedModel staticModel;
+	private AnimatedModel animatedModel;
+	private final boolean isAnimated;
+
 	protected Vector3f position;
 	protected float rotX, rotY, rotZ;
 	protected float scale;
@@ -21,9 +23,9 @@ public class Entity {
 
 	protected int textureIndex = 0;
 
-	public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ,
-			float scale, Vector3f... collisionBoxes) {
-		this.model = model;
+	private void init(Vector3f position, float rotX, float rotY, float rotZ,
+					float scale, Vector3f... collisionBoxes) {
+
 		this.position = position;
 		this.rotX = rotX;
 		this.rotY = rotY;
@@ -44,46 +46,48 @@ public class Entity {
 		}
 	}
 
-	public Entity(TexturedModel model, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ,
+	public Entity(TexturedModel staticModel, Vector3f position, float rotX, float rotY, float rotZ,
 				  float scale, Vector3f... collisionBoxes) {
+		this.staticModel = staticModel;
+		this.isAnimated = false;
+		init(position, rotX, rotY, rotZ, scale, collisionBoxes);
+	}
+
+	public Entity(TexturedModel staticModel, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ,
+				  float scale, Vector3f... collisionBoxes) {
+		this(staticModel, position, rotX, rotY, rotZ, scale, collisionBoxes);
 		this.textureIndex = textureIndex;
-		this.model = model;
-		this.position = position;
-		this.rotX = rotX;
-		this.rotY = rotY;
-		this.rotZ = rotZ;
-		this.scale = scale;
+	}
 
-		this.collisionBoxes = new ArrayList<>();
-		if (collisionBoxes.length == 0) {
-			return;
-		}
+	public Entity(AnimatedModel animatedModel, Vector3f position, float rotX, float rotY, float rotZ,
+				  float scale, Vector3f... collisionBoxes) {
+		this.animatedModel = animatedModel;
+		this.isAnimated = true;
+		init(position, rotX, rotY, rotZ, scale, collisionBoxes);
+	}
 
-		for (Vector3f collisionBox : collisionBoxes) {
-			Vector3f box = new Vector3f(collisionBox);
-			box.x *= scale;
-			box.y *= scale;
-			box.z *= scale;
-			this.collisionBoxes.add(new AABB(this.position, box));
-		}
+	public Entity(AnimatedModel animatedModel, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ,
+				  float scale, Vector3f... collisionBoxes) {
+		this(animatedModel, position, rotX, rotY, rotZ, scale, collisionBoxes);
+		this.textureIndex = textureIndex;
 	}
 
 	public float getTextureXOffset() {
-		int column = this.textureIndex % this.model.getTexture().getNumberOfRows();
-		return (float) column / (float) this.model.getTexture().getNumberOfRows();
+		int column = this.textureIndex % this.staticModel.getTexture().getNumberOfRows();
+		return (float) column / (float) this.staticModel.getTexture().getNumberOfRows();
 	}
 
 	public float getTextureYOffset() {
-		int row = this.textureIndex / this.model.getTexture().getNumberOfRows();
-		return (float) row / (float) this.model.getTexture().getNumberOfRows();
+		int row = this.textureIndex / this.staticModel.getTexture().getNumberOfRows();
+		return (float) row / (float) this.staticModel.getTexture().getNumberOfRows();
 	}
 
-	public TexturedModel getModel() {
-		return model;
+	public TexturedModel getStaticModel() {
+		return staticModel;
 	}
 
-	public void setModel(TexturedModel model) {
-		this.model = model;
+	public void setStaticModel(TexturedModel staticModel) {
+		this.staticModel = staticModel;
 	}
 
 	public Vector3f getPosition() {

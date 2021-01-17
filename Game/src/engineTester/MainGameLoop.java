@@ -28,13 +28,13 @@ public class MainGameLoop {
 
 	/** TODO :
 	 * 		Entities:
-	 * 			-Animatie support voor entities (https://github.com/TheThinMatrix/OpenGL-Animation)
+	 * 			-Animatie support voor entities (animationHandler maken)
 	 * 			-Normal mapping
 	 * 			-Vissen maken met boids algoritme
 	 * 		.
 	 * 		Overig:
 	 * 			-Goede GUI library maken (met animatie support & het resizen van het display)
-	 * 			-Geluid toevoegen
+	 * 			-Geluid implementeren in entities
 	 * 			-Particle systeem maken
 	 * 			-Zon en wolken toevoegen (goede day-night cycle maken)
 	 * 			-Effecten toepassen (Post-Processing, Bloom, Lens flare, etc.)
@@ -43,7 +43,7 @@ public class MainGameLoop {
 	 * 			-Camera & Player controls verbeteren
 	 * 			-Water low poly maken
 	 * 			-Lampen die ingerendered/uitgerendered worden laten in/uit faden
-	 * 			-Collision detectie verbeteren / physics verbeteren (AABB word aangepast als een entity word gedraaid & je kan worden geduwd door andere entities) (of OBB implementeren)
+	 * 			-Collision detectie verbeteren / physics verbeteren (OBB implementeren & je kan worden geduwd door andere entities)
 	 * 			-Blendmap & Heightmap verbeteren
 	 * 		.
 	 * 		Voor betere performance:
