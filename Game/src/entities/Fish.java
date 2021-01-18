@@ -27,16 +27,6 @@ public class Fish extends MovableEntity {
     private Vector3f destination;
     private List<Fish> allFish;
 
-    private Random random;
-
-    public Fish(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ,
-                float scale, Vector3f... collisionBoxes) {
-        super(model, position, rotX, rotY, rotZ, scale, collisionBoxes);
-
-       //this.destination = new Vector3f(position);
-        this.destination = new Vector3f(super.getPosition());
-        this.random = new Random();
-    }
 
     public Fish(TexturedModel model, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ,
                 float scale, Vector3f... collisionBoxes) {
@@ -44,7 +34,6 @@ public class Fish extends MovableEntity {
 
         //this.destination = new Vector3f(position);
         this.destination = new Vector3f(super.getPosition());
-        this.random = new Random();
     }
 
     @Override

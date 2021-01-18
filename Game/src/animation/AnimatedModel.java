@@ -1,16 +1,33 @@
 package animation;
 
-import java.util.List;
+import models.TexturedModel;
+
+import java.util.*;
 
 public class AnimatedModel {
 
-    private List<Animation> animations;
+    private List<Animator> animators;
+
+    private int currentAnimation;
 
     public AnimatedModel(List<Animation> animations) {
-        this.animations = animations;
+        this.currentAnimation = 0;
+
+        this.animators = new ArrayList<>();
+        for (Animation animation : animations) {
+            this.animators.add(new Animator(animation));
+        }
     }
 
-    public List<Animation> getAnimations() {
-        return animations;
+    public void updateCurrentAnimation() {
+        this.animators.get(this.currentAnimation).animate();
+    }
+
+    public void setCurrentAnimation(int currentAnimation) {
+        this.currentAnimation = currentAnimation;
+    }
+
+    public TexturedModel getCurrentModel() {
+        return this.animators.get(this.currentAnimation).getCurrentFrame();
     }
 }

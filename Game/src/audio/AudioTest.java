@@ -10,7 +10,7 @@ public class AudioTest {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         AudioMaster.init();
-        AudioMaster.setListenerData(new Vector3f(0, 0, 0));
+        AudioMaster.setListenerData(new Vector3f(0, 0, -1));
         AL10.alDistanceModel(AL10.AL_INVERSE_DISTANCE_CLAMPED);
 
         int buffer = AudioMaster.loadSound("audio/Bounce.wav");
@@ -18,7 +18,7 @@ public class AudioTest {
         source.setLooping(true);
         source.play(buffer);
 
-        float xPos = 0;
+        float xPos = 5;
         source.setPosition(new Vector3f(xPos, 0, 0));
 
         char c = ' ';

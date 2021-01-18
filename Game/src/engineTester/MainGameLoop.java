@@ -1,7 +1,10 @@
 package engineTester;
 
+import animation.AnimatedModel;
+import animation.Animation;
 import collisions.CollisionHandler;
 import entities.*;
+import models.RawModel;
 import models.TexturedModel;
 
 import org.lwjgl.opengl.Display;

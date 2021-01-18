@@ -1,5 +1,6 @@
 package entities;
 
+import animation.AnimatedModel;
 import collisions.AABB;
 import models.TexturedModel;
 import org.lwjgl.util.vector.Vector3f;
@@ -19,6 +20,18 @@ public abstract class MovableEntity extends Entity {
     public MovableEntity(TexturedModel model, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ,
                          float scale, Vector3f... collisionBoxes) {
         super(model, textureIndex, position, rotX, rotY, rotZ, scale, collisionBoxes);
+        this.velocity = new Vector3f(0, 0, 0);
+    }
+
+    public MovableEntity(AnimatedModel animatedModel, Vector3f position, float rotX, float rotY, float rotZ,
+                         float scale, Vector3f... collisionBoxes) {
+        super(animatedModel, position, rotX, rotY, rotZ, scale, collisionBoxes);
+        this.velocity = new Vector3f(0, 0, 0);
+    }
+
+    public MovableEntity(AnimatedModel animatedModel, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ,
+                         float scale, Vector3f... collisionBoxes) {
+        super(animatedModel, textureIndex, position, rotX, rotY, rotZ, scale, collisionBoxes);
         this.velocity = new Vector3f(0, 0, 0);
     }
 

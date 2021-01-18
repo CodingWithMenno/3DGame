@@ -72,6 +72,12 @@ public class Entity {
 		this.textureIndex = textureIndex;
 	}
 
+	public void updateAnimation() {
+		if (this.isAnimated) {
+			this.animatedModel.updateCurrentAnimation();
+		}
+	}
+
 	public float getTextureXOffset() {
 		int column = this.textureIndex % this.staticModel.getTexture().getNumberOfRows();
 		return (float) column / (float) this.staticModel.getTexture().getNumberOfRows();
@@ -82,11 +88,15 @@ public class Entity {
 		return (float) row / (float) this.staticModel.getTexture().getNumberOfRows();
 	}
 
-	public TexturedModel getStaticModel() {
-		return staticModel;
+	public TexturedModel getModel() {
+		if (!this.isAnimated) {
+			return this.staticModel;
+		}
+
+		return this.animatedModel.getCurrentModel();
 	}
 
-	public void setStaticModel(TexturedModel staticModel) {
+	public void setModel(TexturedModel staticModel) {
 		this.staticModel = staticModel;
 	}
 

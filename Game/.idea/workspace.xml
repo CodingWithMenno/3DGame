@@ -5,11 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1448daae-e5e5-4daf-966b-6006ecad8d18" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/animation/AnimatedModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/animation/Animation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/animation/Animator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/animation/AnimatedModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/animation/AnimatedModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/animation/Animation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/animation/Animation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/engineTester/MainGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/engineTester/MainGameLoop.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Fish.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Fish.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/MovableEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/MovableEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderEngine/MasterRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/MasterRenderer.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -63,7 +66,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.MainGameLoop">
+  <component name="RunManager" selected="Application.AudioTest">
     <configuration name="AudioTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="audio.AudioTest" />
       <module name="Game" />
@@ -98,8 +101,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.MainGameLoop" />
         <item itemvalue="Application.AudioTest" />
+        <item itemvalue="Application.MainGameLoop" />
       </list>
     </recent_temporary>
   </component>
