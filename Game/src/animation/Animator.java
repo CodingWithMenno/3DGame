@@ -1,28 +1,46 @@
 package animation;
 
 import models.TexturedModel;
+import renderEngine.DisplayManager;
 
 public class Animator {
 
     private Animation animation;
 
+    private TexturedModel currentModel;
     private float currentTime;
+
+    private float msPerFrame;
+
 
     public Animator(Animation animation) {
         this.animation = animation;
-        this.currentTime = 0;
+
+        this.currentTime = 0.0f;
+        this.currentModel = this.animation.getKeyframes().get(0);
+
+        this.msPerFrame = this.animation.getAnimationLength() / this.animation.getKeyframes().size();
     }
 
     public TexturedModel getCurrentFrame() {
-        //TODO return the correct keyframe depending on the time
-        return this.animation.getKeyframes().get(0);
+        return this.currentModel;
     }
 
     public void animate() {
         updateTime();
+        setCurrentModel();
     }
 
     private void updateTime() {
-        //TODO
+        this.currentTime += DisplayManager.getDelta();
+
+        if (this.currentTime > this.animation.getAnimationLength()) {
+            this.currentTime = 0.0f;
+        }
+    }
+
+    private void setCurrentModel() {
+        int frame = (int) (this.currentTime / this.msPerFrame);
+        this.currentModel = this.animation.getKeyframes().get(frame);
     }
 }
