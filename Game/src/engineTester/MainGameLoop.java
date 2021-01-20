@@ -36,10 +36,10 @@ public class MainGameLoop {
 	 * 		Entities:
 	 * 			-Normal mapping
 	 * 			-Vissen/vogels maken met boids algoritme
+	 * 			-Geluid implementeren in entities
 	 * 		.
 	 * 		Overig:
 	 * 			-Goede GUI library maken (met animatie support & het resizen van het display)
-	 * 			-Geluid implementeren in entities
 	 * 			-Particle systeem maken
 	 * 			-Zon en wolken toevoegen (goede day-night cycle maken)
 	 * 			-Effecten toepassen (Post-Processing, Bloom, Lens flare, etc.)
