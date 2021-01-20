@@ -16,7 +16,6 @@ import java.io.IOException;
 public class Terrain {
 
     private static final float SIZE = 1500;
-    private static final float MAX_HEIGHT = 120;
 
     private static final int VERTEX_COUNT = 128;
 
@@ -24,13 +23,11 @@ public class Terrain {
     private float z;
     private RawModel model;
     private TerrainTexturePack texturePack;
-    private TerrainTexture blendMap;
 
     private float[][] heights;
 
-    public Terrain(int gridX, int gridZ, Loader loader, TerrainTexturePack texturePack, TerrainTexture blendMap) {
+    public Terrain(int gridX, int gridZ, Loader loader, TerrainTexturePack texturePack) {
         this.texturePack = texturePack;
-        this.blendMap = blendMap;
         this.x = gridX * SIZE;
         this.z = gridZ * SIZE;
         this.model = generateTerrain(loader);
@@ -159,15 +156,7 @@ public class Terrain {
         return SIZE;
     }
 
-    public static float getMaxHeight() {
-        return MAX_HEIGHT;
-    }
-
     public TerrainTexturePack getTexturePack() {
         return texturePack;
-    }
-
-    public TerrainTexture getBlendMap() {
-        return blendMap;
     }
 }

@@ -6,9 +6,9 @@ import java.util.Random;
 
 public class HeightGenerator {
 
-    private static final float AMPLITUDE = 30f;
+    private static final float AMPLITUDE = 40f;
     private static final int OCTAVES = 3;
-    private static final float ROUGHNESS = 0.02f;
+    private static final float ROUGHNESS = 0.03f;
     private static final float SMOOTH_FACTOR = 6f;
 
     private Random random;
@@ -67,7 +67,7 @@ public class HeightGenerator {
 
         float center = getNoise(x, z) / 4f;
 
-        return center + sides + center;
+        return corners + sides + center;
     }
 
     private float getNoise(int x, int z) {

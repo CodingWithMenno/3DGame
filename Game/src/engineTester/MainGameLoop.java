@@ -69,9 +69,7 @@ public class MainGameLoop {
 		TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("ground/StoneTexture"));
 		TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
 
-		TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("BlendMap"));
-
-		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap);
+		Terrain terrain = new Terrain(0, -1, loader, texturePack);
 
 
 		//**********PLAYER SETUP*******************
@@ -136,7 +134,7 @@ public class MainGameLoop {
 		entities.add(new Entity(postModel, new Vector3f(100, terrain.getHeightOfTerrain(100, -150), -150), 0, 0, 0, 1f));
 
 		List<Light> lights = new ArrayList<>();
-		lights.add(new Light(new Vector3f(1000, 300000, -100000), new Vector3f(0.7f, 0.7f, 0.7f)));
+		lights.add(new Light(new Vector3f(1000, 500000, -100000), new Vector3f(0.7f, 0.7f, 0.7f)));
 		lights.add(new Light(new Vector3f(103.2f, terrain.getHeightOfTerrain(100, -150) + 4.5f, -150), new Vector3f(1f, 1f, 0), new Vector3f(1f, 0.01f, 0.002f)));
 
 

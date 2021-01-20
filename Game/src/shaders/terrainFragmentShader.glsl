@@ -14,7 +14,6 @@ uniform sampler2D backgroundTexture;
 uniform sampler2D rTexture;
 uniform sampler2D gTexture;
 uniform sampler2D bTexture;
-uniform sampler2D blendMap;
 uniform sampler2D shadowMap;
 
 uniform vec3 lightColour[5];
@@ -29,18 +28,6 @@ const float totalTexels = (pcfCount * 2.0 + 1.0) * (pcfCount * 2.0 + 1.0);
 
 const float tiling = 100;
 
-vec3 heightToRGB(in float height) {
-    vec3 terrain_colours[3];
-    terrain_colours[0] = vec3(0.59, 0.90, 0.20);
-    terrain_colours[1] = vec3(1, 1, 1);
-    terrain_colours[2] = vec3(0.89, 0.77, 0.50);
-
-    if (height < 0) {
-        return mix(terrain_colours[0], terrain_colours[2], abs(height) / 20);
-    } else {
-        return terrain_colours[0];
-    }
-}
 
 void main(void) {
 
@@ -58,18 +45,33 @@ void main(void) {
     total /= totalTexels;
     float lightFactor = 1.0 - (total * shadowCoords.w);
 
-//    vec4 blendMapColour = texture(blendMap, pass_textureCoordinates);
-    vec4 blendMapColour = vec4(mix(vec3(1, 0.5, 0), vec3(0, 0.1, 1), mapHeight / 50), 0);
+    vec4 blendMapColour = vec4(mix(vec3(1, 0.25, 0), vec3(0, 0.75, 0.8), mapHeight / 50), 0);
+    vec4 rTextureAmount = vec4(0, 0, 0, 0);
+    vec4 gTextureAmount = vec4(0, 0, 0, 0);
+    vec4 bTextureAmount = vec4(0, 0, 0, 0);
+    if(mapHeight <= -5) {
+        rTextureAmount = vec4(1, 0, 0, 0);
+    }
+    if(mapHeight >= -5 && mapHeight <= 40) {
+        gTextureAmount = vec4(0, 1, 0, 0);
+    }
+    if(mapHeight >= 40) {
+        bTextureAmount = vec4(0, 0, 1, 0);
+    }
+
+    if(mapHeight == 5) {
+        rTextureAmount = mix(rTextureAmount, gTextureAmount, mapHeight);
+        gTextureAmount = mix(gTextureAmount, rTextureAmount, mapHeight);
+    }
+
     float backTextureAmount = 1 - (blendMapColour.r + blendMapColour.g + blendMapColour.b);
     vec2 tiledCoords = pass_textureCoordinates * tiling;
     vec4 backgroundTextureColour = texture(backgroundTexture, tiledCoords) * backTextureAmount;
-    vec4 rTextureColour = texture(rTexture, tiledCoords) * blendMapColour.r;
-    vec4 gTextureColour = texture(gTexture, tiledCoords) * blendMapColour.g;
-    vec4 bTextureColour = texture(bTexture, tiledCoords) * blendMapColour.b;
+    vec4 rTextureColour = texture(rTexture, tiledCoords) * rTextureAmount.r;
+    vec4 gTextureColour = texture(gTexture, tiledCoords) * gTextureAmount.g;
+    vec4 bTextureColour = texture(bTexture, tiledCoords) * bTextureAmount.b;
 
-//    vec4 heightColour = vec4(heightToRGB(mapHeight), 1.0);
-//    vec4 heightTextureColour = (vec4(heightColour.r, heightColour.g, heightColour.b, 1.0) * backTextureAmount);
-    vec4 finalBlendMapColour = backgroundTextureColour + rTextureColour + gTextureColour + bTextureColour;
+    vec4 finalBlendMapColour = rTextureColour + gTextureColour + bTextureColour;
     vec4 totalColour = finalBlendMapColour;
 
 
