@@ -24,6 +24,7 @@ public class AnimatedModel {
     }
 
     public void setCurrentAnimation(int currentAnimation) {
+        this.animators.get(this.currentAnimation).resumeAnimation();
         this.currentAnimation = currentAnimation;
     }
 
@@ -33,5 +34,13 @@ public class AnimatedModel {
 
     public void setAnimationTimeOf(int animation, float animationTime) {
         this.animators.get(animation).setAnimationTime(animationTime);
+    }
+
+    public void pauseCurrentAnimation() {
+        this.animators.get(this.currentAnimation).pauseAnimation();
+    }
+
+    public void resumeCurrentAnimation() {
+        this.animators.get(this.currentAnimation).resumeAnimation();
     }
 }

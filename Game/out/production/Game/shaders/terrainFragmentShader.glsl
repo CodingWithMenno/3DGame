@@ -58,17 +58,18 @@ void main(void) {
     total /= totalTexels;
     float lightFactor = 1.0 - (total * shadowCoords.w);
 
-    vec4 blendMapColour = texture(blendMap, pass_textureCoordinates);
+//    vec4 blendMapColour = texture(blendMap, pass_textureCoordinates);
+    vec4 blendMapColour = vec4(mix(vec3(1, 0.5, 0), vec3(0, 0.1, 1), mapHeight / 50), 0);
     float backTextureAmount = 1 - (blendMapColour.r + blendMapColour.g + blendMapColour.b);
     vec2 tiledCoords = pass_textureCoordinates * tiling;
-//    vec4 backgroundTextureColour = texture(backgroundTexture, tiledCoords) * backTextureAmount;
+    vec4 backgroundTextureColour = texture(backgroundTexture, tiledCoords) * backTextureAmount;
     vec4 rTextureColour = texture(rTexture, tiledCoords) * blendMapColour.r;
     vec4 gTextureColour = texture(gTexture, tiledCoords) * blendMapColour.g;
     vec4 bTextureColour = texture(bTexture, tiledCoords) * blendMapColour.b;
 
-    vec4 heightColour = vec4(heightToRGB(mapHeight), 1.0);
-    vec4 heightTextureColour = (vec4(heightColour.r, heightColour.g, heightColour.b, 1.0) * backTextureAmount);
-    vec4 finalBlendMapColour = heightTextureColour + rTextureColour + gTextureColour + bTextureColour;
+//    vec4 heightColour = vec4(heightToRGB(mapHeight), 1.0);
+//    vec4 heightTextureColour = (vec4(heightColour.r, heightColour.g, heightColour.b, 1.0) * backTextureAmount);
+    vec4 finalBlendMapColour = backgroundTextureColour + rTextureColour + gTextureColour + bTextureColour;
     vec4 totalColour = finalBlendMapColour;
 
 

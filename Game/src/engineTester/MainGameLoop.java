@@ -4,12 +4,15 @@ import animation.AnimatedModel;
 import animation.Animation;
 import collisions.CollisionHandler;
 import entities.*;
+import guis.GuiRenderer;
+import guis.GuiTexture;
 import models.RawModel;
 import models.TexturedModel;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import org.lwjgl.util.vector.Vector4f;
@@ -32,7 +35,7 @@ public class MainGameLoop {
 	/** TODO :
 	 * 		Entities:
 	 * 			-Normal mapping
-	 * 			-Vissen maken met boids algoritme
+	 * 			-Vissen/vogels maken met boids algoritme
 	 * 		.
 	 * 		Overig:
 	 * 			-Goede GUI library maken (met animatie support & het resizen van het display)
@@ -40,14 +43,13 @@ public class MainGameLoop {
 	 * 			-Particle systeem maken
 	 * 			-Zon en wolken toevoegen (goede day-night cycle maken)
 	 * 			-Effecten toepassen (Post-Processing, Bloom, Lens flare, etc.)
-	 * 			-Kleine random generated wereld genereren (i.p.v. heightmap + blendmap)
+	 * 			-Kleine random generated wereld genereren (i.p.v. heightmap + blendmap) (blendmap bepalen aan de hand van de hoogte)
 	 * 		.
 	 * 		Optioneel / Verbeteren:
-	 * 			-Camera & Player controls verbeteren
 	 * 			-Water low poly maken
 	 * 			-Lampen die ingerendered/uitgerendered worden laten in/uit faden
 	 * 			-Collision detectie verbeteren / physics verbeteren (OBB implementeren & je kan worden geduwd door andere entities)
-	 * 			-Animaties met collada files (interpolaten tussen frames)
+	 * 			-Animaties met collada files (interpolaten tussen frames en werken met skeletten)
 	 * 		.
 	 * 		Voor betere performance:
 	 * 			-Nieuwe objLoader gebruiken (zie normal mapping filmpje)
@@ -63,13 +65,13 @@ public class MainGameLoop {
 		//*************WORLD SETUP**************
 		TerrainTexture backgroundTexture = new TerrainTexture(loader.loadTexture("ground/GrassTexture"));
 		TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("ground/DirtTexture"));
-		TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("ground/StoneTexture"));
-		TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("ground/PathTexture"));
+		TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("ground/GrassTexture"));
+		TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("ground/StoneTexture"));
 		TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
 
-		TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("BlendMapNew"));
+		TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("BlendMap"));
 
-		Terrain terrain = new Terrain(0, -1, loader, "HeightMap", texturePack, blendMap);
+		Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap);
 
 
 		//**********PLAYER SETUP*******************
@@ -138,18 +140,18 @@ public class MainGameLoop {
 		lights.add(new Light(new Vector3f(103.2f, terrain.getHeightOfTerrain(100, -150) + 4.5f, -150), new Vector3f(1f, 1f, 0), new Vector3f(1f, 0.01f, 0.002f)));
 
 
-		List<Fish> allFish = new ArrayList<>();
-		TexturedModel fishModel = new TexturedModel(ObjLoader.loadObjModel("fish/Fish", loader),
-				new ModelTexture(loader.loadTexture("fish/FishTexture")));
-		fishModel.getTexture().setNumberOfRows(2);
-
-		dimensions = ObjLoader.getLastDimensions();
-		for (int i = 0; i < 30; i += 3) {
-			Fish fish = new Fish(fishModel, random.nextInt(5), new Vector3f(150 - random.nextInt(100), 5 - i, -200 + i * 2), 0, 0, 0, 1f, dimensions);
-			allFish.add(fish);
-			entities.add(fish);
-		}
-		FishGroup fishGroup = new FishGroup(allFish);
+//		List<Fish> allFish = new ArrayList<>();
+//		TexturedModel fishModel = new TexturedModel(ObjLoader.loadObjModel("fish/Fish", loader),
+//				new ModelTexture(loader.loadTexture("fish/FishTexture")));
+//		fishModel.getTexture().setNumberOfRows(2);
+//
+//		dimensions = ObjLoader.getLastDimensions();
+//		for (int i = 0; i < 30; i += 3) {
+//			Fish fish = new Fish(fishModel, random.nextInt(5), new Vector3f(150 - random.nextInt(100), 5 - i, -200 + i * 2), 0, 0, 0, 1f, dimensions);
+//			allFish.add(fish);
+//			entities.add(fish);
+//		}
+//		FishGroup fishGroup = new FishGroup(allFish);
 
 
 		//**********WATER SETUP****************
@@ -181,7 +183,7 @@ public class MainGameLoop {
 			camera.move();
 			player.updateEntity(terrain);
 			player.updateAnimation();
-			fishGroup.updateAllFish(terrain);
+//			fishGroup.updateAllFish(terrain);
 
 			collisionHandler.checkCollisions();
 

@@ -49,7 +49,7 @@ public class Player extends MovableEntity {
     }
 
     private void doAnimations() {
-        if (Maths.difference(this.currentSpeed, 0) > 5) {
+        if (Maths.difference(this.currentSpeed, 0) > 20) {
             super.setAnimation(1);
         } else {
             super.setAnimation(0);

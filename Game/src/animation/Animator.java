@@ -9,8 +9,9 @@ public class Animator {
 
     private TexturedModel currentModel;
     private float currentTime;
-
     private float msPerFrame;
+
+    private boolean isPaused;
 
 
     public Animator(Animation animation) {
@@ -18,17 +19,16 @@ public class Animator {
 
         this.currentTime = 0.0f;
         this.currentModel = this.animation.getKeyframes().get(0);
-
         this.msPerFrame = this.animation.getAnimationLength() / this.animation.getKeyframes().size();
-    }
 
-    public TexturedModel getCurrentFrame() {
-        return this.currentModel;
+        this.isPaused = false;
     }
 
     public void animate() {
-        updateTime();
-        setCurrentModel();
+        if (!this.isPaused) {
+            updateTime();
+            setCurrentModel();
+        }
     }
 
     private void updateTime() {
@@ -47,5 +47,17 @@ public class Animator {
     public void setAnimationTime(float animationTime) {
         this.animation.setAnimationLength(animationTime);
         this.msPerFrame = this.animation.getAnimationLength() / this.animation.getKeyframes().size();
+    }
+
+    public void pauseAnimation() {
+        this.isPaused = true;
+    }
+
+    public void resumeAnimation() {
+        this.isPaused = false;
+    }
+
+    public TexturedModel getCurrentFrame() {
+        return this.currentModel;
     }
 }
