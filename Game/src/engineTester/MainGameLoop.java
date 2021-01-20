@@ -63,11 +63,10 @@ public class MainGameLoop {
 		Loader loader = new Loader();
 
 		//*************WORLD SETUP**************
-		TerrainTexture backgroundTexture = new TerrainTexture(loader.loadTexture("ground/GrassTexture"));
 		TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("ground/DirtTexture"));
 		TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("ground/GrassTexture"));
 		TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("ground/StoneTexture"));
-		TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
+		TerrainTexturePack texturePack = new TerrainTexturePack(rTexture, gTexture, bTexture);
 
 		Terrain terrain = new Terrain(0, -1, loader, texturePack);
 
