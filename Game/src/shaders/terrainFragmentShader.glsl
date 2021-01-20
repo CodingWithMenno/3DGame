@@ -10,7 +10,6 @@ in vec4 shadowCoords;
 
 out vec4 out_Color;
 
-uniform sampler2D backgroundTexture;
 uniform sampler2D rTexture;
 uniform sampler2D gTexture;
 uniform sampler2D bTexture;
@@ -45,6 +44,7 @@ void main(void) {
     total /= totalTexels;
     float lightFactor = 1.0 - (total * shadowCoords.w);
 
+
     vec4 blendMapColour = vec4(mix(vec3(1, 0.25, 0), vec3(0, 0.75, 0.8), mapHeight / 50), 0);
     vec4 rTextureAmount = vec4(0, 0, 0, 0);
     vec4 gTextureAmount = vec4(0, 0, 0, 0);
@@ -59,20 +59,13 @@ void main(void) {
         bTextureAmount = vec4(0, 0, 1, 0);
     }
 
-    if(mapHeight == 5) {
-        rTextureAmount = mix(rTextureAmount, gTextureAmount, mapHeight);
-        gTextureAmount = mix(gTextureAmount, rTextureAmount, mapHeight);
-    }
-
     float backTextureAmount = 1 - (blendMapColour.r + blendMapColour.g + blendMapColour.b);
     vec2 tiledCoords = pass_textureCoordinates * tiling;
-    vec4 backgroundTextureColour = texture(backgroundTexture, tiledCoords) * backTextureAmount;
     vec4 rTextureColour = texture(rTexture, tiledCoords) * rTextureAmount.r;
     vec4 gTextureColour = texture(gTexture, tiledCoords) * gTextureAmount.g;
     vec4 bTextureColour = texture(bTexture, tiledCoords) * bTextureAmount.b;
 
-    vec4 finalBlendMapColour = rTextureColour + gTextureColour + bTextureColour;
-    vec4 totalColour = finalBlendMapColour;
+    vec4 totalColour = rTextureColour + gTextureColour + bTextureColour;
 
 
 	vec3 unitNormal = normalize(surfaceNormal);
