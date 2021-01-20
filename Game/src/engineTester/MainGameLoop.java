@@ -43,7 +43,6 @@ public class MainGameLoop {
 	 * 			-Particle systeem maken
 	 * 			-Zon en wolken toevoegen (goede day-night cycle maken)
 	 * 			-Effecten toepassen (Post-Processing, Bloom, Lens flare, etc.)
-	 * 			-Kleine random generated wereld genereren (i.p.v. heightmap + blendmap) (blendmap bepalen aan de hand van de hoogte)
 	 * 		.
 	 * 		Optioneel / Verbeteren:
 	 * 			-Water low poly maken

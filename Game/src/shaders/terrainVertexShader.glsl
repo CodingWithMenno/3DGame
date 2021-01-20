@@ -4,13 +4,12 @@ in vec3 position;
 in vec2 textureCoordinates;
 in vec3 normal;
 
-out vec2 pass_textureCoordinates;
 flat out vec3 surfaceNormal;
 out vec3 toLightVector[5];
 out vec3 toCameraVector;
 out float visibility;
-out float mapHeight;
 out vec4 shadowCoords;
+flat out vec4 surfaceColour;
 
 uniform mat4 transformationMatrix;
 uniform mat4 projectionMatrix;
@@ -27,6 +26,11 @@ const float transitionDistance = 10.0;
 
 uniform vec4 plane;
 
+uniform sampler2D rTexture;
+uniform sampler2D gTexture;
+uniform sampler2D bTexture;
+const float tiling = 100;
+
 void main(void) {
 
 	vec4 worldPosition = transformationMatrix * vec4(position, 1.0);
@@ -36,9 +40,6 @@ void main(void) {
 
 	vec4 positionRelativeToCam = viewMatrix * worldPosition;
 	gl_Position = projectionMatrix * positionRelativeToCam;
-	pass_textureCoordinates = textureCoordinates;
-
-	mapHeight = worldPosition.y;
 
 	surfaceNormal = (transformationMatrix * vec4(normal, 0.0)).xyz;
 	for(int i = 0; i < 5; i++) {
@@ -53,4 +54,23 @@ void main(void) {
 	distance = distance - (shadowDistance - transitionDistance);
 	distance = distance / transitionDistance;
 	shadowCoords.w = clamp(1.0 - distance, 0.0, 1.0);
+
+	float mapHeight = worldPosition.y;
+	vec4 textureAmount = vec4(0, 0, 0, 0);
+	if(mapHeight < -5) {
+		textureAmount.r = 1;
+	}
+	if(mapHeight >= -5 && mapHeight < 40) {
+		textureAmount.g = 1;
+	}
+	if(mapHeight >= 40) {
+		textureAmount.b = 1;
+	}
+
+	vec2 tiledCoords = textureCoordinates * tiling;
+	vec4 rTextureColour = texture(rTexture, tiledCoords) * textureAmount.r;
+	vec4 gTextureColour = texture(gTexture, tiledCoords) * textureAmount.g;
+	vec4 bTextureColour = texture(bTexture, tiledCoords) * textureAmount.b;
+
+	surfaceColour = rTextureColour + gTextureColour + bTextureColour;
 }
