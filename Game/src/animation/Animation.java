@@ -21,4 +21,8 @@ public class Animation {
     public List<TexturedModel> getKeyframes() {
         return keyframes;
     }
+
+    public void setAnimationLength(float animationLength) {
+        this.animationLength = animationLength;
+    }
 }

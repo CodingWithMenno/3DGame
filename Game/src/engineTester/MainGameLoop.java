@@ -31,7 +31,6 @@ public class MainGameLoop {
 
 	/** TODO :
 	 * 		Entities:
-	 * 			-Animatie support voor entities (animationHandler maken)
 	 * 			-Normal mapping
 	 * 			-Vissen maken met boids algoritme
 	 * 		.
@@ -41,13 +40,14 @@ public class MainGameLoop {
 	 * 			-Particle systeem maken
 	 * 			-Zon en wolken toevoegen (goede day-night cycle maken)
 	 * 			-Effecten toepassen (Post-Processing, Bloom, Lens flare, etc.)
+	 * 			-Kleine random generated wereld genereren (i.p.v. heightmap + blendmap)
 	 * 		.
 	 * 		Optioneel / Verbeteren:
 	 * 			-Camera & Player controls verbeteren
 	 * 			-Water low poly maken
 	 * 			-Lampen die ingerendered/uitgerendered worden laten in/uit faden
 	 * 			-Collision detectie verbeteren / physics verbeteren (OBB implementeren & je kan worden geduwd door andere entities)
-	 * 			-Blendmap & Heightmap verbeteren
+	 * 			-Animaties met collada files (interpolaten tussen frames)
 	 * 		.
 	 * 		Voor betere performance:
 	 * 			-Nieuwe objLoader gebruiken (zie normal mapping filmpje)
@@ -74,11 +74,27 @@ public class MainGameLoop {
 
 		//**********PLAYER SETUP*******************
 		List<Entity> entities = new ArrayList<>();
-		TexturedModel foxModel = new TexturedModel(ObjLoader.loadObjModel("fox/Fox", loader),
-				new ModelTexture(loader.loadTexture("fox/FoxTexture")));
+		ModelTexture foxTexture = new ModelTexture(loader.loadTexture("fox/FoxTexture"));
+		TexturedModel foxModel = new TexturedModel(ObjLoader.loadObjModel("fox/Fox", loader), foxTexture);
+		List<TexturedModel> foxIdle = new ArrayList<>();
+		foxIdle.add(foxModel);
+		Animation foxIdleAnimation = new Animation(foxIdle, 10);
+
 		Vector3f dimensions = ObjLoader.getLastDimensions();
 
-		Player player = new Player(foxModel, new Vector3f(150, -18.5f, -200), 0, 0, 0, 0.4f, dimensions);
+		List<TexturedModel> foxModels = new ArrayList<>();
+		for (int i = 1; i < 10; i++) {
+			foxModels.add(new TexturedModel(ObjLoader.loadObjModel("fox/VillagerFox_animations_00000" + i, loader), foxTexture));
+		}
+		for (int i = 10; i < 32; i++) {
+			foxModels.add(new TexturedModel(ObjLoader.loadObjModel("fox/VillagerFox_animations_0000" + i, loader), foxTexture));
+		}
+
+		Animation foxRunningAnimation = new Animation(foxModels, 1);
+
+		AnimatedModel foxAnimatedModel = new AnimatedModel(foxIdleAnimation, foxRunningAnimation);
+
+		Player player = new Player(foxAnimatedModel, new Vector3f(150, -18.5f, -200), 0, 0, 0, 0.4f, dimensions);
 		entities.add(player);
 
 		Camera camera = new Camera(player, terrain);
@@ -164,6 +180,7 @@ public class MainGameLoop {
 		while(!Display.isCloseRequested()) {
 			camera.move();
 			player.updateEntity(terrain);
+			player.updateAnimation();
 			fishGroup.updateAllFish(terrain);
 
 			collisionHandler.checkCollisions();

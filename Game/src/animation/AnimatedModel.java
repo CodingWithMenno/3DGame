@@ -10,7 +10,7 @@ public class AnimatedModel {
 
     private int currentAnimation;
 
-    public AnimatedModel(List<Animation> animations) {
+    public AnimatedModel(Animation... animations) {
         this.currentAnimation = 0;
 
         this.animators = new ArrayList<>();
@@ -29,5 +29,9 @@ public class AnimatedModel {
 
     public TexturedModel getCurrentModel() {
         return this.animators.get(this.currentAnimation).getCurrentFrame();
+    }
+
+    public void setAnimationTimeOf(int animation, float animationTime) {
+        this.animators.get(animation).setAnimationTime(animationTime);
     }
 }

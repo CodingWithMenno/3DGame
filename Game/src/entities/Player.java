@@ -1,5 +1,6 @@
 package entities;
 
+import animation.AnimatedModel;
 import collisions.AABB;
 import models.TexturedModel;
 import org.lwjgl.input.Keyboard;
@@ -21,9 +22,9 @@ public class Player extends MovableEntity {
 
     private boolean isInAir = true;
 
-    public Player(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ,
+    public Player(AnimatedModel animatedModel, Vector3f position, float rotX, float rotY, float rotZ,
                   float scale, Vector3f... collisionBoxes) {
-        super(model, position, rotX, rotY, rotZ, scale, collisionBoxes);
+        super(animatedModel, position, rotX, rotY, rotZ, scale, collisionBoxes);
     }
 
     @Override
@@ -42,6 +43,16 @@ public class Player extends MovableEntity {
             this.upwardsSpeed = 0;
             this.isInAir = false;
             super.position.y = Maths.lerp(super.position.y, terrainHeight, 0.5f);
+        }
+
+        doAnimations();
+    }
+
+    private void doAnimations() {
+        if (Maths.difference(this.currentSpeed, 0) > 5) {
+            super.setAnimation(1);
+        } else {
+            super.setAnimation(0);
         }
     }
 

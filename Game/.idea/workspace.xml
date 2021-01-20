@@ -5,8 +5,45 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1448daae-e5e5-4daf-966b-6006ecad8d18" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000001.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000002.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000003.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000004.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000005.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000006.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000007.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000008.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000009.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000010.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000011.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000012.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000013.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000014.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000015.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000016.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000017.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000018.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000019.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000020.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000021.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000022.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000023.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000024.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000025.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000026.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000027.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000028.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000029.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000030.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/fox/VillagerFox_animations_000031.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/animation/AnimatedModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/animation/AnimatedModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/animation/Animation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/animation/Animation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/animation/Animator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/animation/Animator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/engineTester/MainGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/engineTester/MainGameLoop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderEngine/Loader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/Loader.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,7 +64,7 @@
   <component name="ProjectId" id="1lhL0lCeHPYsHCSzVkyXHltCTCn" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/audio" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/res/fox" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15566503" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -35,15 +72,15 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res" />
+      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\ground" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\fox" />
       <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\src\audio" />
       <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res" />
       <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\src\water" />
-      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\ground" />
-      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\res" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res" />
       <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\ground" />
     </key>
   </component>

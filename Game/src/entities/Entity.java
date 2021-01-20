@@ -78,14 +78,30 @@ public class Entity {
 		}
 	}
 
+	public void setAnimation(int animationNumber) {
+		if (this.isAnimated) {
+			this.animatedModel.setCurrentAnimation(animationNumber);
+		}
+	}
+
 	public float getTextureXOffset() {
-		int column = this.textureIndex % this.staticModel.getTexture().getNumberOfRows();
-		return (float) column / (float) this.staticModel.getTexture().getNumberOfRows();
+		if (!this.isAnimated) {
+			int column = this.textureIndex % this.staticModel.getTexture().getNumberOfRows();
+			return (float) column / (float) this.staticModel.getTexture().getNumberOfRows();
+		} else {
+			int column = this.textureIndex % this.animatedModel.getCurrentModel().getTexture().getNumberOfRows();
+			return (float) column / (float) this.animatedModel.getCurrentModel().getTexture().getNumberOfRows();
+		}
 	}
 
 	public float getTextureYOffset() {
-		int row = this.textureIndex / this.staticModel.getTexture().getNumberOfRows();
-		return (float) row / (float) this.staticModel.getTexture().getNumberOfRows();
+		if (!this.isAnimated) {
+			int row = this.textureIndex / this.staticModel.getTexture().getNumberOfRows();
+			return (float) row / (float) this.staticModel.getTexture().getNumberOfRows();
+		} else {
+			int row = this.textureIndex / this.animatedModel.getCurrentModel().getTexture().getNumberOfRows();
+			return (float) row / (float) this.animatedModel.getCurrentModel().getTexture().getNumberOfRows();
+		}
 	}
 
 	public TexturedModel getModel() {

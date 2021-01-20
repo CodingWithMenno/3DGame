@@ -43,4 +43,9 @@ public class Animator {
         int frame = (int) (this.currentTime / this.msPerFrame);
         this.currentModel = this.animation.getKeyframes().get(frame);
     }
+
+    public void setAnimationTime(float animationTime) {
+        this.animation.setAnimationLength(animationTime);
+        this.msPerFrame = this.animation.getAnimationLength() / this.animation.getKeyframes().size();
+    }
 }
