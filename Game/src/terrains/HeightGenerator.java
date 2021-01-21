@@ -6,10 +6,13 @@ import java.util.Random;
 
 public class HeightGenerator {
 
-    private static final float AMPLITUDE = 50f;
+    private static final float AMPLITUDE = 60f;
     private static final int OCTAVES = 3;
     private static final float ROUGHNESS = 0.03f;
     private static final float SMOOTH_FACTOR = 7f;
+
+    private static final float MIN_HEIGHT = -0.4f;
+    private static final float MAX_HEIGHT = 0.6f;
 
     private Random random;
     private int seed;
@@ -32,7 +35,7 @@ public class HeightGenerator {
 
         if (total < -AMPLITUDE) {
             total = -AMPLITUDE;
-            total += getInterpolatedNoise(x / (SMOOTH_FACTOR / 4f), z / (SMOOTH_FACTOR / 4f)) * AMPLITUDE / 3f;
+            total += getInterpolatedNoise(x / (SMOOTH_FACTOR / 3f), z / (SMOOTH_FACTOR / 3f)) * AMPLITUDE / 2f;
         }
 
         return total;
@@ -72,6 +75,8 @@ public class HeightGenerator {
 
     private float getNoise(int x, int z) {
         this.random.setSeed(x * 42069 + z * 690420 + this.seed);
-        return this.random.nextFloat() * 2f - 1f;
+        float value = this.random.nextFloat() * 2f - 1f;
+
+        return Maths.clamp(value, MIN_HEIGHT, MAX_HEIGHT);
     }
 }

@@ -60,10 +60,10 @@ void main(void) {
 	if(mapHeight < -5) {
 		textureAmount.r = 1;
 	}
-	if(mapHeight >= -5 && mapHeight < 40) {
+	if(mapHeight >= -5 && mapHeight < 80) {
 		textureAmount.g = 1;
 	}
-	if(mapHeight >= 40) {
+	if(mapHeight >= 80) {
 		textureAmount.b = 1;
 	}
 

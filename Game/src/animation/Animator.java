@@ -40,8 +40,12 @@ public class Animator {
     }
 
     private void setCurrentModel() {
-        int frame = (int) (this.currentTime / this.msPerFrame);
-        this.currentModel = this.animation.getKeyframes().get(frame);
+        try {
+            int frame = (int) (this.currentTime / this.msPerFrame);
+            this.currentModel = this.animation.getKeyframes().get(frame);
+        } catch (IndexOutOfBoundsException e) {
+            this.currentModel = this.animation.getKeyframes() .get(0);
+        }
     }
 
     public void setAnimationTime(float animationTime) {

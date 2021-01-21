@@ -6,12 +6,15 @@ import collisions.CollisionHandler;
 import entities.*;
 import guis.GuiRenderer;
 import guis.GuiTexture;
+import javafx.scene.shape.Box;
+import javafx.scene.shape.Shape3D;
 import models.RawModel;
 import models.TexturedModel;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
+import org.lwjgl.util.Rectangle;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -43,6 +46,7 @@ public class MainGameLoop {
 	 * 			-Particle systeem maken
 	 * 			-Zon en wolken toevoegen (goede day-night cycle maken)
 	 * 			-Effecten toepassen (Post-Processing, Bloom, Lens flare, etc.)
+	 * 			-Biomes toevoegen a.d.h.v. de hoogte van het terrein
 	 * 		.
 	 * 		Optioneel / Verbeteren:
 	 * 			-Water low poly maken
@@ -58,6 +62,8 @@ public class MainGameLoop {
 	public static float WATER_HEIGHT = -15;
 
 	public static void main(String[] args) {
+
+
 		DisplayManager.createDisplay();
 		Loader loader = new Loader();
 
@@ -92,7 +98,7 @@ public class MainGameLoop {
 
 		AnimatedModel foxAnimatedModel = new AnimatedModel(foxIdleAnimation, foxRunningAnimation);
 
-		Player player = new Player(foxAnimatedModel, new Vector3f(150, -18.5f, -200), 0, 0, 0, 0.4f, dimensions);
+		Player player = new Player(foxAnimatedModel, new Vector3f(500, -500, -200), 0, 0, 0, 0.4f, dimensions);
 		entities.add(player);
 
 		Camera camera = new Camera(player, terrain);
