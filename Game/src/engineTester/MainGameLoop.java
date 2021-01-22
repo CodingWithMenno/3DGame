@@ -6,12 +6,16 @@ import collisions.CollisionHandler;
 import entities.*;
 import models.TexturedModel;
 
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Vector3f;
 
 import org.lwjgl.util.vector.Vector4f;
+import particles.Particle;
+import particles.ParticleMaster;
 import renderEngine.*;
 import terrains.Biome;
 import terrains.Terrain;
@@ -53,8 +57,6 @@ public class MainGameLoop {
 	public static float WATER_HEIGHT = -15;
 
 	public static void main(String[] args) {
-
-
 		DisplayManager.createDisplay();
 		Loader loader = new Loader();
 
@@ -98,7 +100,11 @@ public class MainGameLoop {
 
 		Camera camera = new Camera(player, terrain);
 
+
+		//***********PARTICLE SETUP*****************
 		MasterRenderer renderer = new MasterRenderer(camera);
+
+		ParticleMaster.init(loader, renderer.getProjectionMatrix());
 
 
 		//***********ENTITIES SETUP****************
@@ -181,6 +187,7 @@ public class MainGameLoop {
 			player.updateEntity(terrain);
 			player.updateAnimation();
 //			fishGroup.updateAllFish(terrain);
+			ParticleMaster.update();
 
 			collisionHandler.checkCollisions();
 
@@ -203,6 +210,9 @@ public class MainGameLoop {
 			buffers.unbindCurrentFrameBuffer();
 			renderer.renderScene(entities, terrain, lights, camera, new Vector4f(0, -1, 0, 100000));
 			waterRenderer.render(waterTiles, camera, lights.get(0));
+
+			ParticleMaster.renderParticles(camera);
+
 //			guiRenderer.render(guiTextures);
 
 			DisplayManager.updateDisplay();
@@ -210,6 +220,7 @@ public class MainGameLoop {
 
 
 		//********CLEAN UP***************
+		ParticleMaster.cleanUp();
 		buffers.cleanUp();
 		waterShader.cleanUp();
 //		guiRenderer.cleanUp();

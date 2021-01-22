@@ -11,6 +11,8 @@ import java.util.List;
 
 public class Entity {
 
+	public static final float GRAVITY = -50;
+
 	private TexturedModel staticModel;
 	private AnimatedModel animatedModel;
 	private final boolean isAnimated;

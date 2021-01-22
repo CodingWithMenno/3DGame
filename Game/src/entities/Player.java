@@ -13,7 +13,6 @@ public class Player extends MovableEntity {
 
     private static final float RUN_SPEED = 80;
     private static final float TURN_SPEED = 200;
-    private static final float GRAVITY = -50;
     private static final float JUMP_POWER = 30;
 
     private float currentSpeed = 0;
