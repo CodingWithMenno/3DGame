@@ -4,14 +4,11 @@ import models.RawModel;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.Loader;
-import textures.TerrainTexture;
-import textures.TerrainTexturePack;
 import toolbox.Maths;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Terrain {
 
@@ -22,12 +19,14 @@ public class Terrain {
     private float x;
     private float z;
     private RawModel model;
-    private TerrainTexturePack texturePack;
+    private List<Biome> biomes;
 
     private float[][] heights;
 
-    public Terrain(int gridX, int gridZ, Loader loader, TerrainTexturePack texturePack) {
-        this.texturePack = texturePack;
+    public Terrain(int gridX, int gridZ, Loader loader, Biome... biomes) {
+        this.biomes = new ArrayList<>();
+        this.biomes.addAll(Arrays.asList(biomes));
+
         this.x = gridX * SIZE;
         this.z = gridZ * SIZE;
         this.model = generateTerrain(loader);
@@ -156,7 +155,7 @@ public class Terrain {
         return SIZE;
     }
 
-    public TerrainTexturePack getTexturePack() {
-        return texturePack;
+    public List<Biome> getBiomes() {
+        return biomes;
     }
 }

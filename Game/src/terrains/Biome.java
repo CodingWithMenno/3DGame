@@ -5,24 +5,18 @@ import textures.TerrainTexture;
 public class Biome {
 
     private TerrainTexture groundTexture;
-    private final int minHeight;
-    private final int maxHeight;
+    private final int separationHeight;
 
-    public Biome(TerrainTexture groundTexture, int minHeight, int maxHeight) {
+    public Biome(TerrainTexture groundTexture, int separationHeight) {
         this.groundTexture = groundTexture;
-        this.minHeight = minHeight;
-        this.maxHeight = maxHeight;
+        this.separationHeight = separationHeight;
     }
 
     public TerrainTexture getGroundTexture() {
         return groundTexture;
     }
 
-    public int getMinHeight() {
-        return minHeight;
-    }
-
-    public int getMaxHeight() {
-        return maxHeight;
+    public int getSeparationHeight() {
+        return separationHeight;
     }
 }

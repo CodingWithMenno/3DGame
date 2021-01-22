@@ -5,18 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1448daae-e5e5-4daf-966b-6006ecad8d18" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/res/ground/SnowTexture.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/terrains/Biome.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Game/shaders/terrainVertexShader.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Game/shaders/terrainVertexShader.glsl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/engineTester/MainGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/engineTester/MainGameLoop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderEngine/DisplayManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/DisplayManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderEngine/TerrainRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/TerrainRenderer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shaders/TerrainShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shaders/TerrainShader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shaders/terrainVertexShader.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/src/shaders/terrainVertexShader.glsl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/textures/TerrainTexturePack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/textures/TerrainTexturePack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/water/WaterFrameBuffers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/water/WaterFrameBuffers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/water/WaterTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/water/WaterTile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/terrains/Biome.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/terrains/Biome.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/terrains/Terrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/terrains/Terrain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/TerrainTexturePack.java" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

@@ -10,8 +10,8 @@ import org.lwjgl.util.vector.Vector3f;
 import shaders.TerrainShader;
 import shadows.ShadowBox;
 import shadows.ShadowMapMasterRenderer;
+import terrains.Biome;
 import terrains.Terrain;
-import textures.TerrainTexturePack;
 import toolbox.Maths;
 
 import java.util.List;
@@ -50,15 +50,19 @@ public class TerrainRenderer {
     }
 
     private void bindTextures(Terrain terrain) {
-        TerrainTexturePack texturePack = terrain.getTexturePack();
+        List<Biome> biomes = terrain.getBiomes();
+        int totalBiomes = biomes.size();
+
         GL13.glActiveTexture(GL13.GL_TEXTURE1);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, texturePack.getrTexture().getTextureID());
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, biomes.get(0).getGroundTexture().getTextureID());
         GL13.glActiveTexture(GL13.GL_TEXTURE2);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, texturePack.getgTexture().getTextureID());
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, totalBiomes > 1 ? biomes.get(1).getGroundTexture().getTextureID() : biomes.get(0).getGroundTexture().getTextureID());
         GL13.glActiveTexture(GL13.GL_TEXTURE3);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, texturePack.getbTexture().getTextureID());
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, totalBiomes > 2 ? biomes.get(2).getGroundTexture().getTextureID() : biomes.get(0).getGroundTexture().getTextureID());
         GL13.glActiveTexture(GL13.GL_TEXTURE4);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, texturePack.getaTexture().getTextureID());
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, totalBiomes > 3 ? biomes.get(3).getGroundTexture().getTextureID() : biomes.get(0).getGroundTexture().getTextureID());
+
+        this.shader.loadBiomeSeparations(biomes);
     }
 
     private void unbindTexturedModel() {

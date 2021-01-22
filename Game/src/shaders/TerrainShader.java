@@ -5,13 +5,16 @@ import entities.Light;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
+import terrains.Biome;
 import toolbox.Maths;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TerrainShader extends ShaderProgram {
 
     private static final int MAX_LIGHTS = 5;
+    private static final int MAX_BIOMES = 4;
 
     private static final String VERTEX_FILE = "src/shaders/terrainVertexShader.glsl";
     private static final String FRAGMENT_FILE = "src/shaders/terrainFragmentShader.glsl";
@@ -26,6 +29,7 @@ public class TerrainShader extends ShaderProgram {
     private int location_reflectivity;
     private int location_skyColour;
     private int location_density;
+    private int location_biomeSeparation[];
     private int location_rTexture;
     private int location_gTexture;
     private int location_bTexture;
@@ -74,6 +78,11 @@ public class TerrainShader extends ShaderProgram {
             this.location_lightColour[i] = super.getUniformLocation("lightColour[" + i + "]");
             this.location_attenuation[i] = super.getUniformLocation("attenuation[" + i + "]");
         }
+
+        this.location_biomeSeparation = new int[MAX_BIOMES];
+        for (int i = 0; i < MAX_BIOMES; i++) {
+            this.location_biomeSeparation[i] = super.getUniformLocation("biomeSeparation[" + i + "]");
+        }
     }
 
     public void connectTextureUnits() {
@@ -82,6 +91,16 @@ public class TerrainShader extends ShaderProgram {
         super.loadInt(this.location_bTexture, 3);
         super.loadInt(this.location_aTexture, 4);
         super.loadInt(this.location_shadowMap, 5);
+    }
+
+    public void loadBiomeSeparations(List<Biome> biomes) {
+        for (int i = 0; i < MAX_BIOMES; i++) {
+            if (i < biomes.size()) {
+                super.loadInt(this.location_biomeSeparation[i], biomes.get(i).getSeparationHeight());
+            } else {
+                super.loadInt(this.location_biomeSeparation[i], 0);
+            }
+        }
     }
 
     public void loadShadowDistanceAndSize(float distance, float size) {

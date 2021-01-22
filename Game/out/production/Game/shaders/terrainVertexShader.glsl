@@ -26,6 +26,7 @@ const float transitionDistance = 10.0;
 
 uniform vec4 plane;
 
+uniform int biomeSeparation[4];
 uniform sampler2D rTexture;
 uniform sampler2D gTexture;
 uniform sampler2D bTexture;
@@ -58,16 +59,16 @@ void main(void) {
 
 	float mapHeight = worldPosition.y;
 	vec4 textureAmount = vec4(0, 0, 0, 0);
-	if(mapHeight < -5) {
+	if(mapHeight < biomeSeparation[0]) {
 		textureAmount.r = 1;
 	}
-	if(mapHeight >= -5 && mapHeight < 80) {
+	if(mapHeight >= biomeSeparation[0] && mapHeight < biomeSeparation[1]) {
 		textureAmount.g = 1;
 	}
-	if(mapHeight >= 80 && mapHeight < 100) {
+	if(mapHeight >= biomeSeparation[1] && mapHeight < biomeSeparation[2]) {
 		textureAmount.b = 1;
 	}
-	if(mapHeight >= 100) {
+	if(mapHeight >= biomeSeparation[2]) {
 		textureAmount.a = 1;
 	}
 

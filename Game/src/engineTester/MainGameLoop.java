@@ -4,23 +4,19 @@ import animation.AnimatedModel;
 import animation.Animation;
 import collisions.CollisionHandler;
 import entities.*;
-import guis.GuiRenderer;
-import guis.GuiTexture;
-import models.RawModel;
 import models.TexturedModel;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
-import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import org.lwjgl.util.vector.Vector4f;
 import renderEngine.*;
+import terrains.Biome;
 import terrains.Terrain;
 import textures.ModelTexture;
 import textures.TerrainTexture;
-import textures.TerrainTexturePack;
 import water.WaterFrameBuffers;
 import water.WaterRenderer;
 import water.WaterShader;
@@ -42,7 +38,6 @@ public class MainGameLoop {
 	 * 			-Particle systeem maken (sneeuw op bergtoppen)
 	 * 			-Zon en wolken toevoegen (goede day-night cycle maken)
 	 * 			-Effecten toepassen (Post-Processing, Bloom, Lens flare, etc.)
-	 * 			-Biomes toevoegen a.d.h.v. de hoogte van het terrein
 	 * 		.
 	 * 		Optioneel / Verbeteren:
 	 * 			-Water low poly maken
@@ -65,12 +60,15 @@ public class MainGameLoop {
 
 		//*************WORLD SETUP**************
 		TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("ground/DirtTexture"));
+		Biome rBiome = new Biome(rTexture, -5);
 		TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("ground/GrassTexture"));
+		Biome gBiome = new Biome(gTexture, 80);
 		TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("ground/StoneTexture"));
+		Biome bBiome = new Biome(bTexture, 100);
 		TerrainTexture aTexture = new TerrainTexture(loader.loadTexture("ground/SnowTexture"));
-		TerrainTexturePack texturePack = new TerrainTexturePack(rTexture, gTexture, bTexture, aTexture);
+		Biome aBiome = new Biome(aTexture, 0);
 
-		Terrain terrain = new Terrain(0, -1, loader, texturePack);
+		Terrain terrain = new Terrain(0, -1, loader, rBiome, gBiome, bBiome, aBiome);
 
 
 		//**********PLAYER SETUP*******************
