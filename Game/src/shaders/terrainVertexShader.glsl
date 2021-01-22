@@ -29,6 +29,7 @@ uniform vec4 plane;
 uniform sampler2D rTexture;
 uniform sampler2D gTexture;
 uniform sampler2D bTexture;
+uniform sampler2D aTexture;
 const float tiling = 100;
 
 void main(void) {
@@ -63,14 +64,18 @@ void main(void) {
 	if(mapHeight >= -5 && mapHeight < 80) {
 		textureAmount.g = 1;
 	}
-	if(mapHeight >= 80) {
+	if(mapHeight >= 80 && mapHeight < 100) {
 		textureAmount.b = 1;
+	}
+	if(mapHeight >= 100) {
+		textureAmount.a = 1;
 	}
 
 	vec2 tiledCoords = textureCoordinates * tiling;
 	vec4 rTextureColour = texture(rTexture, tiledCoords) * textureAmount.r;
 	vec4 gTextureColour = texture(gTexture, tiledCoords) * textureAmount.g;
 	vec4 bTextureColour = texture(bTexture, tiledCoords) * textureAmount.b;
+	vec4 aTextureColour = texture(aTexture, tiledCoords) * textureAmount.a;
 
-	surfaceColour = rTextureColour + gTextureColour + bTextureColour;
+	surfaceColour = rTextureColour + gTextureColour + bTextureColour + aTextureColour;
 }

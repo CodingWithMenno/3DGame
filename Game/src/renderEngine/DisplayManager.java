@@ -6,7 +6,8 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.*;
 
 public class DisplayManager {
-	
+
+	private static final String TITLE = "Poly Hunting";
 	private static final int WIDTH = 1920;
 	private static final int HEIGHT = 1080;
 	private static final int FPS_CAP = 250;
@@ -24,7 +25,7 @@ public class DisplayManager {
 		try {
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 			Display.create(new PixelFormat().withDepthBits(24).withSamples(ANTIALIASING_AMOUNT), attribs);
-			Display.setTitle("3D Game");
+			Display.setTitle(TITLE);
 			Display.setVSyncEnabled(true);
 			GL11.glEnable(GL13.GL_MULTISAMPLE);
 		} catch (LWJGLException e) {

@@ -6,15 +6,12 @@ import collisions.CollisionHandler;
 import entities.*;
 import guis.GuiRenderer;
 import guis.GuiTexture;
-import javafx.scene.shape.Box;
-import javafx.scene.shape.Shape3D;
 import models.RawModel;
 import models.TexturedModel;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
-import org.lwjgl.util.Rectangle;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -37,13 +34,12 @@ public class MainGameLoop {
 
 	/** TODO :
 	 * 		Entities:
-	 * 			-Normal mapping
 	 * 			-Vissen/vogels maken met boids algoritme
 	 * 			-Geluid implementeren in entities
 	 * 		.
 	 * 		Overig:
-	 * 			-Goede GUI library maken (met animatie support & het resizen van het display)
-	 * 			-Particle systeem maken
+	 * 			-Goede GUI library maken (met animatie support & het resizen van het display) (+ text rendering)
+	 * 			-Particle systeem maken (sneeuw op bergtoppen)
 	 * 			-Zon en wolken toevoegen (goede day-night cycle maken)
 	 * 			-Effecten toepassen (Post-Processing, Bloom, Lens flare, etc.)
 	 * 			-Biomes toevoegen a.d.h.v. de hoogte van het terrein
@@ -71,7 +67,8 @@ public class MainGameLoop {
 		TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("ground/DirtTexture"));
 		TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("ground/GrassTexture"));
 		TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("ground/StoneTexture"));
-		TerrainTexturePack texturePack = new TerrainTexturePack(rTexture, gTexture, bTexture);
+		TerrainTexture aTexture = new TerrainTexture(loader.loadTexture("ground/SnowTexture"));
+		TerrainTexturePack texturePack = new TerrainTexturePack(rTexture, gTexture, bTexture, aTexture);
 
 		Terrain terrain = new Terrain(0, -1, loader, texturePack);
 
