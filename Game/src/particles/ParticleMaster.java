@@ -4,29 +4,37 @@ import entities.Camera;
 import org.lwjgl.util.vector.Matrix4f;
 import renderEngine.Loader;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class ParticleMaster {
 
-    private static List<Particle> particles;
+    private static Map<ParticleTexture, List<Particle>> particles;
     private static ParticleRenderer renderer;
 
     public static void init(Loader loader, Matrix4f projectionMatrix) {
-        particles = new ArrayList<>();
+        particles = new HashMap<>();
         renderer = new ParticleRenderer(loader, projectionMatrix);
     }
 
-    public static void update() {
-        Iterator<Particle> iterator = particles.iterator();
-        while (iterator.hasNext()) {
-            Particle particle = iterator.next();
-            boolean isAlive = particle.update();
+    public static void update(Camera camera) {
+        Iterator<Map.Entry<ParticleTexture, List<Particle>>> mapIterator = particles.entrySet().iterator();
+        while (mapIterator.hasNext()) {
+            List<Particle> list = mapIterator.next().getValue();
+            Iterator<Particle> iterator = list.iterator();
 
-            if (!isAlive) {
-                iterator.remove();
+            while (iterator.hasNext()) {
+                Particle particle = iterator.next();
+                boolean isAlive = particle.update(camera);
+
+                if (!isAlive) {
+                    iterator.remove();
+
+                    if (list.isEmpty()) {
+                        mapIterator.remove();
+                    }
+                }
             }
+            InsertionSort.sortHighToLow(list);
         }
     }
 
@@ -35,7 +43,14 @@ public class ParticleMaster {
     }
 
     public static void addParticle(Particle particle) {
-        particles.add(particle);
+        List<Particle> list = particles.get(particle.getTexture());
+
+        if (list == null) {
+            list = new ArrayList<>();
+            particles.put(particle.getTexture(), list);
+        }
+
+        list.add(particle);
     }
 
     public static void cleanUp() {

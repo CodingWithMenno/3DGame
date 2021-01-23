@@ -1,8 +1,10 @@
 package particles;
 
 import java.util.List;
+import java.util.Map;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
@@ -29,13 +31,28 @@ public class ParticleRenderer {
 		this.shader.stop();
 	}
 	
-	protected void render(List<Particle> particles, Camera camera) {
+	protected void render(Map<ParticleTexture, List<Particle>> particles, Camera camera) {
 		Matrix4f viewMatrix = Maths.createViewMatrix(camera);
-		prepare();
 
-		for (Particle particle : particles) {
-			updateModelViewMatrix(particle.getPosition(), particle.getRotation(), particle.getScale(), viewMatrix);
-			GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, this.quad.getVertexCount());
+		prepare();
+		for (ParticleTexture texture : particles.keySet()) {
+			if (texture.isGlowing()) {
+				GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+			} else {
+				GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			}
+		}
+
+		for (ParticleTexture texture : particles.keySet()) {
+
+			GL13.glActiveTexture(GL13.GL_TEXTURE0);
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.getTextureID());
+
+			for (Particle particle : particles.get(texture)) {
+				updateModelViewMatrix(particle.getPosition(), particle.getRotation(), particle.getScale(), viewMatrix);
+				this.shader.loadTextureCoordsInfo(particle.getTexOffset1(), particle.getTexOffset2(), texture.getNumberOfRows(), particle.getBlend());
+				GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, this.quad.getVertexCount());
+			}
 		}
 
 		finishRendering();

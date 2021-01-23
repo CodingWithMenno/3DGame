@@ -1,4 +1,4 @@
-package engineTester;
+package gameLoop;
 
 import animation.AnimatedModel;
 import animation.Animation;
@@ -6,16 +6,15 @@ import collisions.CollisionHandler;
 import entities.*;
 import models.TexturedModel;
 
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Vector3f;
 
 import org.lwjgl.util.vector.Vector4f;
-import particles.Particle;
 import particles.ParticleMaster;
+import particles.ParticleSystem;
+import particles.ParticleTexture;
 import renderEngine.*;
 import terrains.Biome;
 import terrains.Terrain;
@@ -35,7 +34,7 @@ public class MainGameLoop {
 	/** TODO :
 	 * 		Entities:
 	 * 			-Vissen/vogels maken met boids algoritme
-	 * 			-Geluid implementeren in entities
+	 * 			-Geluid implementeren in entities en biomes
 	 * 		.
 	 * 		Overig:
 	 * 			-Goede GUI library maken (met animatie support & het resizen van het display) (+ text rendering)
@@ -48,10 +47,12 @@ public class MainGameLoop {
 	 * 			-Lampen die ingerendered/uitgerendered worden laten in/uit faden
 	 * 			-Collision detectie verbeteren / physics verbeteren (OBB implementeren & je kan worden geduwd door andere entities)
 	 * 			-Animaties met collada files (interpolaten tussen frames en werken met skeletten)
+	 * 			-Terrain generator verbeteren
 	 * 		.
 	 * 		Voor betere performance:
 	 * 			-Nieuwe objLoader gebruiken (zie normal mapping filmpje)
 	 * 			-De vertexen/fragments van het water alleen renderen als ze hoger zijn dan het terrein
+	 * 			-Instanced rendering voor particles toevoegen
 	 */
 
 	public static float WATER_HEIGHT = -15;
@@ -66,7 +67,7 @@ public class MainGameLoop {
 		TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("ground/GrassTexture"));
 		Biome gBiome = new Biome(gTexture, 80);
 		TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("ground/StoneTexture"));
-		Biome bBiome = new Biome(bTexture, 100);
+		Biome bBiome = new Biome(bTexture, 120);
 		TerrainTexture aTexture = new TerrainTexture(loader.loadTexture("ground/SnowTexture"));
 		Biome aBiome = new Biome(aTexture, 0);
 
@@ -105,6 +106,9 @@ public class MainGameLoop {
 		MasterRenderer renderer = new MasterRenderer(camera);
 
 		ParticleMaster.init(loader, renderer.getProjectionMatrix());
+
+		ParticleTexture particleTexture = new ParticleTexture(loader.loadTexture("particles/SnowTexture"), 1, false);
+		ParticleSystem system = new ParticleSystem(particleTexture, 40, 10, 0.1f, 1);
 
 
 		//***********ENTITIES SETUP****************
@@ -187,7 +191,9 @@ public class MainGameLoop {
 			player.updateEntity(terrain);
 			player.updateAnimation();
 //			fishGroup.updateAllFish(terrain);
-			ParticleMaster.update();
+
+			ParticleMaster.update(camera);
+			system.generateParticles(new Vector3f(player.getPosition()));
 
 			collisionHandler.checkCollisions();
 

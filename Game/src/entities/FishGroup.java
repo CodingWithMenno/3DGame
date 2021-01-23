@@ -1,6 +1,6 @@
 package entities;
 
-import engineTester.MainGameLoop;
+import gameLoop.MainGameLoop;
 import org.lwjgl.util.vector.Vector3f;
 import terrains.Terrain;
 import toolbox.Maths;

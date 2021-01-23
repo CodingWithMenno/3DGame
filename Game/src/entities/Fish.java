@@ -1,6 +1,6 @@
 package entities;
 
-import engineTester.MainGameLoop;
+import gameLoop.MainGameLoop;
 import models.TexturedModel;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.DisplayManager;
@@ -8,7 +8,6 @@ import terrains.Terrain;
 import toolbox.Maths;
 
 import java.util.List;
-import java.util.Random;
 
 public class Fish extends MovableEntity {
 

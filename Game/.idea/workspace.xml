@@ -5,15 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1448daae-e5e5-4daf-966b-6006ecad8d18" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/particles/ParticleMaster.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/particles/FireTexture.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/particles/SnowTexture.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/particles/InsertionSort.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/particles/ParticleSystem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/particles/ParticleTexture.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/engineTester/MainGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/engineTester/MainGameLoop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shadows/ShadowBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shadows/ShadowBox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shadows/ShadowFrameBuffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shadows/ShadowFrameBuffer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shadows/ShadowMapEntityRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shadows/ShadowMapEntityRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shadows/ShadowMapMasterRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shadows/ShadowMapMasterRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game/particles/particleFragmentshader.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Game/particles/particleFragmentshader.glsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game/particles/particleVertexShader.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Game/particles/particleVertexShader.glsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/engineTester/MainGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Camera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Fish.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Fish.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/FishGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/FishGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/particles/Particle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/particles/Particle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/particles/ParticleMaster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/particles/ParticleMaster.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/particles/ParticleRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/particles/ParticleRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/particles/ParticleShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/particles/ParticleShader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/particles/particleFragmentshader.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/src/particles/particleFragmentshader.glsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/particles/particleVertexShader.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/src/particles/particleVertexShader.glsl" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,7 +43,7 @@
   <component name="ProjectId" id="1lhL0lCeHPYsHCSzVkyXHltCTCn" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/res/ground" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/res/particles" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15566503" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -42,15 +51,19 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\particles" />
+      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\ground" />
+      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="particles" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\particles" />
       <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\ground" />
       <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\fox" />
       <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\src\audio" />
-      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res" />
-      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\src\water" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\ground" />
       <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res" />
     </key>
   </component>
@@ -82,12 +95,12 @@
       </method>
     </configuration>
     <configuration name="MainGameLoop" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="engineTester.MainGameLoop" />
+      <option name="MAIN_CLASS_NAME" value="gameLoop.MainGameLoop" />
       <module name="Game" />
       <option name="VM_PARAMETERS" value=" -Djava.library.path=libs/natives/" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="engineTester.*" />
+          <option name="PATTERN" value="gameLoop.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
