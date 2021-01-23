@@ -23,10 +23,8 @@ public class Terrain {
 
     private float[][] heights;
 
-    public Terrain(int gridX, int gridZ, Loader loader, Biome... biomes) {
+    public Terrain(int gridX, int gridZ, Loader loader) {
         this.biomes = new ArrayList<>();
-        this.biomes.addAll(Arrays.asList(biomes));
-
         this.x = gridX * SIZE;
         this.z = gridZ * SIZE;
         this.model = generateTerrain(loader);
@@ -137,6 +135,10 @@ public class Terrain {
 
     private float getHeight(int x, int z, HeightGenerator generator) {
         return generator.generateHeight(x, z);
+    }
+
+    public void addBiomes(Biome... biomes) {
+        this.biomes.addAll(Arrays.asList(biomes));
     }
 
     public float getX() {

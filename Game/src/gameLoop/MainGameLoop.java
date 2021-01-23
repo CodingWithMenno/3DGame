@@ -32,47 +32,25 @@ import java.util.Random;
 
 public class MainGameLoop {
 
-	/** TODO :
-	 * 		Entities:
-	 * 			-Vissen/vogels maken met boids algoritme
-	 * 			-Geluid implementeren in entities en biomes
-	 * 		.
-	 * 		Overig:
-	 * 			-Goede GUI library maken (met animatie support & het resizen van het display) (+ text rendering)
-	 * 			-Zon en wolken toevoegen (goede day-night cycle maken)
-	 * 			-Effecten toepassen (Post-Processing, Bloom, Lens flare, etc.)
-	 * 		.
-	 * 		Optioneel / Verbeteren:
-	 * 			-CLEAN UP MAINGAMELOOP !!!!!!!!!!!!!!!!!!!!!!!!!!!!																		<--------!!!!!!!!!!!!!!!!!!!!
-	 * 			-Water low poly maken
-	 * 			-Lampen die ingerendered/uitgerendered worden laten in/uit faden
-	 * 			-Collision detectie verbeteren / physics verbeteren (OBB implementeren & je kan worden geduwd door andere entities)
-	 * 			-Animaties met collada files (interpolaten tussen frames en werken met skeletten)
-	 * 			-Terrain generator verbeteren
-	 * 		.
-	 * 		Voor betere performance:
-	 * 			-Nieuwe objLoader gebruiken (zie normal mapping filmpje)
-	 * 			-De vertexen/fragments van het water alleen renderen als ze hoger zijn dan het terrein
-	 * 			-Instanced rendering voor particles toevoegen
-	 */
-
 	public static float WATER_HEIGHT = -15;
 
 	public static void main(String[] args) {
 		DisplayManager.createDisplay();
 		Loader loader = new Loader();
 
+
 		//*************WORLD SETUP**************
 		TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("ground/DirtTexture"));
-		Biome rBiome = new Biome(rTexture, -5);
-		TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("ground/PathTexture"));
-		Biome gBiome = new Biome(gTexture, 80);
+		Biome rBiome = new Biome(rTexture, -5, false);
+		TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("ground/GrassTexture"));
+		Biome gBiome = new Biome(gTexture, 80, false);
 		TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("ground/StoneTexture"));
-		Biome bBiome = new Biome(bTexture, 120);
+		Biome bBiome = new Biome(bTexture, 120, false);
 		TerrainTexture aTexture = new TerrainTexture(loader.loadTexture("ground/SnowTexture"));
-		Biome aBiome = new Biome(aTexture, 0);
+		Biome aBiome = new Biome(aTexture, 120, true);
 
-		Terrain terrain = new Terrain(0, -1, loader, rBiome, gBiome, bBiome, aBiome);
+		Terrain terrain = new Terrain(0, -1, loader);
+		terrain.addBiomes(rBiome, gBiome, bBiome, aBiome);
 
 
 		//**********PLAYER SETUP*******************

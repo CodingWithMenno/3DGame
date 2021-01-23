@@ -9,7 +9,7 @@ import org.lwjgl.util.vector.Vector3f;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Entity {
+public class Entity implements Cloneable {
 
 	public static final float GRAVITY = -50;
 
@@ -112,6 +112,16 @@ public class Entity {
 		}
 
 		return this.animatedModel.getCurrentModel();
+	}
+
+	@Override
+	public Object clone() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public void setModel(TexturedModel staticModel) {
