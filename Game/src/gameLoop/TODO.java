@@ -11,6 +11,7 @@ public class TODO {
      * 			-Goede GUI library maken (met animatie support & het resizen van het display) (+ text rendering)
      * 			-Zon en wolken toevoegen (goede day-night cycle maken)
      * 			-Effecten toepassen (Post-Processing, Bloom, Lens flare, etc.)
+     * 		    -Biomes verbeteren
      * 		.
      * 		Optioneel / Verbeteren:
      * 			-CLEAN UP MAINGAMELOOP !!!!!!!!!!!!!!!!!!!!!!!!!!!!																		<--------!!!!!!!!!!!!!!!!!!!!

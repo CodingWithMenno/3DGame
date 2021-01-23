@@ -119,7 +119,8 @@ public class MainGameLoop {
 
 		TexturedModel postModel = new TexturedModel(ObjLoader.loadObjModel("lamp/LampPost", loader),
 				new ModelTexture(loader.loadTexture("lamp/LampPostTexture")));
-		entities.add(new Entity(postModel, new Vector3f(100, terrain.getHeightOfTerrain(100, -150), -150), 0, 0, 0, 1f));
+		dimensions = ObjLoader.getLastDimensions();
+		entities.add(new Entity(postModel, new Vector3f(100, terrain.getHeightOfTerrain(100, -150), -150), 0, 0, 0, 1f, dimensions));
 
 		List<Light> lights = new ArrayList<>();
 		lights.add(new Light(new Vector3f(1000, 500000, -100000), new Vector3f(0.7f, 0.7f, 0.7f)));

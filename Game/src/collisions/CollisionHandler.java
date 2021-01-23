@@ -46,4 +46,12 @@ public class CollisionHandler {
             }
         }
     }
+
+    public void addEntity(Entity entity) {
+        this.entities.add(entity);
+
+        if (entity instanceof MovableEntity) {
+            this.movableEntities.add((MovableEntity) entity);
+        }
+    }
 }
