@@ -5,12 +5,11 @@ import renderEngine.DisplayManager;
 
 public class ParticleSystem {
 
-    private float pps;
-    private float speed;
-    private float gravityComplient;
-    private float lifeLength;
-
-    private ParticleTexture texture;
+    protected float pps;
+    protected float speed;
+    protected float gravityComplient;
+    protected float lifeLength;
+    protected ParticleTexture texture;
 
     public ParticleSystem(ParticleTexture texture, float pps, float speed, float gravityComplient, float lifeLength) {
         this.texture = texture;
@@ -35,7 +34,7 @@ public class ParticleSystem {
         }
     }
 
-    private void emitParticle(Vector3f center){
+    protected void emitParticle(Vector3f center){
         float dirX = (float) Math.random() * 2f - 1f;
         float dirZ = (float) Math.random() * 2f - 1f;
         Vector3f velocity = new Vector3f(dirX, 1, dirZ);

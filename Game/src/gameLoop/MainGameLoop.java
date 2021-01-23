@@ -15,6 +15,7 @@ import org.lwjgl.util.vector.Vector4f;
 import particles.ParticleMaster;
 import particles.ParticleSystem;
 import particles.ParticleTexture;
+import particles.SnowParticleSystem;
 import renderEngine.*;
 import terrains.Biome;
 import terrains.Terrain;
@@ -38,11 +39,11 @@ public class MainGameLoop {
 	 * 		.
 	 * 		Overig:
 	 * 			-Goede GUI library maken (met animatie support & het resizen van het display) (+ text rendering)
-	 * 			-Particle systeem maken (sneeuw op bergtoppen)
 	 * 			-Zon en wolken toevoegen (goede day-night cycle maken)
 	 * 			-Effecten toepassen (Post-Processing, Bloom, Lens flare, etc.)
 	 * 		.
 	 * 		Optioneel / Verbeteren:
+	 * 			-CLEAN UP MAINGAMELOOP !!!!!!!!!!!!!!!!!!!!!!!!!!!!																		<--------!!!!!!!!!!!!!!!!!!!!
 	 * 			-Water low poly maken
 	 * 			-Lampen die ingerendered/uitgerendered worden laten in/uit faden
 	 * 			-Collision detectie verbeteren / physics verbeteren (OBB implementeren & je kan worden geduwd door andere entities)
@@ -108,7 +109,7 @@ public class MainGameLoop {
 		ParticleMaster.init(loader, renderer.getProjectionMatrix());
 
 		ParticleTexture particleTexture = new ParticleTexture(loader.loadTexture("particles/SnowTexture"), 1, false);
-		ParticleSystem system = new ParticleSystem(particleTexture, 40, 10, 0.1f, 1);
+		ParticleSystem snowParticleSystem = new SnowParticleSystem(particleTexture, bBiome.getSeparationHeight() + 10, player);
 
 
 		//***********ENTITIES SETUP****************
@@ -193,7 +194,7 @@ public class MainGameLoop {
 //			fishGroup.updateAllFish(terrain);
 
 			ParticleMaster.update(camera);
-			system.generateParticles(new Vector3f(player.getPosition()));
+			snowParticleSystem.generateParticles(new Vector3f(player.getPosition()));
 
 			collisionHandler.checkCollisions();
 

@@ -5,24 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1448daae-e5e5-4daf-966b-6006ecad8d18" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/res/particles/FireTexture.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/particles/SnowTexture.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/particles/InsertionSort.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/particles/ParticleSystem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/particles/ParticleTexture.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/particles/SnowParticleSystem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game/particles/particleFragmentshader.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Game/particles/particleFragmentshader.glsl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game/particles/particleVertexShader.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Game/particles/particleVertexShader.glsl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/engineTester/MainGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Camera.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Fish.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Fish.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/FishGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/FishGroup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/particles/Particle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/particles/Particle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/particles/ParticleMaster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/particles/ParticleMaster.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/particles/ParticleRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/particles/ParticleRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/particles/ParticleShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/particles/ParticleShader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/particles/particleFragmentshader.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/src/particles/particleFragmentshader.glsl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/particles/particleVertexShader.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/src/particles/particleVertexShader.glsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/particles/ParticleSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/particles/ParticleSystem.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
