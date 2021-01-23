@@ -12,7 +12,7 @@ public class CollisionHandler {
 
     private List<MovableEntity> movableEntities;
 
-    public CollisionHandler(List<Entity> entities) {
+    public void setEntities(List<Entity> entities) {
         this.entities = entities;
         this.movableEntities = new ArrayList<>();
 
@@ -44,14 +44,6 @@ public class CollisionHandler {
                     }
                 }
             }
-        }
-    }
-
-    public void addEntity(Entity entity) {
-        this.entities.add(entity);
-
-        if (entity instanceof MovableEntity) {
-            this.movableEntities.add((MovableEntity) entity);
         }
     }
 }

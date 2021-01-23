@@ -17,6 +17,7 @@ public class Biome {
 
     private ParticleSystem particleSystem;
     private List<Entity> entities;
+    //private Music backGroundMusic;
 
     public Biome(TerrainTexture groundTexture, int separationHeight, boolean aboveSeparation) {
         this.groundTexture = groundTexture;
@@ -49,6 +50,10 @@ public class Biome {
         if (this.particleSystem != null) {
             this.particleSystem.generateParticles(particleCenter);
         }
+    }
+
+    public void addEntity(Entity entity) {
+        this.entities.add(entity);
     }
 
     public ParticleSystem getParticleSystem() {

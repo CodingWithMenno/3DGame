@@ -3,7 +3,7 @@ package collisions;
 import org.lwjgl.util.vector.Vector3f;
 import toolbox.Maths;
 
-public class AABB {
+public class AABB implements Cloneable {
 
     private Vector3f center;
     private Vector3f dimensions; //width, height, depth
@@ -60,8 +60,15 @@ public class AABB {
         this.center.z += velocity.z;
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
     public void setNewCenter(Vector3f newPosition) {
         this.center = newPosition;
+        this.center.x += this.dimensions.x;
+        this.center.y += this.dimensions.y;
     }
 
     public Vector3f getCenter() {

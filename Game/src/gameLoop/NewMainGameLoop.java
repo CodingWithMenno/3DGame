@@ -5,13 +5,15 @@ import animation.Animation;
 import collisions.CollisionHandler;
 import entities.Camera;
 import entities.Entity;
+import entities.Light;
 import entities.Player;
 import models.TexturedModel;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 import particles.ParticleMaster;
-import particles.ParticleSystem;
-import particles.ParticleTexture;
-import particles.SnowParticleSystem;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.MasterRenderer;
@@ -19,12 +21,10 @@ import renderEngine.ObjLoader;
 import terrains.Biome;
 import terrains.BiomeBuilder;
 import terrains.Terrain;
+import terrains.World;
 import textures.ModelTexture;
 import textures.TerrainTexture;
-import water.WaterFrameBuffers;
-import water.WaterRenderer;
-import water.WaterShader;
-import water.WaterTile;
+import water.Water;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,15 +32,14 @@ import java.util.Random;
 
 public class NewMainGameLoop {
 
-    private static final float WATER_HEIGHT = -15;
-
     public static void main(String[] args) {
         DisplayManager.createDisplay();
         Loader loader = new Loader();
-        Random random = new Random();
         Terrain terrain = new Terrain(0, -1, loader);
+        Random random = new Random();
 
-        //***********PLAYER SETUP*************
+
+        //*************PLAYER SETUP**************
         ModelTexture foxTexture = new ModelTexture(loader.loadTexture("fox/FoxTexture"));
         TexturedModel foxModel = new TexturedModel(ObjLoader.loadObjModel("fox/Fox", loader), foxTexture);
         List<TexturedModel> foxIdle = new ArrayList<>();
@@ -58,7 +57,6 @@ public class NewMainGameLoop {
         }
 
         Animation foxRunningAnimation = new Animation(foxModels, 1);
-
         AnimatedModel foxAnimatedModel = new AnimatedModel(foxIdleAnimation, foxRunningAnimation);
 
         Player player = new Player(foxAnimatedModel, new Vector3f(500, -500, -200), 0, 0, 0, 0.4f, dimensions);
@@ -67,70 +65,88 @@ public class NewMainGameLoop {
         MasterRenderer renderer = new MasterRenderer(camera);
         ParticleMaster.init(loader, renderer.getProjectionMatrix());
 
-        //***********WORLD SETUP***************
-        //DIRT BIOME
+        
+        //***********WORLD SETUP****************
         TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("ground/DirtTexture"));
-        BiomeBuilder dirtBiomeBuilder = new BiomeBuilder(rTexture, -5, false);
-
+        BiomeBuilder biomeBuilder = new BiomeBuilder(rTexture, -5, false);
         TexturedModel grassModel = new TexturedModel(ObjLoader.loadObjModel("grass/GrassModel", loader),
                 new ModelTexture(loader.loadTexture("grass/GrassTexture")));
         grassModel.getTexture().setHasTransparency(true);
         grassModel.getTexture().setUseFakeLighting(true);
         grassModel.getTexture().setNumberOfRows(2);
-        Entity grassEntity = new Entity(grassModel, random.nextInt(5), new Vector3f(0, 0, 0), 0, random.nextInt(360), 0, 1);
+        biomeBuilder = biomeBuilder.addRandomEntities(terrain, World.getWaterHeight(), new Entity(grassModel, random.nextInt(5), new Vector3f(0, 0, 0), 0, random.nextInt(360), 0, 1), 1000);
+        Biome rBiome = biomeBuilder.buildBiome();
 
-        dirtBiomeBuilder.addRandomEntities(terrain, WATER_HEIGHT, grassEntity, 200);
-        Biome dirtBiome = dirtBiomeBuilder.buildBiome();
-
-
-        //GRASS BIOME
         TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("ground/GrassTexture"));
-        BiomeBuilder grassBiomeBuilder = new BiomeBuilder(gTexture, 80, false);
-
-        TexturedModel treeModel = new TexturedModel(ObjLoader.loadObjModel("tree/Tree", loader),
-                new ModelTexture(loader.loadTexture("tree/TreeTexture")));
-        dimensions = ObjLoader.getLastDimensions();
-        Entity treeEntity = new Entity(treeModel, new Vector3f(0, 0, 0), 0, random.nextInt(360), 0, 0.2f, dimensions);
-
-        grassBiomeBuilder.addRandomEntities(terrain, WATER_HEIGHT, treeEntity, 100);
-        grassBiomeBuilder.addRandomEntities(terrain, WATER_HEIGHT, grassEntity, 300);
-        Biome grassBiome = grassBiomeBuilder.buildBiome();
-
-
-        //STONE BIOME
+        Biome gBiome = new Biome(gTexture, 80, false);
         TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("ground/StoneTexture"));
-        BiomeBuilder stoneBiomeBuilder = new BiomeBuilder(bTexture, 120, false);
-        Biome stoneBiome = stoneBiomeBuilder.buildBiome();
-
-
-        //SNOW BIOME
+        Biome bBiome = new Biome(bTexture, 120, false);
         TerrainTexture aTexture = new TerrainTexture(loader.loadTexture("ground/SnowTexture"));
-        BiomeBuilder snowBiomeBuilder = new BiomeBuilder(aTexture, 120, true);
-        ParticleTexture snowParticleTexture = new ParticleTexture(loader.loadTexture("particles/SnowTexture"), 1, false);
-        ParticleSystem snowParticleSystem = new SnowParticleSystem(snowParticleTexture, snowBiomeBuilder.getSeparationHeight() + 10, player);
-        snowBiomeBuilder.addParticleSystem(snowParticleSystem);
-        Biome snowBiome = snowBiomeBuilder.buildBiome();
+        Biome aBiome = new Biome(aTexture, 120, true);
+        terrain.addBiomes(rBiome, gBiome, bBiome, aBiome);
+
+        Water water = new Water(loader, renderer, World.getWaterHeight(), Terrain.getSIZE());
+
+        World world = new World(terrain, water);
 
 
-        terrain.addBiomes(dirtBiome, grassBiome, stoneBiome, snowBiome);
+        //**********LIGHT SETUP*****************
+        TexturedModel postModel = new TexturedModel(ObjLoader.loadObjModel("lamp/LampPost", loader),
+                new ModelTexture(loader.loadTexture("lamp/LampPostTexture")));
+        dimensions = ObjLoader.getLastDimensions();
+        world.addEntityToCorrectBiome(new Entity(postModel, 2, new Vector3f(100, terrain.getHeightOfTerrain(100, -150), -150), 0, 0, 0, 1f, dimensions));
+
+        List<Light> lights = new ArrayList<>();
+        lights.add(new Light(new Vector3f(1000, 500000, -100000), new Vector3f(0.7f, 0.7f, 0.7f)));
+        lights.add(new Light(new Vector3f(103.2f, terrain.getHeightOfTerrain(100, -150) + 4.5f, -150), new Vector3f(1f, 1f, 0), new Vector3f(1f, 0.01f, 0.002f)));
 
 
-        //************WATER SETUP***********
-        WaterFrameBuffers buffers = new WaterFrameBuffers();
-        WaterShader waterShader = new WaterShader();
-        WaterRenderer waterRenderer = new WaterRenderer(loader, waterShader, renderer.getProjectionMatrix(), buffers);
-        List<WaterTile> waterTiles = new ArrayList<>();
-        WaterTile water = new WaterTile(Terrain.getSIZE() / 2, -Terrain.getSIZE() / 2, WATER_HEIGHT);
-        waterTiles.add(water);
+        //***********COLLISION SETUP************
+        CollisionHandler collisionHandler = new CollisionHandler();
 
+        //***********MAIN GAME LOOP**************
+        while(!Display.isCloseRequested()) {
+            camera.move();
+            player.updateEntity(terrain);
+            player.updateAnimation();
+            world.update(player);
+            ParticleMaster.update(camera);
 
-        //***********COLLISION SETUP********
-        List<Entity> allEntities = new ArrayList<>();
-        for (Biome biome : terrain.getBiomes()) {
-            allEntities.addAll(biome.getEntities());
+            List<Entity> entities = new ArrayList<>(world.getEntities());
+            entities.add(player);
+            collisionHandler.setEntities(entities);
+            collisionHandler.checkCollisions();
+
+            renderer.renderShadowMap(entities, lights.get(0));
+
+            GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
+
+            water.getWaterFrameBuffers().bindReflectionFrameBuffer();
+            float distance = 2 * (camera.getPosition().y - World.getWaterHeight());
+            camera.getPosition().y -= distance;
+            camera.invertPitch();
+            renderer.renderScene(entities, terrain, lights, camera, new Vector4f(0, 1, 0, -World.getWaterHeight()));
+            camera.getPosition().y += distance;
+            camera.invertPitch();
+
+            water.getWaterFrameBuffers().bindRefractionFrameBuffer();
+            renderer.renderScene(entities, terrain, lights, camera, new Vector4f(0, -1, 0, World.getWaterHeight() + 0.5f));
+
+            GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
+            water.getWaterFrameBuffers().unbindCurrentFrameBuffer();
+            renderer.renderScene(entities, terrain, lights, camera, new Vector4f(0, -1, 0, 100000));
+            water.getWaterRenderer().render(water.getWaterTiles(), camera, lights.get(0));
+
+            ParticleMaster.renderParticles(camera);
+
+            DisplayManager.updateDisplay();
         }
-        allEntities.add(player);
 
-        CollisionHandler collisionHandler = new CollisionHandler(allEntities);
+        ParticleMaster.cleanUp();
+        water.getWaterFrameBuffers().cleanUp();
+        water.getWaterShader().cleanUp();
+        renderer.cleanUp();
+        loader.cleanUp();
+        DisplayManager.closeDisplay();
     }
 }

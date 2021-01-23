@@ -5,6 +5,7 @@ import collisions.AABB;
 import models.TexturedModel;
 import org.lwjgl.util.vector.Vector3f;
 import terrains.Terrain;
+import toolbox.Maths;
 
 public abstract class MovableEntity extends Entity {
 
@@ -49,7 +50,7 @@ public abstract class MovableEntity extends Entity {
 
 
     public boolean isMoving() {
-        if (this.velocity.x != 0 || this.velocity.y != 0 || this.velocity.z != 0) {
+        if (Maths.difference(this.velocity.x, 0) > 0.001f || Maths.difference(this.velocity.y, 0) > 0.001f || Maths.difference(this.velocity.z, 0) > 0.001f) {
             return true;
         }
         return false;

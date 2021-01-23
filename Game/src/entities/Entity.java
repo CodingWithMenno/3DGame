@@ -5,6 +5,7 @@ import collisions.AABB;
 import models.TexturedModel;
 
 import org.lwjgl.util.vector.Vector3f;
+import renderEngine.ObjLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,10 +118,17 @@ public class Entity implements Cloneable {
 	@Override
 	public Object clone() {
 		try {
-			return super.clone();
+			Entity e = (Entity) super.clone();
+			e.collisionBoxes = new ArrayList<>();
+			for (AABB box : this.collisionBoxes) {
+				e.collisionBoxes.add((AABB) box.clone());
+			}
+			return e;
+
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
+
 		return null;
 	}
 
@@ -133,7 +141,11 @@ public class Entity implements Cloneable {
 	}
 
 	public void setPosition(Vector3f position) {
-		this.position = position;
+		for (AABB collisionBox : this.collisionBoxes) {
+			collisionBox.setNewCenter(new Vector3f(position));
+		}
+
+		this.position = new Vector3f(position);
 	}
 
 	public float getRotX() {
@@ -176,4 +188,7 @@ public class Entity implements Cloneable {
 		return !this.collisionBoxes.isEmpty();
 	}
 
+	public int getTextureIndex() {
+		return textureIndex;
+	}
 }

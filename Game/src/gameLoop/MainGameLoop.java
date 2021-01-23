@@ -72,7 +72,6 @@ public class MainGameLoop {
 		}
 
 		Animation foxRunningAnimation = new Animation(foxModels, 1);
-
 		AnimatedModel foxAnimatedModel = new AnimatedModel(foxIdleAnimation, foxRunningAnimation);
 
 		Player player = new Player(foxAnimatedModel, new Vector3f(500, -500, -200), 0, 0, 0, 0.4f, dimensions);
@@ -161,8 +160,8 @@ public class MainGameLoop {
 
 
 		//**********COLLISION SETUP******
-		CollisionHandler collisionHandler = new CollisionHandler(entities);
-
+		CollisionHandler collisionHandler = new CollisionHandler();
+		collisionHandler.setEntities(entities);
 
 		//**********GAME LOOP**************
 
@@ -175,6 +174,7 @@ public class MainGameLoop {
 			ParticleMaster.update(camera);
 			snowParticleSystem.generateParticles(new Vector3f(player.getPosition()));
 
+			//collisionHandler.setEntities(entities);
 			collisionHandler.checkCollisions();
 
 			renderer.renderShadowMap(entities, lights.get(0));
