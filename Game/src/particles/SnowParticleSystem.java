@@ -15,7 +15,7 @@ public class SnowParticleSystem extends ParticleSystem {
     private Random random;
 
     public SnowParticleSystem(ParticleTexture texture, float occurrenceHeight, Player player) {
-        super(texture, 200, 10, 0.1f, 5);
+        super(texture, 200, 8, 0.01f, 5);
         this.occurrenceHeight = occurrenceHeight;
         this.player = player;
         this.random = new Random();

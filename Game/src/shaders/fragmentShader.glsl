@@ -61,7 +61,7 @@ void main(void) {
     }
     totalDiffuse = max(totalDiffuse * lightFactor, 0.15);
 
-    vec4 textureColour = texture(modelTexture,pass_textureCoordinates);
+    vec4 textureColour = texture(modelTexture, pass_textureCoordinates);
     if (textureColour.a < 0.5) {
         discard;
     }

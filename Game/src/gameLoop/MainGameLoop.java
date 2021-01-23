@@ -65,7 +65,7 @@ public class MainGameLoop {
 		//*************WORLD SETUP**************
 		TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("ground/DirtTexture"));
 		Biome rBiome = new Biome(rTexture, -5);
-		TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("ground/GrassTexture"));
+		TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("ground/PathTexture"));
 		Biome gBiome = new Biome(gTexture, 80);
 		TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("ground/StoneTexture"));
 		Biome bBiome = new Biome(bTexture, 120);
