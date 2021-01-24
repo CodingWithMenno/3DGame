@@ -65,6 +65,16 @@ public class NewMainGameLoop {
         lights.add(new Light(new Vector3f(103.2f, terrain.getHeightOfTerrain(100, -150) + 4.5f, -150), new Vector3f(1f, 1f, 0), new Vector3f(1f, 0.01f, 0.002f)));
 
 
+        //**************GUI SETUP****************
+//		List<GuiTexture> guiTextures = new ArrayList<>();
+//		GuiTexture shadowMap = new GuiTexture(renderer.getShadowMapTexture(), new Vector2f(0.5f, 0.5f), new Vector2f(0.5f, 0.5f));
+//		GuiTexture reflection = new GuiTexture(buffers.getReflectionTexture(), new Vector2f(-0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
+//		guiTextures.add(shadowMap);
+//		guiTextures.add(reflection);
+//
+//		GuiRenderer guiRenderer = new GuiRenderer(loader);
+
+
         //***********COLLISION SETUP************
         CollisionHandler collisionHandler = new CollisionHandler();
 
@@ -105,7 +115,7 @@ public class NewMainGameLoop {
             water.getWaterRenderer().render(water.getWaterTiles(), camera, lights.get(0));
 
             ParticleMaster.renderParticles(camera);
-
+//			guiRenderer.render(guiTextures);
             DisplayManager.updateDisplay();
         }
 
@@ -114,6 +124,7 @@ public class NewMainGameLoop {
         ParticleMaster.cleanUp();
         water.getWaterFrameBuffers().cleanUp();
         water.getWaterShader().cleanUp();
+//        guiRenderer.cleanUp();
         renderer.cleanUp();
         loader.cleanUp();
         DisplayManager.closeDisplay();
@@ -181,7 +192,6 @@ public class NewMainGameLoop {
 
         terrain.addBiomes(rBiome, gBiome, bBiome, aBiome);
         Water water = new Water(loader, renderer, waterHeight, terrainSize);
-
         return new World(terrain, water);
     }
 }

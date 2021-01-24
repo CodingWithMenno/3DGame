@@ -7,15 +7,18 @@ import org.lwjgl.opengl.*;
 
 public class DisplayManager {
 
-	private static final String TITLE = "Poly Hunting";
+	private static final String TITLE = "Poly Hunter";
 	private static final int WIDTH = 1920;
 	private static final int HEIGHT = 1080;
-	private static final int FPS_CAP = 250;
-
+	private static final int FPS_CAP = 500;
+	private static final boolean VSYNC = false;
 	private static final int ANTIALIASING_AMOUNT = 8;
 
 	private static long lastFrameTime;
 	private static float delta;
+
+	private static long lastFPS;
+	private static long FPS;
 	
 	public static void createDisplay() {
 		ContextAttribs attribs = new ContextAttribs(3,2)
@@ -26,7 +29,7 @@ public class DisplayManager {
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 			Display.create(new PixelFormat().withDepthBits(24).withSamples(ANTIALIASING_AMOUNT), attribs);
 			Display.setTitle(TITLE);
-			Display.setVSyncEnabled(true);
+			Display.setVSyncEnabled(VSYNC);
 			GL11.glEnable(GL13.GL_MULTISAMPLE);
 		} catch (LWJGLException e) {
 			e.printStackTrace();
@@ -41,6 +44,9 @@ public class DisplayManager {
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
+
+		lastFPS = getCurrentTime();
+		FPS = 0;
 	}
 	
 	public static void updateDisplay() {
@@ -50,6 +56,13 @@ public class DisplayManager {
 		long currentFrameTime = getCurrentTime();
 		delta = (currentFrameTime - lastFrameTime) / 1000f;
 		lastFrameTime = currentFrameTime;
+
+		if (getCurrentTime() - lastFPS > 1000) {
+			Display.setTitle(TITLE + ", FPS: " + FPS);
+			FPS = 0;
+			lastFPS += 1000;
+		}
+		FPS++;
 	}
 
 	public static float getDelta() {

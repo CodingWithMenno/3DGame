@@ -4,6 +4,7 @@ import animation.AnimatedModel;
 import collisions.AABB;
 import models.TexturedModel;
 import org.lwjgl.util.vector.Vector3f;
+import renderEngine.DisplayManager;
 import terrains.Terrain;
 import toolbox.Maths;
 
@@ -50,7 +51,7 @@ public abstract class MovableEntity extends Entity {
 
 
     public boolean isMoving() {
-        if (Maths.difference(this.velocity.x, 0) > 0.001f || Maths.difference(this.velocity.y, 0) > 0.001f || Maths.difference(this.velocity.z, 0) > 0.001f) {
+        if (Maths.difference(this.velocity.x, 0) > 0.0000f || Maths.difference(this.velocity.y, 0) > 0.0000f || Maths.difference(this.velocity.z, 0) > 0.0000f) {
             return true;
         }
         return false;
