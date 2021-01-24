@@ -1,9 +1,9 @@
 package entities;
 
-import gameLoop.MainGameLoop;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector3f;
 import terrains.Terrain;
+import terrains.World;
 import toolbox.Maths;
 
 public class Camera {
@@ -58,8 +58,8 @@ public class Camera {
 		}
 
 		heightDifference = Maths.difference(newPos.y, -12);
-		if (newPos.y < MainGameLoop.WATER_HEIGHT + 1) {
-			newPos.y = MainGameLoop.WATER_HEIGHT + 1;
+		if (newPos.y < World.getWaterHeight() + 1) {
+			newPos.y = World.getWaterHeight() + 1;
 			this.pitch += heightDifference;
 		}
 
@@ -97,9 +97,9 @@ public class Camera {
 		float pitchChange = Mouse.getDY() * MOUSE_SENSITIVITY;
 		this.pitch -= pitchChange;
 
-		if (pitchChange == 0 && this.pitch != DEFAULT_PITCH && this.entityIsMoving) {
-			//this.pitch = Maths.lerp(this.pitch, DEFAULT_PITCH, AUTO_ZOOM);
-		}
+//		if (pitchChange == 0 && this.pitch != DEFAULT_PITCH && this.entityIsMoving) {
+//			this.pitch = Maths.lerp(this.pitch, DEFAULT_PITCH, AUTO_ZOOM);
+//		}
 
 		this.pitch = Maths.clamp(this.pitch, -6, 85);
 	}
@@ -108,9 +108,9 @@ public class Camera {
 		float angleChange = Mouse.getDX() * MOUSE_SENSITIVITY * 3f;
 		this.angleAroundEntity -= angleChange;
 
-		if (angleChange == 0 && this.angleAroundEntity != 0 && this.entityIsMoving) {
-			//this.angleAroundEntity = Maths.lerp(this.angleAroundEntity, 0, AUTO_ZOOM);
-		}
+//		if (angleChange == 0 && this.angleAroundEntity != 0 && this.entityIsMoving) {
+//			this.angleAroundEntity = Maths.lerp(this.angleAroundEntity, 0, AUTO_ZOOM);
+//		}
 
 		this.angleAroundEntity = Maths.clamp(this.angleAroundEntity, -180, 180);
 	}

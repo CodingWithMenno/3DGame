@@ -1,10 +1,10 @@
 package entities;
 
-import gameLoop.MainGameLoop;
 import models.TexturedModel;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.DisplayManager;
 import terrains.Terrain;
+import terrains.World;
 import toolbox.Maths;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public class Fish extends MovableEntity {
 
     private static final float VIEW_DISTANCE = 10;
 
-    private static final float MAX_HEIGHT = MainGameLoop.WATER_HEIGHT - 10f;
+    private static final float MAX_HEIGHT = World.getWaterHeight() - 10f;
 
     private static final float separationFactor = 1f;
     private static final float alignmentFactor = 0.5f;

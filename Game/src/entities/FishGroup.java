@@ -1,8 +1,8 @@
 package entities;
 
-import gameLoop.MainGameLoop;
 import org.lwjgl.util.vector.Vector3f;
 import terrains.Terrain;
+import terrains.World;
 import toolbox.Maths;
 
 import java.util.List;
@@ -47,14 +47,14 @@ public class FishGroup {
         int x = 0;
         int z = 0;
         int terrainHeight = 0;
-        while (x < 2 || z > -5 || terrainHeight >= MainGameLoop.WATER_HEIGHT - 3.5f) {
+        while (x < 2 || z > -5 || terrainHeight >= World.getWaterHeight() - 3.5f) {
             x = (int) (this.fish.get(0).getPosition().x + this.random.nextInt(50) - 25);
             z = (int) (this.fish.get(0).getPosition().z + this.random.nextInt(50) - 25);
 
             terrainHeight = (int) terrain.getHeightOfTerrain(x, z) + 2;
         }
 
-        int waterDifference = (int) Maths.difference(terrainHeight, MainGameLoop.WATER_HEIGHT - 3.5f);
+        int waterDifference = (int) Maths.difference(terrainHeight, World.getWaterHeight() - 3.5f);
 
         int y = terrainHeight + this.random.nextInt(waterDifference);
 

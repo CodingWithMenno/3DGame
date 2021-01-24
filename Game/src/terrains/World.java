@@ -59,12 +59,12 @@ public class World {
         setAllEntities();
     }
 
-    public List<Entity> getEntitiesFromBiome(Vector3f position) {
+    public List<Entity> getEntitiesFromCurrentBiome(Vector3f position) {
         Biome biome = isInBiome(position.y);
         return biome.getEntities();
     }
 
-    public List<Entity> getAllEntitiesFromDistance(Vector3f position, float distance) {
+    public List<Entity> getEntitiesFromDistance(Vector3f position, float distance) {
         List<Entity> entities = new ArrayList<>();
         for (Entity entity : this.entities) {
             if (Maths.getDistanceBetween(new Vector3f(entity.getPosition()), position) < distance) {

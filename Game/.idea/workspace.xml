@@ -6,8 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="1448daae-e5e5-4daf-966b-6006ecad8d18" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderEngine/MasterRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/MasterRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/water/WaterFrameBuffers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/water/WaterFrameBuffers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Camera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Fish.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Fish.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/FishGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/FishGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameLoop/NewMainGameLoop.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/terrains/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/terrains/World.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -93,8 +97,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NewMainGameLoop" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="gameLoop.NewMainGameLoop" />
+    <configuration name="MainGameLoop" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="gameLoop.MainGameLoop" />
       <module name="Game" />
       <option name="VM_PARAMETERS" value=" -Djava.library.path=libs/natives/" />
       <extension name="coverage">
