@@ -3,8 +3,10 @@ package terrains;
 import entities.Entity;
 import entities.Player;
 import org.lwjgl.util.vector.Vector3f;
+import toolbox.Maths;
 import water.Water;
 
+import javax.swing.text.html.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +62,16 @@ public class World {
     public List<Entity> getEntitiesFromBiome(Vector3f position) {
         Biome biome = isInBiome(position.y);
         return biome.getEntities();
+    }
+
+    public List<Entity> getAllEntitiesFromDistance(Vector3f position, float distance) {
+        List<Entity> entities = new ArrayList<>();
+        for (Entity entity : this.entities) {
+            if (Maths.getDistanceBetween(new Vector3f(entity.getPosition()), position) < distance) {
+                entities.add(entity);
+            }
+        }
+        return entities;
     }
 
     private Biome isInBiome(float yPos) {

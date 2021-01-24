@@ -88,7 +88,7 @@ public class NewMainGameLoop {
             world.update(new Vector3f(player.getPosition()));
             ParticleMaster.update(camera);
 
-            List<Entity> entities = new ArrayList<>(world.getEntities());
+            List<Entity> entities = new ArrayList<>(world.getAllEntitiesFromDistance(new Vector3f(player.getPosition()), MasterRenderer.FAR_PLANE));
             entities.add(player);
             collisionHandler.setEntities(entities);
             collisionHandler.checkCollisions();
