@@ -14,7 +14,6 @@ public class TODO {
      * 		    -Biomes verbeteren
      * 		.
      * 		Optioneel / Verbeteren:
-     * 			-CLEAN UP MAINGAMELOOP !!!!!!!!!!!!!!!!!!!!!!!!!!!!																		<--------!!!!!!!!!!!!!!!!!!!!
      * 			-Water low poly maken
      * 			-Lampen die ingerendered/uitgerendered worden laten in/uit faden
      * 			-Collision detectie verbeteren / physics verbeteren (OBB implementeren & je kan worden geduwd door andere entities)

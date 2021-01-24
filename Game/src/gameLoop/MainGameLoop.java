@@ -32,6 +32,10 @@ import java.util.Random;
 
 public class MainGameLoop {
 
+	/**
+	 * Example class for the NewMainGameLoop
+	 */
+
 	public static float WATER_HEIGHT = -15;
 
 	public static void main(String[] args) {
@@ -86,7 +90,7 @@ public class MainGameLoop {
 		ParticleMaster.init(loader, renderer.getProjectionMatrix());
 
 		ParticleTexture particleTexture = new ParticleTexture(loader.loadTexture("particles/SnowTexture"), 1, false);
-		ParticleSystem snowParticleSystem = new SnowParticleSystem(particleTexture, bBiome.getSeparationHeight() + 10, player);
+//		ParticleSystem snowParticleSystem = new SnowParticleSystem(particleTexture, bBiome.getSeparationHeight() + 10, player);
 
 
 		//***********ENTITIES SETUP****************
@@ -172,7 +176,7 @@ public class MainGameLoop {
 //			fishGroup.updateAllFish(terrain);
 
 			ParticleMaster.update(camera);
-			snowParticleSystem.generateParticles(new Vector3f(player.getPosition()));
+//			snowParticleSystem.generateParticles(new Vector3f(player.getPosition()));
 
 			//collisionHandler.setEntities(entities);
 			collisionHandler.checkCollisions();

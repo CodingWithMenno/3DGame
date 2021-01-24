@@ -38,7 +38,7 @@ public class Biome {
         this.particleSystem = particleSystem;
     }
 
-    public void update(Terrain terrain, Vector3f particleCenter) {
+    public void update(Terrain terrain, Vector3f playerPos, boolean isInBiome) {
         for (Entity entity : this.entities) {
             entity.updateAnimation();
 
@@ -47,8 +47,8 @@ public class Biome {
             }
         }
 
-        if (this.particleSystem != null) {
-            this.particleSystem.generateParticles(particleCenter);
+        if (this.particleSystem != null && isInBiome) {
+            this.particleSystem.generateParticles(playerPos);
         }
     }
 

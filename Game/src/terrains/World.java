@@ -24,11 +24,17 @@ public class World {
         setAllEntities();
     }
 
-    public void update(Player player) {
+    public void update(Vector3f playerPos) {
         setAllEntities();
 
-        for (Biome biome : this.terrain.getBiomes()) {
-            biome.update(this.terrain, new Vector3f(player.getPosition()));
+        Biome currentBiome = isInBiome(playerPos.y);
+        List<Biome> biomes = this.terrain.getBiomes();
+        for (int i = 0; i < biomes.size(); i++) {
+            if (currentBiome == biomes.get(i)) {
+                biomes.get(i).update(this.terrain, new Vector3f(playerPos), true);
+            } else {
+                biomes.get(i).update(this.terrain, new Vector3f(playerPos), false);
+            }
         }
     }
 
@@ -87,5 +93,9 @@ public class World {
 
     public List<Entity> getEntities() {
         return entities;
+    }
+
+    public Water getWater() {
+        return water;
     }
 }
