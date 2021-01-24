@@ -40,7 +40,7 @@ public class MasterRenderer {
     private Map<TexturedModel, List<Entity>> entities;
     private List<Terrain> terrains;
 
-    private List<Light> lightsToRender = new ArrayList();
+    private List<Light> lightsToRender;
 
     private ShadowMapMasterRenderer shadowMapRenderer;
 
@@ -48,6 +48,7 @@ public class MasterRenderer {
         enableCulling();
         createProjectionMatrix();
 
+        this.lightsToRender = new ArrayList();
         this.entities = new HashMap<>();
         this.terrains = new ArrayList<>();
         this.shader = new StaticShader();
