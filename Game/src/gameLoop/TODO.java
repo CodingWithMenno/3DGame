@@ -6,13 +6,12 @@ public class TODO {
      * 		Entities:
      * 			-Vissen/vogels maken met boids algoritme
      * 			-Geluid implementeren in entities en biomes
-     * 		    -Player synchroniseren met frames (delta) (of de MovableEntity class)
+     * 		    -Player synchroniseren met frames (delta) (of de MovableEntity class) (player klasse opnieuw maken)
      * 		.
      * 		Overig:
      * 			-Goede GUI library maken (met animatie support & het resizen van het display) (+ text rendering)
      * 			-Zon en wolken toevoegen (goede day-night cycle maken)
      * 			-Effecten toepassen (Post-Processing, Bloom, Lens flare, etc.)
-     * 		    -Biomes verbeteren
      * 		.
      * 		Optioneel / Verbeteren:
      * 			-Water low poly maken
@@ -25,6 +24,7 @@ public class TODO {
      * 			-Nieuwe objLoader gebruiken (zie normal mapping filmpje)
      * 			-De vertexen/fragments van het water alleen renderen als ze hoger zijn dan het terrein
      * 			-Instanced rendering voor particles toevoegen
+     * 		    -Optie voor user maken voor het uitzetten van reflectie van het water
      */
 
 }
