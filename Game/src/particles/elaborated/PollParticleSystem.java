@@ -20,7 +20,7 @@ public class PollParticleSystem extends ParticleSystem {
 
     protected void emitParticle(Vector3f center){
         float x = (this.random.nextInt(DISTANCE_FROM_CENTER) - DISTANCE_FROM_CENTER / 2.0f) + center.getX();
-        float y = (this.random.nextInt(DISTANCE_FROM_CENTER / 3) + 5) + center.getY();
+        float y = this.random.nextInt(DISTANCE_FROM_CENTER / 3) + center.getY();
         float z = (this.random.nextInt(DISTANCE_FROM_CENTER) - DISTANCE_FROM_CENTER / 2.0f) + center.getZ();
 
         Vector3f velocity = new Vector3f(this.random.nextFloat() * 2f - 1f, this.random.nextFloat() * 2f - 1f, this.random.nextFloat() * 2f - 1f);

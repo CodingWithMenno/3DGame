@@ -10,6 +10,7 @@ import entities.elaborated.Player;
 import guis.*;
 import guis.elaborated.Button;
 import models.TexturedModel;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Vector2f;
@@ -70,7 +71,7 @@ public class MainGameLoop implements Scene {
         Water water = this.world.getWater();
 
 
-        //**********LIGHT SETUP*****************
+        //**********LIGHTS SETUP*****************
         TexturedModel postModel = new TexturedModel(ObjLoader.loadObjModel("lamp/LampPost", this.loader),
                 new ModelTexture(this.loader.loadTexture("lamp/LampPostTexture")));
         Vector3f dimensions = ObjLoader.getLastDimensions();
@@ -110,11 +111,14 @@ public class MainGameLoop implements Scene {
 
     @Override
     public void render() {
+        //Getting all the entities in the game
         List<Entity> entities = new ArrayList<>(this.world.getEntitiesFromDistance(new Vector3f(this.camera.getPosition()), MasterRenderer.FAR_PLANE));
         entities.add(this.player);
 
+        //Shadow rendering
         this.renderer.renderShadowMap(entities, this.lights.get(0));
 
+        //Water reflection and refraction rendering
         GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
 
         this.world.getWater().getWaterFrameBuffers().bindReflectionFrameBuffer();
@@ -130,9 +134,12 @@ public class MainGameLoop implements Scene {
 
         GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
         this.world.getWater().getWaterFrameBuffers().unbindCurrentFrameBuffer();
+
+        //World and water rendering
         this.renderer.renderScene(entities, this.world.getTerrain(), this.lights, this.camera, new Vector4f(0, -1, 0, 100000));
         this.world.getWater().getWaterRenderer().render(this.world.getWater().getWaterTiles(), this.camera, this.lights.get(0));
 
+        //Particle and GUI rendering
         ParticleMaster.renderParticles(this.camera);
         this.guiRenderer.render(this.guiManager.getGuiTextures());
     }
@@ -172,6 +179,7 @@ public class MainGameLoop implements Scene {
 
 
     private static World setupWorld(Terrain terrain, Loader loader, MasterRenderer renderer, Random random, float waterHeight, float terrainSize) {
+        //Dirt biome
         TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("ground/DirtTexture"));
         BiomeBuilder dirtBiomeBuilder = new BiomeBuilder(rTexture, -5, false);
         TexturedModel grassModel = new TexturedModel(ObjLoader.loadObjModel("grass/GrassModel", loader),
@@ -183,7 +191,7 @@ public class MainGameLoop implements Scene {
         dirtBiomeBuilder.addRandomEntities(terrain, waterHeight, grassEntity, 1000);
         Biome rBiome = dirtBiomeBuilder.buildBiome();
 
-
+        //Grass biome
         TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("ground/GrassTexture"));
         BiomeBuilder grassBiomeBuilder = new BiomeBuilder(gTexture, 80, false);
         grassBiomeBuilder.addRandomEntities(terrain, waterHeight, grassEntity, 1000);
@@ -196,18 +204,18 @@ public class MainGameLoop implements Scene {
         grassBiomeBuilder.addParticleSystem(new PollParticleSystem(pollTexture));
         Biome gBiome = grassBiomeBuilder.buildBiome();
 
-
+        //Stone biome
         TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("ground/StoneTexture"));
         Biome bBiome = new Biome(bTexture, 120, false);
 
-
+        //Snow biome
         TerrainTexture aTexture = new TerrainTexture(loader.loadTexture("ground/SnowTexture"));
         BiomeBuilder snowBiomeBuilder = new BiomeBuilder(aTexture, 120, true);
         ParticleTexture snowTexture = new ParticleTexture(loader.loadTexture("particles/SnowTexture"), 1, false);
         snowBiomeBuilder.addParticleSystem(new SnowParticleSystem(snowTexture));
         Biome aBiome = snowBiomeBuilder.buildBiome();
 
-
+        //Adding all the biomes
         terrain.addBiomes(rBiome, gBiome, bBiome, aBiome);
         Water water = new Water(loader, renderer, waterHeight, terrainSize);
         return new World(terrain, water);
