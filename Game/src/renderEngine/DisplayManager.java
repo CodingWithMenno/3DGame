@@ -56,23 +56,22 @@ public class DisplayManager {
 	}
 	
 	public static void updateDisplay() {
+		//Updating the display
 		Display.sync(FPS_CAP);
 		Display.update();
 
+		//Updating the delta time
 		long currentFrameTime = getCurrentTime();
 		delta = (currentFrameTime - lastFrameTime) / 1000f;
 		lastFrameTime = currentFrameTime;
 
+		//Calculating the fps
 		if (getCurrentTime() - lastFPS > 1000) {
 			Display.setTitle(TITLE + ", FPS: " + FPS);
 			FPS = 0;
 			lastFPS += 1000;
 		}
 		FPS++;
-	}
-
-	public static float getDelta() {
-		return delta;
 	}
 	
 	public static void closeDisplay() {
@@ -82,6 +81,10 @@ public class DisplayManager {
 
 	private static long getCurrentTime() {
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+	}
+
+	public static float getDelta() {
+		return delta;
 	}
 
 	public static float getWIDTH() {

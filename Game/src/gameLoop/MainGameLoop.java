@@ -68,7 +68,6 @@ public class MainGameLoop implements Scene {
 
         //***********WORLD SETUP****************
         this.world = setupWorld(terrain, this.loader, this.renderer, random, World.getWaterHeight(), Terrain.getSIZE());
-        Water water = this.world.getWater();
 
 
         //**********LIGHTS SETUP*****************
@@ -206,11 +205,11 @@ public class MainGameLoop implements Scene {
 
         //Stone biome
         TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("ground/StoneTexture"));
-        Biome bBiome = new Biome(bTexture, 120, false);
+        Biome bBiome = new Biome(bTexture, 150, false);
 
         //Snow biome
         TerrainTexture aTexture = new TerrainTexture(loader.loadTexture("ground/SnowTexture"));
-        BiomeBuilder snowBiomeBuilder = new BiomeBuilder(aTexture, 120, true);
+        BiomeBuilder snowBiomeBuilder = new BiomeBuilder(aTexture, 150, true);
         ParticleTexture snowTexture = new ParticleTexture(loader.loadTexture("particles/SnowTexture"), 1, false);
         snowBiomeBuilder.addParticleSystem(new SnowParticleSystem(snowTexture));
         Biome aBiome = snowBiomeBuilder.buildBiome();
