@@ -89,11 +89,6 @@ public class Entity implements Cloneable {
 		}
 	}
 
-	//Override this method
-	public void onCollide(Collision collision) {
-		//Do something like play a sound and perform hit animation
-	}
-
 	public float getTextureXOffset() {
 		if (!this.isAnimated) {
 			int column = this.textureIndex % this.staticModel.getTexture().getNumberOfRows();

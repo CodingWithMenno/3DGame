@@ -38,10 +38,14 @@ public class CollisionHandler {
                     for (AABB box2 : entity.getCollisionBoxes()) {
                         if (box1.isOnTopOf(box2)) {
                             movableEntity.onCollide(new Collision(movableEntity, entity, false, true));
-                            entity.onCollide(new Collision(movableEntity, entity, false, true));
+                            if (entity instanceof MovableEntity) {
+                                ((MovableEntity) entity).onCollide(new Collision(movableEntity, entity, false, true));
+                            }
                         } else if (box1.isStandingAgainst(box2)) {
                             movableEntity.onCollide(new Collision(movableEntity, entity, true, false));
-                            entity.onCollide(new Collision(movableEntity, entity, true, false));
+                            if (entity instanceof MovableEntity) {
+                                ((MovableEntity) entity).onCollide(new Collision(movableEntity, entity, true, false));
+                            }
                         }
                     }
                 }

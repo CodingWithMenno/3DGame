@@ -49,7 +49,6 @@ public abstract class MovableEntity extends Entity {
 
     protected abstract void update(Terrain terrain);
 
-
     public boolean isMoving() {
         if (Maths.difference(this.velocity.x, 0) > 0.0000f || Maths.difference(this.velocity.y, 0) > 0.0000f || Maths.difference(this.velocity.z, 0) > 0.0000f) {
             return true;
