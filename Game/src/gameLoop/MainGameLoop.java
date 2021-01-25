@@ -10,7 +10,6 @@ import entities.elaborated.Player;
 import guis.*;
 import guis.elaborated.Button;
 import models.TexturedModel;
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Vector2f;
@@ -20,7 +19,6 @@ import particles.ParticleMaster;
 import particles.ParticleTexture;
 import particles.elaborated.PollParticleSystem;
 import particles.elaborated.SnowParticleSystem;
-import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.MasterRenderer;
 import renderEngine.ObjLoader;
@@ -36,106 +34,118 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MainGameLoop {
+public class MainGameLoop implements Scene {
 
-    public static void main(String[] args) {
-        DisplayManager.createDisplay();
-        Loader loader = new Loader();
-        Terrain terrain = new Terrain(0, -1, loader);
+    private MasterRenderer renderer;
+    private Loader loader;
+
+    private Camera camera;
+    private Player player;
+    private World world;
+
+    private GuiManager guiManager;
+    private GuiRenderer guiRenderer;
+
+    private CollisionHandler collisionHandler;
+
+    private List<Light> lights;
+
+    @Override
+    public void setup() {
+        this.loader = new Loader();
+        Terrain terrain = new Terrain(0, -1, this.loader);
         Random random = new Random();
 
 
         //*************PLAYER SETUP**************
-        Player player = setupPlayer(loader);
+        this.player = setupPlayer(this.loader);
 
-        Camera camera = new Camera(player, terrain);
-        MasterRenderer renderer = new MasterRenderer(camera);
-        ParticleMaster.init(loader, renderer.getProjectionMatrix());
+        this.camera = new Camera(this.player, terrain);
+        this.renderer = new MasterRenderer(this.camera);
+        ParticleMaster.init(this.loader, this.renderer.getProjectionMatrix());
 
-        
+
         //***********WORLD SETUP****************
-        World world = setupWorld(terrain, loader, renderer, random, World.getWaterHeight(), Terrain.getSIZE());
-        Water water = world.getWater();
+        this.world = setupWorld(terrain, this.loader, this.renderer, random, World.getWaterHeight(), Terrain.getSIZE());
+        Water water = this.world.getWater();
 
 
         //**********LIGHT SETUP*****************
-        TexturedModel postModel = new TexturedModel(ObjLoader.loadObjModel("lamp/LampPost", loader),
-                new ModelTexture(loader.loadTexture("lamp/LampPostTexture")));
+        TexturedModel postModel = new TexturedModel(ObjLoader.loadObjModel("lamp/LampPost", this.loader),
+                new ModelTexture(this.loader.loadTexture("lamp/LampPostTexture")));
         Vector3f dimensions = ObjLoader.getLastDimensions();
-        world.addEntityToCorrectBiome(new Entity(postModel, 2, new Vector3f(100, terrain.getHeightOfTerrain(100, -150), -150), 0, 0, 0, 1f, dimensions));
+        this.world.addEntityToCorrectBiome(new Entity(postModel, 2, new Vector3f(100, terrain.getHeightOfTerrain(100, -150), -150), 0, 0, 0, 1f, dimensions));
 
-        List<Light> lights = new ArrayList<>();
-        lights.add(new Light(new Vector3f(1000, 500000, -100000), new Vector3f(0.7f, 0.7f, 0.7f)));
-        lights.add(new Light(new Vector3f(103.2f, terrain.getHeightOfTerrain(100, -150) + 4.5f, -150), new Vector3f(1f, 1f, 0), new Vector3f(1f, 0.01f, 0.002f)));
+        this.lights = new ArrayList<>();
+        this.lights.add(new Light(new Vector3f(1000, 500000, -100000), new Vector3f(0.7f, 0.7f, 0.7f)));
+        this.lights.add(new Light(new Vector3f(103.2f, terrain.getHeightOfTerrain(100, -150) + 4.5f, -150), new Vector3f(1f, 1f, 0), new Vector3f(1f, 0.01f, 0.002f)));
 
 
         //**************GUI SETUP****************
-        GuiManager guiManager = new GuiManager();
-        GuiTexture button = new Button(loader.loadTexture("Health"), loader.loadTexture("water/WaterDUDV"), loader.loadTexture("water/WaterNormal"), new Vector2f(-0.5f, -0.5f), new Vector2f(0.25f, 0.25f));
-        guiManager.addTexture(button);
+        this.guiManager = new GuiManager();
+        GuiTexture button = new Button(this.loader.loadTexture("Health"), this.loader.loadTexture("water/WaterDUDV"), this.loader.loadTexture("water/WaterNormal"), new Vector2f(-0.5f, -0.5f), new Vector2f(0.25f, 0.25f));
+        this.guiManager.addTexture(button);
 
-		GuiRenderer guiRenderer = new GuiRenderer(loader);
+        this.guiRenderer = new GuiRenderer(this.loader);
 
 
         //***********COLLISION SETUP************
-        CollisionHandler collisionHandler = new CollisionHandler();
-
-
-        //***********MAIN GAME LOOP**************
-        while(!Display.isCloseRequested()) {
-            //updating
-            camera.move();
-            player.updateEntity(terrain);
-            player.updateAnimation();
-            world.update(new Vector3f(player.getPosition()));
-            guiManager.update();
-            ParticleMaster.update(camera);
-
-            List<Entity> entities = new ArrayList<>(world.getEntities());
-            entities.add(player);
-            collisionHandler.setEntities(entities);
-            collisionHandler.checkCollisions();
-            entities = new ArrayList<>(world.getEntitiesFromDistance(new Vector3f(camera.getPosition()), MasterRenderer.FAR_PLANE));
-            entities.add(player);
-
-
-            //rendering
-            renderer.renderShadowMap(entities, lights.get(0));
-
-            GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
-
-            water.getWaterFrameBuffers().bindReflectionFrameBuffer();
-            float distance = 2 * (camera.getPosition().y - World.getWaterHeight());
-            camera.getPosition().y -= distance;
-            camera.invertPitch();
-            renderer.renderScene(entities, terrain, lights, camera, new Vector4f(0, 1, 0, -World.getWaterHeight()));
-            camera.getPosition().y += distance;
-            camera.invertPitch();
-
-            water.getWaterFrameBuffers().bindRefractionFrameBuffer();
-            renderer.renderScene(entities, terrain, lights, camera, new Vector4f(0, -1, 0, World.getWaterHeight() + 0.5f));
-
-            GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
-            water.getWaterFrameBuffers().unbindCurrentFrameBuffer();
-            renderer.renderScene(entities, terrain, lights, camera, new Vector4f(0, -1, 0, 100000));
-            water.getWaterRenderer().render(water.getWaterTiles(), camera, lights.get(0));
-
-            ParticleMaster.renderParticles(camera);
-			guiRenderer.render(guiManager.getGuiTextures());
-            DisplayManager.updateDisplay();
-        }
-
-
-        //***********CLEAN UP************
-        ParticleMaster.cleanUp();
-        water.getWaterFrameBuffers().cleanUp();
-        water.getWaterShader().cleanUp();
-        guiRenderer.cleanUp();
-        renderer.cleanUp();
-        loader.cleanUp();
-        DisplayManager.closeDisplay();
+        this.collisionHandler = new CollisionHandler();
     }
 
+    @Override
+    public void update() {
+        this.camera.move();
+        this.player.updateEntity(this.world.getTerrain());
+        this.player.updateAnimation();
+        this.world.update(new Vector3f(this.player.getPosition()));
+        this.guiManager.update();
+        ParticleMaster.update(this.camera);
+
+        List<Entity> entities = new ArrayList<>(this.world.getEntities());
+        entities.add(this.player);
+        this.collisionHandler.setEntities(entities);
+        this.collisionHandler.checkCollisions();
+    }
+
+    @Override
+    public void render() {
+        List<Entity> entities = new ArrayList<>(this.world.getEntitiesFromDistance(new Vector3f(this.camera.getPosition()), MasterRenderer.FAR_PLANE));
+        entities.add(this.player);
+
+        this.renderer.renderShadowMap(entities, this.lights.get(0));
+
+        GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
+
+        this.world.getWater().getWaterFrameBuffers().bindReflectionFrameBuffer();
+        float distance = 2 * (this.camera.getPosition().y - World.getWaterHeight());
+        this.camera.getPosition().y -= distance;
+        this.camera.invertPitch();
+        this.renderer.renderScene(entities, this.world.getTerrain(), this.lights, this.camera, new Vector4f(0, 1, 0, -World.getWaterHeight()));
+        this.camera.getPosition().y += distance;
+        this.camera.invertPitch();
+
+        this.world.getWater().getWaterFrameBuffers().bindRefractionFrameBuffer();
+        this.renderer.renderScene(entities, this.world.getTerrain(), this.lights, this.camera, new Vector4f(0, -1, 0, World.getWaterHeight() + 0.5f));
+
+        GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
+        this.world.getWater().getWaterFrameBuffers().unbindCurrentFrameBuffer();
+        this.renderer.renderScene(entities, this.world.getTerrain(), this.lights, this.camera, new Vector4f(0, -1, 0, 100000));
+        this.world.getWater().getWaterRenderer().render(this.world.getWater().getWaterTiles(), this.camera, this.lights.get(0));
+
+        ParticleMaster.renderParticles(this.camera);
+        this.guiRenderer.render(this.guiManager.getGuiTextures());
+    }
+
+    @Override
+    public void cleanUp() {
+        ParticleMaster.cleanUp();
+        this.world.getWater().getWaterFrameBuffers().cleanUp();
+        this.world.getWater().getWaterShader().cleanUp();
+        this.guiRenderer.cleanUp();
+        this.renderer.cleanUp();
+        this.loader.cleanUp();
+    }
 
     private static Player setupPlayer(Loader loader) {
         ModelTexture foxTexture = new ModelTexture(loader.loadTexture("fox/FoxTexture"));

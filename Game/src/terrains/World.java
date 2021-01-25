@@ -108,4 +108,8 @@ public class World {
     public Water getWater() {
         return water;
     }
+
+    public Terrain getTerrain() {
+        return terrain;
+    }
 }
