@@ -2,9 +2,9 @@ package entities;
 
 import animation.AnimatedModel;
 import collisions.AABB;
+import collisions.Collision;
 import models.TexturedModel;
 import org.lwjgl.util.vector.Vector3f;
-import renderEngine.DisplayManager;
 import terrains.Terrain;
 import toolbox.Maths;
 
@@ -57,6 +57,20 @@ public abstract class MovableEntity extends Entity {
         return false;
     }
 
+    public void onCollide(Collision collision) {
+        if (collision.getEntity1() == this) {
+            if (collision.isHitFromSide()) {
+                revertHorizontal();
+            } else {
+                revertVerticalDown();
+            }
+        }
+
+        onCollided(collision);
+    }
+
+    protected abstract void onCollided(Collision collision);
+
     public void revertPosition() {
         Vector3f revertVelocity = Vector3f.sub(super.getPosition(), this.velocity, null);
 
@@ -92,11 +106,11 @@ public abstract class MovableEntity extends Entity {
             collisionBox.move(new Vector3f(0, -this.velocity.y, 0));
         }
 
-        resetGravity();
+        resetVerticalSpeed();
         this.velocity.y = 0;
     }
 
-    protected abstract void resetGravity();
+    protected abstract void resetVerticalSpeed();
 
     public void increasePosition(float dx, float dy, float dz) {
         super.position.x += dx;

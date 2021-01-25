@@ -14,6 +14,11 @@ public class DisplayManager {
 	private static final boolean VSYNC = false;
 	private static final int ANTIALIASING_AMOUNT = 8;
 
+	private static final float DEFAULT_WIDTH = 2560f;
+	private static final float DEFAULT_HEIGHT = 1440f;
+	private static final float SCALED_WIDTH = WIDTH / DEFAULT_WIDTH;
+	private static final float SCALED_HEIGHT = HEIGHT / DEFAULT_HEIGHT;
+
 	private static long lastFrameTime;
 	private static float delta;
 
@@ -40,7 +45,7 @@ public class DisplayManager {
 
 		try {
 			Mouse.create();
-			Mouse.setGrabbed(true);
+			//Mouse.setGrabbed(true);
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
@@ -76,5 +81,29 @@ public class DisplayManager {
 
 	private static long getCurrentTime() {
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+	}
+
+	public static float getWIDTH() {
+		return WIDTH;
+	}
+
+	public static float getHEIGHT() {
+		return HEIGHT;
+	}
+
+	public static float getScaledWidth() {
+		return SCALED_WIDTH;
+	}
+
+	public static float getScaledHeight() {
+		return SCALED_HEIGHT;
+	}
+
+	public static float getDefaultWidth() {
+		return DEFAULT_WIDTH;
+	}
+
+	public static float getDefaultHeight() {
+		return DEFAULT_HEIGHT;
 	}
 }

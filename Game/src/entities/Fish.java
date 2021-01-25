@@ -1,5 +1,6 @@
 package entities;
 
+import collisions.Collision;
 import models.TexturedModel;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.DisplayManager;
@@ -39,6 +40,11 @@ public class Fish extends MovableEntity {
     protected void update(Terrain terrain) {
         doFishBehaviour();
         stayInWater(terrain);
+    }
+
+    @Override
+    protected void onCollided(Collision collision) {
+
     }
 
     private void doFishBehaviour() {
@@ -175,5 +181,5 @@ public class Fish extends MovableEntity {
     }
 
     @Override
-    protected void resetGravity() {}
+    protected void resetVerticalSpeed() {}
 }

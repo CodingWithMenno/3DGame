@@ -7,10 +7,12 @@ import entities.Camera;
 import entities.Entity;
 import entities.Light;
 import entities.Player;
+import guis.*;
 import models.TexturedModel;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 import particles.ParticleMaster;
@@ -66,13 +68,11 @@ public class MainGameLoop {
 
 
         //**************GUI SETUP****************
-//		List<GuiTexture> guiTextures = new ArrayList<>();
-//		GuiTexture shadowMap = new GuiTexture(renderer.getShadowMapTexture(), new Vector2f(0.5f, 0.5f), new Vector2f(0.5f, 0.5f));
-//		GuiTexture reflection = new GuiTexture(buffers.getReflectionTexture(), new Vector2f(-0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
-//		guiTextures.add(shadowMap);
-//		guiTextures.add(reflection);
-//
-//		GuiRenderer guiRenderer = new GuiRenderer(loader);
+        GuiManager guiManager = new GuiManager();
+        GuiTexture button = new Button(loader.loadTexture("Health"), loader.loadTexture("WaterDUDV"), loader.loadTexture("WaterNormal"), new Vector2f(0f, 0f), new Vector2f(0.25f, 0.25f));
+        guiManager.addTexture(button);
+
+		GuiRenderer guiRenderer = new GuiRenderer(loader);
 
 
         //***********COLLISION SETUP************
@@ -86,6 +86,7 @@ public class MainGameLoop {
             player.updateEntity(terrain);
             player.updateAnimation();
             world.update(new Vector3f(player.getPosition()));
+            guiManager.update();
             ParticleMaster.update(camera);
 
             List<Entity> entities = new ArrayList<>(world.getEntities());
@@ -95,6 +96,7 @@ public class MainGameLoop {
             entities = new ArrayList<>(world.getEntitiesFromDistance(new Vector3f(camera.getPosition()), MasterRenderer.FAR_PLANE));
             entities.add(player);
 
+            
             //rendering
             renderer.renderShadowMap(entities, lights.get(0));
 
@@ -117,7 +119,7 @@ public class MainGameLoop {
             water.getWaterRenderer().render(water.getWaterTiles(), camera, lights.get(0));
 
             ParticleMaster.renderParticles(camera);
-//			guiRenderer.render(guiTextures);
+			guiRenderer.render(guiManager.getGuiTextures());
             DisplayManager.updateDisplay();
         }
 
@@ -126,7 +128,7 @@ public class MainGameLoop {
         ParticleMaster.cleanUp();
         water.getWaterFrameBuffers().cleanUp();
         water.getWaterShader().cleanUp();
-//        guiRenderer.cleanUp();
+        guiRenderer.cleanUp();
         renderer.cleanUp();
         loader.cleanUp();
         DisplayManager.closeDisplay();

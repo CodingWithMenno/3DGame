@@ -6,6 +6,7 @@ public class TODO {
      * 		Entities:
      * 			-Vissen/vogels maken met boids algoritme
      * 			-Geluid implementeren in entities en biomes
+     * 		    -ParticleSystem in entities implementeren
      * 		    -Player synchroniseren met frames (delta) (of de MovableEntity class) (player klasse opnieuw maken)
      * 		.
      * 		Overig:

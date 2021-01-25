@@ -2,10 +2,12 @@ package entities;
 
 import animation.AnimatedModel;
 import collisions.AABB;
+import collisions.Collision;
 import models.TexturedModel;
 
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.ObjLoader;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +87,11 @@ public class Entity implements Cloneable {
 		if (this.isAnimated) {
 			this.animatedModel.setCurrentAnimation(animationNumber);
 		}
+	}
+
+	//Override this method
+	public void onCollide(Collision collision) {
+		//Do something like play a sound and perform hit animation
 	}
 
 	public float getTextureXOffset() {

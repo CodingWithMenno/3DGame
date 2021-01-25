@@ -1,8 +1,7 @@
 package entities;
 
 import animation.AnimatedModel;
-import collisions.AABB;
-import models.TexturedModel;
+import collisions.Collision;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.DisplayManager;
@@ -47,6 +46,15 @@ public class Player extends MovableEntity {
         doAnimations();
     }
 
+    @Override
+    protected void onCollided(Collision collision) {
+        if (collision.isHitFromSide()) {
+            System.out.println("Hit the side");
+        } else {
+            System.out.println("Hit the top");
+        }
+    }
+
     private void doAnimations() {
         if (Maths.difference(this.currentSpeed, 0) > 20) {
             super.setAnimation(1);
@@ -56,7 +64,7 @@ public class Player extends MovableEntity {
     }
 
     @Override
-    protected void resetGravity() {
+    protected void resetVerticalSpeed() {
         this.upwardsSpeed = 0;
         this.isInAir = false;
     }
