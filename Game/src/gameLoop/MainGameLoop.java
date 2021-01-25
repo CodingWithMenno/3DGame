@@ -69,8 +69,8 @@ public class MainGameLoop {
 
         //**************GUI SETUP****************
         GuiManager guiManager = new GuiManager();
-        GuiTexture button = new Button(loader.loadTexture("Health"), loader.loadTexture("WaterDUDV"), loader.loadTexture("WaterNormal"), new Vector2f(0f, 0f), new Vector2f(0.25f, 0.25f));
-        guiManager.addTexture(button);
+//        GuiTexture button = new Button(loader.loadTexture("Health"), loader.loadTexture("WaterDUDV"), loader.loadTexture("WaterNormal"), new Vector2f(-0.5f, -0.5f), new Vector2f(0.25f, 0.25f));
+//        guiManager.addTexture(button);
 
 		GuiRenderer guiRenderer = new GuiRenderer(loader);
 
@@ -96,7 +96,7 @@ public class MainGameLoop {
             entities = new ArrayList<>(world.getEntitiesFromDistance(new Vector3f(camera.getPosition()), MasterRenderer.FAR_PLANE));
             entities.add(player);
 
-            
+
             //rendering
             renderer.renderShadowMap(entities, lights.get(0));
 

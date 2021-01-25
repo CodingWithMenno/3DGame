@@ -11,7 +11,7 @@ public class DisplayManager {
 	private static final int WIDTH = 1920;
 	private static final int HEIGHT = 1080;
 	private static final int FPS_CAP = 500;
-	private static final boolean VSYNC = false;
+	private static final boolean VSYNC = true;
 	private static final int ANTIALIASING_AMOUNT = 8;
 
 	private static final float DEFAULT_WIDTH = 2560f;
@@ -45,7 +45,7 @@ public class DisplayManager {
 
 		try {
 			Mouse.create();
-			//Mouse.setGrabbed(true);
+			Mouse.setGrabbed(true);
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}

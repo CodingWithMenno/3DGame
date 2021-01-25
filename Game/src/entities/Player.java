@@ -48,11 +48,7 @@ public class Player extends MovableEntity {
 
     @Override
     protected void onCollided(Collision collision) {
-        if (collision.isHitFromSide()) {
-            System.out.println("Hit the side");
-        } else {
-            System.out.println("Hit the top");
-        }
+
     }
 
     private void doAnimations() {
