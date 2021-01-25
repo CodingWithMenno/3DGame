@@ -1,7 +1,9 @@
-package particles;
+package particles.elaborated;
 
-import entities.Player;
 import org.lwjgl.util.vector.Vector3f;
+import particles.Particle;
+import particles.ParticleSystem;
+import particles.ParticleTexture;
 
 import java.util.Random;
 

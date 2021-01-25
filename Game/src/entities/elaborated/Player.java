@@ -1,7 +1,8 @@
-package entities;
+package entities.elaborated;
 
 import animation.AnimatedModel;
 import collisions.Collision;
+import entities.MovableEntity;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.DisplayManager;

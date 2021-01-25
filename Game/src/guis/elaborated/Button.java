@@ -1,5 +1,6 @@
-package guis;
+package guis.elaborated;
 
+import guis.InteractableGui;
 import org.lwjgl.util.vector.Vector2f;
 
 public class Button extends InteractableGui {

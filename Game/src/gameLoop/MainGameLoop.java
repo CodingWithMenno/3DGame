@@ -6,8 +6,9 @@ import collisions.CollisionHandler;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
-import entities.Player;
+import entities.elaborated.Player;
 import guis.*;
+import guis.elaborated.Button;
 import models.TexturedModel;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -17,7 +18,8 @@ import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 import particles.ParticleMaster;
 import particles.ParticleTexture;
-import particles.SnowParticleSystem;
+import particles.elaborated.PollParticleSystem;
+import particles.elaborated.SnowParticleSystem;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.MasterRenderer;
@@ -69,7 +71,7 @@ public class MainGameLoop {
 
         //**************GUI SETUP****************
         GuiManager guiManager = new GuiManager();
-        GuiTexture button = new Button(loader.loadTexture("Health"), loader.loadTexture("WaterDUDV"), loader.loadTexture("WaterNormal"), new Vector2f(-0.5f, -0.5f), new Vector2f(0.25f, 0.25f));
+        GuiTexture button = new Button(loader.loadTexture("Health"), loader.loadTexture("water/WaterDUDV"), loader.loadTexture("water/WaterNormal"), new Vector2f(-0.5f, -0.5f), new Vector2f(0.25f, 0.25f));
         guiManager.addTexture(button);
 
 		GuiRenderer guiRenderer = new GuiRenderer(loader);
@@ -180,6 +182,8 @@ public class MainGameLoop {
         Vector3f dimensions = ObjLoader.getLastDimensions();
         Entity treeEntity = new Entity(treeModel, new Vector3f(0, 0, 0), 0, random.nextInt(360), 0, 0.2f, dimensions);
         grassBiomeBuilder.addRandomEntities(terrain, waterHeight, treeEntity, 100);
+        ParticleTexture pollTexture = new ParticleTexture(loader.loadTexture("particles/PollTexture"), 1, false);
+        grassBiomeBuilder.addParticleSystem(new PollParticleSystem(pollTexture));
         Biome gBiome = grassBiomeBuilder.buildBiome();
 
 

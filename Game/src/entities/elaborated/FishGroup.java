@@ -1,4 +1,4 @@
-package entities;
+package entities.elaborated;
 
 import org.lwjgl.util.vector.Vector3f;
 import terrains.Terrain;

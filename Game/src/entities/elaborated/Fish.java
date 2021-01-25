@@ -1,6 +1,7 @@
-package entities;
+package entities.elaborated;
 
 import collisions.Collision;
+import entities.MovableEntity;
 import models.TexturedModel;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.DisplayManager;

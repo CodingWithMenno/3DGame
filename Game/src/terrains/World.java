@@ -1,12 +1,10 @@
 package terrains;
 
 import entities.Entity;
-import entities.Player;
 import org.lwjgl.util.vector.Vector3f;
 import toolbox.Maths;
 import water.Water;
 
-import javax.swing.text.html.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
