@@ -3,6 +3,9 @@ package gameLoop;
 public class TODO {
 
     /** TODO :
+     *      Current:
+     *      .
+     *      .
      * 		Entities:
      * 			-Vissen/vogels maken met boids algoritme
      * 			-Geluid implementeren in entities en biomes
@@ -10,7 +13,7 @@ public class TODO {
      * 		    -Player synchroniseren met frames (delta) (of de MovableEntity class) (player klasse opnieuw maken)
      * 		.
      * 		Overig:
-     * 			-Goede GUI library maken (met animatie support & het resizen van het display) (+ text rendering)
+     * 			-Goede GUI library maken (met animatie support & text rendering)
      * 			-Zon en wolken toevoegen (goede day-night cycle maken)
      * 			-Effecten toepassen (Post-Processing, Bloom, Lens flare, etc.)
      * 		.

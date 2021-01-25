@@ -20,7 +20,7 @@ public class GuiShader extends ShaderProgram {
 
     @Override
     protected void setAllUniformLocations() {
-        location_transformationMatrix = super.getUniformLocation("transformationMatrix");
+        this.location_transformationMatrix = super.getUniformLocation("transformationMatrix");
     }
 
     @Override
