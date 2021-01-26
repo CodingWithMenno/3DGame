@@ -46,7 +46,6 @@ public class DisplayManager {
 
 		try {
 			Mouse.create();
-			Mouse.setGrabbed(true);
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}

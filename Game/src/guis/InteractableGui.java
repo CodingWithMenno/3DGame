@@ -32,8 +32,8 @@ public abstract class InteractableGui extends GuiTexture {
     private boolean isHoveringAbove() {
         Vector2f mousePos = Input.getRelativeMousePos();
 
-        if (mousePos.x > this.minXY.x && mousePos.x < this.maxXY.x &&
-            mousePos.y > this.minXY.y && mousePos.y < this.maxXY.y) {
+        if (mousePos.x >= this.minXY.x && mousePos.x <= this.maxXY.x &&
+            mousePos.y >= this.minXY.y && mousePos.y <= this.maxXY.y) {
 
             this.texture = this.hoverTexture;
 

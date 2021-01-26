@@ -11,6 +11,7 @@ import guis.*;
 import guis.elaborated.Button;
 import models.TexturedModel;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Vector2f;
@@ -31,6 +32,7 @@ import textures.ModelTexture;
 import textures.TerrainTexture;
 import water.Water;
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -53,6 +55,7 @@ public class MainGameLoop implements Scene {
 
     @Override
     public void setup() {
+        Mouse.setGrabbed(true);
         this.loader = new Loader();
         Terrain terrain = new Terrain(0, -1, this.loader);
         Random random = new Random();
@@ -83,8 +86,8 @@ public class MainGameLoop implements Scene {
 
         //**************GUI SETUP****************
         this.guiManager = new GuiManager();
-        GuiTexture button = new Button(this.loader.loadTexture("Health"), this.loader.loadTexture("water/WaterDUDV"), this.loader.loadTexture("water/WaterNormal"), new Vector2f(-0.5f, -0.5f), new Vector2f(0.25f, 0.25f));
-        this.guiManager.addTexture(button);
+//        GuiTexture button = new Button(this.loader.loadTexture("Health"), this.loader.loadTexture("water/WaterDUDV"), this.loader.loadTexture("water/WaterNormal"), new Vector2f(-0.5f, -0.5f), new Vector2f(0.25f, 0.25f));
+//        this.guiManager.addTexture(button);
 
         this.guiRenderer = new GuiRenderer(this.loader);
 
@@ -94,7 +97,16 @@ public class MainGameLoop implements Scene {
     }
 
     @Override
+    public void resume() {
+        Mouse.setGrabbed(true);
+    }
+
+    @Override
     public void update() {
+        if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+            MainManager.stackScene(new PauseScreen());
+        }
+
         this.camera.move();
         this.player.updateEntity(this.world.getTerrain());
         this.player.updateAnimation();

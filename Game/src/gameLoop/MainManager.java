@@ -3,32 +3,66 @@ package gameLoop;
 import org.lwjgl.opengl.Display;
 import renderEngine.DisplayManager;
 
+import java.util.EmptyStackException;
+import java.util.Stack;
+
 public class MainManager {
 
-    private static Scene currentScene;
+    private static Stack<Scene> scenes;
 
     public static void main(String[] args) {
         DisplayManager.createDisplay();
 
-        currentScene = new MainGameLoop();
-        currentScene.setup();
+        scenes = new Stack<>();
+        scenes.push(new MainGameLoop());
+        scenes.peek().setup();
+
 
         while(!Display.isCloseRequested()) {
-            //updating
-            currentScene.update();
+            try {
+                //updating
+                scenes.peek().update();
 
-            //rendering
-            currentScene.render();
+                //rendering
+                if (scenes.peek() instanceof TransparentScene) {
+                    for (int i = 0; i < scenes.size(); i++) {
+                        if (scenes.get(i) == scenes.peek()) {
+                            scenes.get(i - 1).render();
+                        }
+                    }
+                }
+
+                scenes.peek().render();
+            } catch (EmptyStackException e) {
+                break;
+            }
+
             DisplayManager.updateDisplay();
         }
 
-        currentScene.cleanUp();
+
+        for (Scene scene : scenes) {
+            scene.cleanUp();
+        }
+
         DisplayManager.closeDisplay();
     }
 
     public static void changeScene(Scene scene) {
-        currentScene.cleanUp();
-        currentScene = scene;
-        currentScene.setup();
+        scenes.pop().cleanUp();
+        scenes.push(scene);
+        scenes.peek().setup();
     }
+
+    public static void stackScene(Scene scene) {
+        scenes.push(scene);
+        scenes.peek().setup();
+    }
+
+    public static void goBackAScene() {
+        scenes.pop().cleanUp();
+        scenes.peek().resume();
+    }
+
+
 }

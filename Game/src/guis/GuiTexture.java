@@ -1,6 +1,7 @@
 package guis;
 
 import org.lwjgl.util.vector.Vector2f;
+import renderEngine.DisplayManager;
 
 public class GuiTexture {
 
@@ -12,6 +13,8 @@ public class GuiTexture {
         this.texture = texture;
         this.position = position;
         this.scale = scale;
+
+        this.scale.x /= (DisplayManager.getWIDTH() / DisplayManager.getHEIGHT());
     }
 
     public int getTexture() {

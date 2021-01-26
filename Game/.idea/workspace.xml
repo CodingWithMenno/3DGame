@@ -5,10 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1448daae-e5e5-4daf-966b-6006ecad8d18" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gameLoop/PauseScreen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gameLoop/TransparentScene.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameLoop/TODO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/TODO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameLoop/MainManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/MainManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameLoop/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/Scene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guis/GuiRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/guis/GuiRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guis/GuiTexture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/guis/GuiTexture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guis/InteractableGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/guis/InteractableGui.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderEngine/DisplayManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/DisplayManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/toolbox/Maths.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/toolbox/Maths.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,6 +28,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -29,6 +38,7 @@
   <component name="ProjectId" id="1lhL0lCeHPYsHCSzVkyXHltCTCn" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/res/particles" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15566503" />
