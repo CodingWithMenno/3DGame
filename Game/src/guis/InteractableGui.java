@@ -1,5 +1,6 @@
 package guis;
 
+import input.Inputs;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
 
@@ -30,7 +31,7 @@ public abstract class InteractableGui extends GuiTexture {
     }
 
     private boolean isHoveringAbove() {
-        Vector2f mousePos = Input.getRelativeMousePos();
+        Vector2f mousePos = Inputs.getRelativeMousePos();
 
         if (mousePos.x >= this.minXY.x && mousePos.x <= this.maxXY.x &&
             mousePos.y >= this.minXY.y && mousePos.y <= this.maxXY.y) {

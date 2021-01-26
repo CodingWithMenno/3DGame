@@ -5,13 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1448daae-e5e5-4daf-966b-6006ecad8d18" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/guis/GuiAction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/entities/elaborated/NewPlayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game/Health.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/Health.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameLoop/MainManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/MainManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gameLoop/PauseScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/PauseScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gameLoop/TODO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/TODO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/guis/elaborated/Button.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/guis/Button.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guis/Input.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/input/Inputs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guis/InteractableGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/guis/InteractableGui.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

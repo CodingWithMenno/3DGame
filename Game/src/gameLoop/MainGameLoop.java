@@ -83,7 +83,7 @@ public class MainGameLoop implements Scene {
 
         //**************GUI SETUP****************
         this.guiManager = new GuiManager();
-//        GuiTexture button = new Button(this.loader.loadTexture("Health"), this.loader.loadTexture("water/WaterDUDV"), this.loader.loadTexture("water/WaterNormal"), new Vector2f(-0.5f, -0.5f), new Vector2f(0.25f, 0.25f));
+//        Button button = new Button(this.loader.loadTexture("button/button0"), this.loader.loadTexture("button/button1"), this.loader.loadTexture("button/button2"), new Vector2f(-0.5f, -0.5f), new Vector2f(0.25f, 0.25f));
 //        this.guiManager.addTexture(button);
 
         this.guiRenderer = new GuiRenderer(this.loader);

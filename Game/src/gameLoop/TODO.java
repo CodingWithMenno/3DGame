@@ -4,6 +4,7 @@ public class TODO {
 
     /** TODO :
      *      Current:
+     *          -Player klasse remake
      *      .
      *      .
      * 		Entities:
