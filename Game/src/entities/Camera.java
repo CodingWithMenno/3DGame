@@ -21,6 +21,8 @@ public class Camera {
 	private float distanceFromEntity = 14;
 	private float angleAroundEntity = 0;
 	private Entity entityToFollow;
+	private float subtractRotation = 0;
+	private float targetRotation = 0;
 
 	private Vector3f position;
 	private float pitch = DEFAULT_PITCH;
@@ -35,7 +37,7 @@ public class Camera {
 		this.position = new Vector3f(pos.x, pos.y + 8, pos.z - 20);
 	}
 
-	public void move(){
+	public void move() {
 		calculateZoom();
 		calculatePitch();
 		calculateAngleAroundPlayer();
@@ -67,12 +69,14 @@ public class Camera {
 			this.position.y = terrainHeight + 1f;
 		}
 
-
-		this.yaw = 180 - (this.entityToFollow.getRotY() + this.angleAroundEntity);
+		this.yaw = 180 - (this.targetRotation + this.angleAroundEntity);
 	}
 
 	private Vector3f calculateCameraPosition(float horizontalDistance, float verticalDistance) {
-		float theta = this.entityToFollow.getRotY() + this.angleAroundEntity;
+		float target = this.entityToFollow.getRotY() - this.subtractRotation;
+		this.targetRotation = Maths.lerp(this.targetRotation, target, ROTATION_SPEED * DisplayManager.getDelta());
+
+		float theta = this.targetRotation + this.angleAroundEntity;
 		float offsetX = (float) (horizontalDistance * Math.sin(Math.toRadians(theta)));
 		float offsetZ = (float) (horizontalDistance * Math.cos(Math.toRadians(theta)));
 		float toPosX = this.entityToFollow.getPosition().x - offsetX;
@@ -130,5 +134,9 @@ public class Camera {
 
 	public float getYaw() {
 		return yaw;
+	}
+
+	public void setSubtractRotation(float subtractRotation) {
+		this.subtractRotation = subtractRotation;
 	}
 }

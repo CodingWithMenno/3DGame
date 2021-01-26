@@ -61,6 +61,7 @@ public class MainGameLoop implements Scene {
         //*************PLAYER SETUP**************
         this.player = setupPlayer(this.loader);
         this.camera = new Camera(this.player, terrain);
+        this.player.setCamera(this.camera);
 
         this.renderer = new MasterRenderer(this.camera);
         ParticleMaster.init(this.loader, this.renderer.getProjectionMatrix());

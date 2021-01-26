@@ -11,7 +11,6 @@ public class TODO {
      * 			-Vissen/vogels maken met boids algoritme
      * 		    -Vlinders en bijen maken als particles
      * 			-Geluid implementeren in entities en biomes
-     * 		    -Player controls verbeteren
      * 		    -Grappige model maken voor de camera (zodat je een cameraman ziet in de reflectie)
      * 		.
      * 		Overig:

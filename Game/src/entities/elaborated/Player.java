@@ -16,15 +16,18 @@ public class Player extends MovableEntity {
 
     private static final float RUN_SPEED = 80;
     private static final float JUMP_POWER = 50;
-    private static final float TURN_SPEED = 100;
+    private static final float ACCELERATION = 5;
+    private static final float MODEL_ROTATION_SPEED = 20;
 
     private float currentVerticalSpeed = 0;
     private float currentHorizontalSpeed;
     private float currentTurnSpeed = 0;
     private float upwardsSpeed = 0;
+    private float modelRotation = 0;
 
     private boolean isInAir = true;
 
+    private Camera camera;
 
     public Player(AnimatedModel animatedModel, Vector3f position, float rotX, float rotY, float rotZ, float scale, Vector3f... collisionBoxes) {
         super(animatedModel, position, rotX, rotY, rotZ, scale, collisionBoxes);
@@ -47,6 +50,7 @@ public class Player extends MovableEntity {
 
     @Override
     protected void update(Terrain terrain) {
+        super.increaseRotation(0, -this.modelRotation, 0);
         checkInputs();
 
         increaseRotation(0, this.currentTurnSpeed, 0);
@@ -71,6 +75,11 @@ public class Player extends MovableEntity {
             this.isInAir = true;
         }
 
+        if (this.camera != null) {
+            this.camera.setSubtractRotation(this.modelRotation);
+        }
+        super.increaseRotation(0, this.modelRotation, 0);
+
         doAnimations();
     }
 
@@ -89,33 +98,60 @@ public class Player extends MovableEntity {
         float finalVerticalSpeed = 0;
         float finalHorizontalSpeed = 0;
         float finalTurnSpeed = 0;
+        float finalModelRotation = 0;
 
+        boolean forwardPressed = false;
         if (Keyboard.isKeyDown(Inputs.FORWARD)) {
             finalVerticalSpeed += RUN_SPEED;
+            forwardPressed = true;
         }
 
+        boolean backwardPressed = false;
         if (Keyboard.isKeyDown(Inputs.BACKWARDS)) {
             finalVerticalSpeed -= RUN_SPEED;
+            finalModelRotation += 180;
+            backwardPressed = true;
         }
 
         if (Keyboard.isKeyDown(Inputs.LEFT)) {
             finalHorizontalSpeed += RUN_SPEED;
+
+            if (forwardPressed) {
+                finalModelRotation += 45;
+            } else if (backwardPressed) {
+                finalModelRotation -= 45;
+            } else {
+                finalModelRotation += 90;
+            }
         }
 
         if (Keyboard.isKeyDown(Inputs.RIGHT)) {
             finalHorizontalSpeed -= RUN_SPEED;
+
+            if (forwardPressed) {
+                finalModelRotation -= 45;
+            } else if (backwardPressed) {
+                finalModelRotation += 45;
+            } else {
+                finalModelRotation -= 90;
+            }
         }
 
         if (!Keyboard.isKeyDown(Inputs.FREE_CAMERA_ANGLE)) {
             finalTurnSpeed -= Mouse.getDX() * Inputs.SENSITIVITY;
         }
 
-        this.currentVerticalSpeed = Maths.lerp(this.currentVerticalSpeed, finalVerticalSpeed, 5f * DisplayManager.getDelta());
-        this.currentHorizontalSpeed = Maths.lerp(this.currentHorizontalSpeed, finalHorizontalSpeed, 5f * DisplayManager.getDelta());
+        this.currentVerticalSpeed = Maths.lerp(this.currentVerticalSpeed, finalVerticalSpeed, ACCELERATION * DisplayManager.getDelta());
+        this.currentHorizontalSpeed = Maths.lerp(this.currentHorizontalSpeed, finalHorizontalSpeed, ACCELERATION * DisplayManager.getDelta());
         this.currentTurnSpeed = finalTurnSpeed;
+        this.modelRotation = Maths.lerp(this.modelRotation, finalModelRotation, MODEL_ROTATION_SPEED * DisplayManager.getDelta());
 
         if (Keyboard.isKeyDown(Inputs.JUMP)) {
             jump();
         }
+    }
+
+    public void setCamera(Camera camera) {
+        this.camera = camera;
     }
 }
