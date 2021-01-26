@@ -45,6 +45,8 @@ public abstract class MovableEntity extends Entity {
         for (AABB collisionBox : super.getCollisionBoxes()) {
             collisionBox.move(this.velocity);
         }
+
+        this.position = Maths.clamp(new Vector3f(this.position), new Vector3f(1, -1000, 1), new Vector3f(Terrain.getSIZE() - 1, 1000, Terrain.getSIZE() - 1));
     }
 
     protected abstract void update(Terrain terrain);

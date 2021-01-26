@@ -20,7 +20,7 @@ public class Water {
         this.waterRenderer = new WaterRenderer(loader, this.waterShader, renderer.getProjectionMatrix(), this.waterFrameBuffers);
 
         this.waterTiles = new ArrayList<>();
-        WaterTile water = new WaterTile(terrainSize / 2, -terrainSize / 2, waterLevel);
+        WaterTile water = new WaterTile(terrainSize / 2, terrainSize / 2, waterLevel);
         this.waterTiles.add(water);
     }
 

@@ -54,7 +54,7 @@ public class MainGameLoop implements Scene {
     public void setup() {
         Mouse.setGrabbed(true);
         this.loader = new Loader();
-        Terrain terrain = new Terrain(0, -1, this.loader);
+        Terrain terrain = new Terrain(0, 0, this.loader);
         Random random = new Random();
 
 
@@ -74,11 +74,11 @@ public class MainGameLoop implements Scene {
         TexturedModel postModel = new TexturedModel(ObjLoader.loadObjModel("lamp/LampPost", this.loader),
                 new ModelTexture(this.loader.loadTexture("lamp/LampPostTexture")));
         Vector3f dimensions = ObjLoader.getLastDimensions();
-        this.world.addEntityToCorrectBiome(new Entity(postModel, 2, new Vector3f(100, terrain.getHeightOfTerrain(100, -150), -150), 0, 0, 0, 1f, dimensions));
+        this.world.addEntityToCorrectBiome(new Entity(postModel, 2, new Vector3f(100, terrain.getHeightOfTerrain(100, 150), 150), 0, 0, 0, 1f, dimensions));
 
         this.lights = new ArrayList<>();
         this.lights.add(new Light(new Vector3f(1000, 500000, -100000), new Vector3f(0.7f, 0.7f, 0.7f)));
-        this.lights.add(new Light(new Vector3f(103.2f, terrain.getHeightOfTerrain(100, -150) + 4.5f, -150), new Vector3f(1f, 1f, 0), new Vector3f(1f, 0.01f, 0.002f)));
+        this.lights.add(new Light(new Vector3f(103.2f, terrain.getHeightOfTerrain(100, 150) + 4.5f, 150), new Vector3f(1f, 1f, 0), new Vector3f(1f, 0.01f, 0.002f)));
 
 
         //**************GUI SETUP****************
@@ -182,7 +182,7 @@ public class MainGameLoop implements Scene {
         Animation foxRunningAnimation = new Animation(foxModels, 1);
         AnimatedModel foxAnimatedModel = new AnimatedModel(foxIdleAnimation, foxRunningAnimation);
 
-        return new Player(foxAnimatedModel, new Vector3f(500, -500, -200), 0, 0, 0, 0.4f, dimensions);
+        return new Player(foxAnimatedModel, new Vector3f(500, 0, 200), 0, 0, 0, 0.4f, dimensions);
     }
 
 

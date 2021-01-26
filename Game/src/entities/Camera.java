@@ -58,10 +58,10 @@ public class Camera {
 			this.pitch += heightDifference;
 		}
 
-		this.pitch = Maths.clamp(this.pitch, -6, 85);
+		this.pitch = Maths.clamp(this.pitch, -20, 85);
 
 		this.position = newPos;
-		this.position = Maths.clamp(new Vector3f(this.position), new Vector3f(0, -500, -Terrain.getSIZE()), new Vector3f(Terrain.getSIZE(), 500, 0));
+		this.position = Maths.clamp(new Vector3f(this.position), new Vector3f(1, -1000, 1), new Vector3f(Terrain.getSIZE() - 1, 1000, Terrain.getSIZE() - 1));
 		if (this.position.y < terrainHeight + 1f) {
 			this.position.y = terrainHeight + 1f;
 		}

@@ -36,7 +36,7 @@ public class BiomeBuilder {
     public BiomeBuilder addRandomEntities(Terrain terrain, float waterHeight, Entity entity, int totalEntities) {
         for (int i = 0; i < totalEntities; i++) {
             float x = random.nextFloat() * Terrain.getSIZE();
-            float z = random.nextFloat() * terrain.getZ();
+            float z = random.nextFloat() * Terrain.getSIZE();
             float y = terrain.getHeightOfTerrain(x, z);
 
             if (y <= waterHeight) { continue; }
