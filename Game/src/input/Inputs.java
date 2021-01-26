@@ -14,6 +14,9 @@ public class Inputs {
     public static final int RIGHT = Keyboard.KEY_D;
     public static final int JUMP = Keyboard.KEY_SPACE;
 
+    //Camera controls
+    public static final float SENSITIVITY = 0.1f;
+    public static final int FREE_CAMERA_ANGLE = Keyboard.KEY_LCONTROL;
 
     public static Vector2f getRelativeMousePos() {
         float x = (Mouse.getX() / DisplayManager.getScaledWidth() / DisplayManager.getDefaultWidth()) * 2f - 1f;

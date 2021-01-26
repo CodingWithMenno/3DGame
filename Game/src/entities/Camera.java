@@ -1,22 +1,23 @@
 package entities;
 
+import input.Inputs;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector3f;
+import renderEngine.DisplayManager;
 import terrains.Terrain;
 import terrains.World;
 import toolbox.Maths;
 
 public class Camera {
 
-	private static float MOUSE_SENSITIVITY = 0.05f;
-	private static float AUTO_ZOOM = 0.005f;
+	private static float AUTO_ZOOM = 5f;
 	private static float DEFAULT_PITCH = 12;
 	private static float MAX_ZOOM_IN = 8;
 	private static float MAX_ZOOM_OUT = 100;
 
 	private float distanceFromEntity = 14;
 	private float angleAroundEntity = 0;
-	private boolean entityIsMoving = false;
 	private Entity entityToFollow;
 
 	private Vector3f position;
@@ -43,12 +44,6 @@ public class Camera {
 
 		Vector3f newPos = calculateCameraPosition(horizontalDistance, verticalDistance);
 
-		if (Maths.difference(newPos.x, this.position.x) > 0.1f || Maths.difference(newPos.z, this.position.z) > 0.1f) {
-			this.entityIsMoving = true;
-		} else {
-			this.entityIsMoving = false;
-		}
-
 		float terrainHeight = this.terrain.getHeightOfTerrain(newPos.x, newPos.z);
 		float heightDifference = Maths.difference(newPos.y, terrainHeight + 1);
 		if (newPos.y < terrainHeight + 1f) {
@@ -63,7 +58,14 @@ public class Camera {
 			this.pitch += heightDifference;
 		}
 
+		this.pitch = Maths.clamp(this.pitch, -6, 85);
+
 		this.position = newPos;
+		this.position = Maths.clamp(new Vector3f(this.position), new Vector3f(0, -500, -Terrain.getSIZE()), new Vector3f(Terrain.getSIZE(), 500, 0));
+		if (this.position.y < terrainHeight + 1f) {
+			this.position.y = terrainHeight + 1f;
+		}
+
 
 		this.yaw = 180 - (this.entityToFollow.getRotY() + this.angleAroundEntity);
 	}
@@ -94,23 +96,21 @@ public class Camera {
 	}
 
 	private void calculatePitch() {
-		float pitchChange = Mouse.getDY() * MOUSE_SENSITIVITY;
+		float pitchChange = Mouse.getDY() * Inputs.SENSITIVITY;
 		this.pitch -= pitchChange;
-
-//		if (pitchChange == 0 && this.pitch != DEFAULT_PITCH && this.entityIsMoving) {
-//			this.pitch = Maths.lerp(this.pitch, DEFAULT_PITCH, AUTO_ZOOM);
-//		}
-
-		this.pitch = Maths.clamp(this.pitch, -6, 85);
 	}
 
 	private void calculateAngleAroundPlayer() {
-		float angleChange = Mouse.getDX() * MOUSE_SENSITIVITY * 3f;
-		this.angleAroundEntity -= angleChange;
+		if (Keyboard.isKeyDown(Inputs.FREE_CAMERA_ANGLE)) {
+			float angleChange = Mouse.getDX() * Inputs.SENSITIVITY * 3f;
+			this.angleAroundEntity -= angleChange;
+		}
 
-//		if (angleChange == 0 && this.angleAroundEntity != 0 && this.entityIsMoving) {
-//			this.angleAroundEntity = Maths.lerp(this.angleAroundEntity, 0, AUTO_ZOOM);
-//		}
+		if (this.entityToFollow instanceof MovableEntity) {
+			if (((MovableEntity) this.entityToFollow).isMovingAbove(0.01f)) {
+				this.angleAroundEntity = Maths.lerp(this.angleAroundEntity, 0, AUTO_ZOOM * DisplayManager.getDelta());
+			}
+		}
 
 		this.angleAroundEntity = Maths.clamp(this.angleAroundEntity, -180, 180);
 	}

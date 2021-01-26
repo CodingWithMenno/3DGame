@@ -55,6 +55,14 @@ public class Maths {
 		return Math.max(min, Math.min(max, val));
 	}
 
+	//Clamps a vector between the min and max
+	public static Vector3f clamp(Vector3f val, Vector3f min, Vector3f max) {
+		val.x = clamp(val.x, min.x, max.x);
+		val.y = clamp(val.y, min.y, max.y);
+		val.z = clamp(val.z, min.z, max.z);
+		return val;
+	}
+
 	//Linear interpolation
 	public static float lerp(float from, float to, float amount) {
 		return from + amount * (to - from);

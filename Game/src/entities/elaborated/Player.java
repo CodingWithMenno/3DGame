@@ -3,7 +3,9 @@ package entities.elaborated;
 import animation.AnimatedModel;
 import collisions.Collision;
 import entities.MovableEntity;
+import input.Inputs;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.DisplayManager;
 import terrains.Terrain;
@@ -12,28 +14,48 @@ import toolbox.Maths;
 public class Player extends MovableEntity {
 
     private static final float RUN_SPEED = 80;
-    private static final float TURN_SPEED = 200;
-    private static final float JUMP_POWER = 30;
+    private static final float JUMP_POWER = 50;
 
-    private float currentSpeed = 0;
+    private float currentVerticalSpeed = 0;
+    private float currentHorizontalSpeed;
     private float currentTurnSpeed = 0;
     private float upwardsSpeed = 0;
 
     private boolean isInAir = true;
 
-    public Player(AnimatedModel animatedModel, Vector3f position, float rotX, float rotY, float rotZ,
-                  float scale, Vector3f... collisionBoxes) {
+    public Player(AnimatedModel animatedModel, Vector3f position, float rotX, float rotY, float rotZ, float scale, Vector3f... collisionBoxes) {
         super(animatedModel, position, rotX, rotY, rotZ, scale, collisionBoxes);
+    }
+
+    private void doAnimations() {
+        if (Maths.difference(this.currentVerticalSpeed, 0) > 20) {
+            super.setAnimation(1);
+        } else {
+            super.setAnimation(0);
+        }
+    }
+
+    private void jump() {
+        if (!this.isInAir) {
+            this.upwardsSpeed = JUMP_POWER;
+            this.isInAir = true;
+        }
     }
 
     @Override
     protected void update(Terrain terrain) {
         checkInputs();
-        super.increaseRotation(0, this.currentTurnSpeed * DisplayManager.getDelta(), 0);
-        float distance = this.currentSpeed * DisplayManager.getDelta();
-        float dx = (float) (distance * Math.sin(Math.toRadians(super.getRotY())));
-        float dz = (float) (distance * Math.cos(Math.toRadians(super.getRotY())));
-        super.increasePosition(dx, 0, dz);
+
+        increaseRotation(0, this.currentTurnSpeed, 0);
+
+        float verticalDistance = this.currentVerticalSpeed * DisplayManager.getDelta();
+        float dxv = (float) (verticalDistance * Math.sin(Math.toRadians(super.getRotY())));
+        float dzv = (float) (verticalDistance * Math.cos(Math.toRadians(super.getRotY())));
+
+        float horizontalDistance = this.currentHorizontalSpeed * DisplayManager.getDelta();
+        float dxh = (float) (horizontalDistance * Math.cos(Math.toRadians(super.getRotY())));
+        float dzh = (float) (horizontalDistance * Math.sin(Math.toRadians(super.getRotY())));
+        super.increasePosition(dxv + dxh, 0, dzv - dzh);
 
         this.upwardsSpeed += GRAVITY * DisplayManager.getDelta();
         super.increasePosition(0, this.upwardsSpeed * DisplayManager.getDelta(), 0);
@@ -42,6 +64,8 @@ public class Player extends MovableEntity {
             this.upwardsSpeed = 0;
             this.isInAir = false;
             super.position.y = Maths.lerp(super.position.y, terrainHeight, 0.5f);
+        } else {
+            this.isInAir = true;
         }
 
         doAnimations();
@@ -52,51 +76,42 @@ public class Player extends MovableEntity {
 
     }
 
-    private void doAnimations() {
-        if (Maths.difference(this.currentSpeed, 0) > 20) {
-            super.setAnimation(1);
-        } else {
-            super.setAnimation(0);
-        }
-    }
-
     @Override
     protected void resetVerticalSpeed() {
         this.upwardsSpeed = 0;
         this.isInAir = false;
     }
 
-    private void jump() {
-        if (!this.isInAir) {
-            this.upwardsSpeed = JUMP_POWER;
-            this.isInAir = true;
-        }
-    }
-
     private void checkInputs() {
-        float finalSpeed = 0;
+        float finalVerticalSpeed = 0;
+        float finalHorizontalSpeed = 0;
         float finalTurnSpeed = 0;
 
-        if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
-            finalSpeed += RUN_SPEED;
+        if (Keyboard.isKeyDown(Inputs.FORWARD)) {
+            finalVerticalSpeed += RUN_SPEED;
         }
 
-        if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
-            finalSpeed -= RUN_SPEED;
+        if (Keyboard.isKeyDown(Inputs.BACKWARDS)) {
+            finalVerticalSpeed -= RUN_SPEED;
         }
 
-        if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
-            finalTurnSpeed -= TURN_SPEED;
+        if (Keyboard.isKeyDown(Inputs.LEFT)) {
+            finalHorizontalSpeed += RUN_SPEED;
         }
 
-        if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
-            finalTurnSpeed += TURN_SPEED;
+        if (Keyboard.isKeyDown(Inputs.RIGHT)) {
+            finalHorizontalSpeed -= RUN_SPEED;
         }
 
-        this.currentSpeed = Maths.lerp(this.currentSpeed, finalSpeed, 0.04f);
-        this.currentTurnSpeed = Maths.lerp(this.currentTurnSpeed, finalTurnSpeed, 0.05f);
+        if (!Keyboard.isKeyDown(Inputs.FREE_CAMERA_ANGLE)) {
+            finalTurnSpeed -= Mouse.getDX() * Inputs.SENSITIVITY;
+        }
 
-        if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
+        this.currentVerticalSpeed = Maths.lerp(this.currentVerticalSpeed, finalVerticalSpeed, 5f * DisplayManager.getDelta());
+        this.currentHorizontalSpeed = Maths.lerp(this.currentHorizontalSpeed, finalHorizontalSpeed, 5f * DisplayManager.getDelta());
+        this.currentTurnSpeed = finalTurnSpeed;
+
+        if (Keyboard.isKeyDown(Inputs.JUMP)) {
             jump();
         }
     }

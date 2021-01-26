@@ -4,14 +4,13 @@ public class TODO {
 
     /** TODO :
      *      Current:
-     *          -Player klasse remake
+     *          -
      *      .
      *      .
      * 		Entities:
      * 			-Vissen/vogels maken met boids algoritme
      * 		    -Vlinders en bijen maken als particles
      * 			-Geluid implementeren in entities en biomes
-     * 		    -Player synchroniseren met frames (delta) (of de MovableEntity class) (player klasse opnieuw maken)
      * 		.
      * 		Overig:
      * 			-Goede GUI library uitbreiden (met animatie support & text rendering)

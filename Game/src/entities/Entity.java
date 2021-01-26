@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Entity implements Cloneable {
 
-	public static final float GRAVITY = -50;
+	public static final float GRAVITY = -70;
 
 	private TexturedModel staticModel;
 	private AnimatedModel animatedModel;
