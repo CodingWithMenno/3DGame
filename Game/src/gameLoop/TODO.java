@@ -13,7 +13,7 @@ public class TODO {
      * 		    -Player synchroniseren met frames (delta) (of de MovableEntity class) (player klasse opnieuw maken)
      * 		.
      * 		Overig:
-     * 			-Goede GUI library maken (met animatie support & text rendering)
+     * 			-Goede GUI library uitbreiden (met animatie support & text rendering)
      * 			-Zon en wolken toevoegen (goede day-night cycle maken)
      * 			-Effecten toepassen (Post-Processing, Bloom, Lens flare, etc.)
      * 		.
