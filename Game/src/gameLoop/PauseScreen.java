@@ -23,8 +23,6 @@ public class PauseScreen implements TransparentScene, Comparable {
         button.setOnClickAction(() -> {
             MainManager.changeScene(new MainGameLoop());
         });
-
-
         this.guiManager.addTexture(button);
 
         this.guiRenderer = new GuiRenderer(this.loader);

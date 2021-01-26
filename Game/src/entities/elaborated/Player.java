@@ -2,6 +2,7 @@ package entities.elaborated;
 
 import animation.AnimatedModel;
 import collisions.Collision;
+import entities.Camera;
 import entities.MovableEntity;
 import input.Inputs;
 import org.lwjgl.input.Keyboard;
@@ -15,6 +16,7 @@ public class Player extends MovableEntity {
 
     private static final float RUN_SPEED = 80;
     private static final float JUMP_POWER = 50;
+    private static final float TURN_SPEED = 100;
 
     private float currentVerticalSpeed = 0;
     private float currentHorizontalSpeed;
@@ -22,6 +24,7 @@ public class Player extends MovableEntity {
     private float upwardsSpeed = 0;
 
     private boolean isInAir = true;
+
 
     public Player(AnimatedModel animatedModel, Vector3f position, float rotX, float rotY, float rotZ, float scale, Vector3f... collisionBoxes) {
         super(animatedModel, position, rotX, rotY, rotZ, scale, collisionBoxes);

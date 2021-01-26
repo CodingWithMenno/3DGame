@@ -1,6 +1,7 @@
 package collisions;
 
 import org.lwjgl.util.vector.Vector3f;
+import terrains.Terrain;
 import toolbox.Maths;
 
 public class AABB implements Cloneable {
@@ -58,6 +59,8 @@ public class AABB implements Cloneable {
         this.center.x += velocity.x;
         this.center.y += velocity.y;
         this.center.z += velocity.z;
+
+        this.center = Maths.clamp(new Vector3f(this.center), new Vector3f(1, -1000, 1), new Vector3f(Terrain.getSIZE() - 1, 1000, Terrain.getSIZE() - 1));
     }
 
     @Override

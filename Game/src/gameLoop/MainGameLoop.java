@@ -60,8 +60,8 @@ public class MainGameLoop implements Scene {
 
         //*************PLAYER SETUP**************
         this.player = setupPlayer(this.loader);
-
         this.camera = new Camera(this.player, terrain);
+
         this.renderer = new MasterRenderer(this.camera);
         ParticleMaster.init(this.loader, this.renderer.getProjectionMatrix());
 
@@ -134,9 +134,9 @@ public class MainGameLoop implements Scene {
         this.camera.getPosition().y -= distance;
         this.camera.invertPitch();
         this.renderer.renderScene(entities, this.world.getTerrain(), this.lights, this.camera, new Vector4f(0, 1, 0, -World.getWaterHeight()));
+
         this.camera.getPosition().y += distance;
         this.camera.invertPitch();
-
         this.world.getWater().getWaterFrameBuffers().bindRefractionFrameBuffer();
         this.renderer.renderScene(entities, this.world.getTerrain(), this.lights, this.camera, new Vector4f(0, -1, 0, World.getWaterHeight() + 0.5f));
 

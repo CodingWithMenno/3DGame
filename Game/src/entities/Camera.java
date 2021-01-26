@@ -1,5 +1,6 @@
 package entities;
 
+import entities.elaborated.Player;
 import input.Inputs;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -11,10 +12,11 @@ import toolbox.Maths;
 
 public class Camera {
 
-	private static float AUTO_ZOOM = 5f;
+	private static float AUTO_ZOOM = 5;
 	private static float DEFAULT_PITCH = 12;
 	private static float MAX_ZOOM_IN = 8;
 	private static float MAX_ZOOM_OUT = 100;
+	private static float ROTATION_SPEED = 15;
 
 	private float distanceFromEntity = 14;
 	private float angleAroundEntity = 0;
@@ -23,7 +25,6 @@ public class Camera {
 	private Vector3f position;
 	private float pitch = DEFAULT_PITCH;
 	private float yaw;
-	private float roll;
 
 	private Terrain terrain;
 
@@ -129,9 +130,5 @@ public class Camera {
 
 	public float getYaw() {
 		return yaw;
-	}
-
-	public float getRoll() {
-		return roll;
 	}
 }

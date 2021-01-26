@@ -1,5 +1,6 @@
 package renderEngine;
 
+import entities.elaborated.Player;
 import models.RawModel;
 import models.TexturedModel;
 
