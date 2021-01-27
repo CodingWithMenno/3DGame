@@ -1,48 +1,45 @@
 package gameLoop;
 
-import collisions.Box;
-import collisions.OBB;
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Vector3f;
+import renderEngine.DisplayManager;
+
+import java.util.EmptyStackException;
 import java.util.Stack;
 
-public class MainManager {
+public class SceneManager {
 
     private static Stack<Scene> scenes;
 
     public static void main(String[] args) {
-        OBB box1 = new Box(new Vector3f(1, 1, 1), new Vector3f(10, 10, 10));
-        OBB box2 = new Box(new Vector3f(1, 1, 1), new Vector3f(10, 10, 10));
+        DisplayManager.createDisplay();
+
+        scenes = new Stack<>();
+        scenes.push(new MainGameLoop());
+        scenes.peek().setup();
 
 
-//        DisplayManager.createDisplay();
-//
-//        scenes = new Stack<>();
-//        scenes.push(new MainGameLoop());
-//        scenes.peek().setup();
-//
-//
-//        while(!Display.isCloseRequested()) {
-//            try {
-//                //updating
-//                scenes.peek().update();
-//
-//                //rendering
-//                renderTransparency();
-//                scenes.peek().render();
-//            } catch (EmptyStackException e) {
-//                break;
-//            }
-//
-//            DisplayManager.updateDisplay();
-//        }
-//
-//
-//        for (Scene scene : scenes) {
-//            scene.cleanUp();
-//        }
-//
-//        DisplayManager.closeDisplay();
+        while(!Display.isCloseRequested()) {
+            try {
+                //updating
+                scenes.peek().update();
+
+                //rendering
+                renderTransparency();
+                scenes.peek().render();
+            } catch (EmptyStackException e) {
+                break;
+            }
+
+            DisplayManager.updateDisplay();
+        }
+
+
+        for (Scene scene : scenes) {
+            scene.cleanUp();
+        }
+
+        DisplayManager.closeDisplay();
     }
 
     public static void changeScene(Scene scene) {

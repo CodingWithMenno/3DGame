@@ -21,7 +21,7 @@ public class PauseScreen implements TransparentScene, Comparable {
         this.guiManager = new GuiManager();
         Button button = new Button(this.loader.loadTexture("button/button0"), this.loader.loadTexture("button/button1"), this.loader.loadTexture("button/button2"), new Vector2f(-0.5f, -0.5f), new Vector2f(0.25f, 0.25f));
         button.setOnClickAction(() -> {
-            MainManager.changeScene(new MainGameLoop());
+            SceneManager.changeScene(new MainGameLoop());
         });
         this.guiManager.addTexture(button);
 
@@ -36,11 +36,11 @@ public class PauseScreen implements TransparentScene, Comparable {
     @Override
     public void update() {
         if (Keyboard.isKeyDown(Keyboard.KEY_1)) {
-            MainManager.goBackAScene();
+            SceneManager.goBackAScene();
         }
 
         if (Keyboard.isKeyDown(Keyboard.KEY_2)) {
-            MainManager.goBackAScene();
+            SceneManager.goBackAScene();
         }
 
         this.guiManager.update();

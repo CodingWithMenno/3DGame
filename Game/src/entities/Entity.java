@@ -2,7 +2,9 @@ package entities;
 
 import animation.AnimatedModel;
 import collisions.AABB;
+import collisions.Box;
 import collisions.Collision;
+import collisions.OBB;
 import models.TexturedModel;
 
 import org.lwjgl.util.vector.Vector3f;
@@ -24,7 +26,7 @@ public class Entity implements Cloneable {
 	protected float rotX, rotY, rotZ;
 	protected float scale;
 
-	private List<AABB> collisionBoxes;
+	private List<OBB> collisionBoxes;
 
 	protected int textureIndex = 0;
 
@@ -44,10 +46,15 @@ public class Entity implements Cloneable {
 
 		for (Vector3f collisionBox : collisionBoxes) {
 			Vector3f box = new Vector3f(collisionBox);
-			box.x *= scale;
-			box.y *= scale;
-			box.z *= scale;
-			this.collisionBoxes.add(new AABB(this.position, box));
+			box.x = (box.x * scale);
+			box.y = (box.y * scale);
+			box.z = (box.z * scale);
+
+			OBB obb = new Box(new Vector3f(this.position.x + box.x / 2, this.position.y + box.y / 2, this.position.z + box.z / 2), box);
+			obb.rotX(rotX);
+			obb.rotY(rotY);
+			obb.rotZ(rotZ);
+			this.collisionBoxes.add(obb);
 		}
 	}
 
@@ -122,8 +129,8 @@ public class Entity implements Cloneable {
 		try {
 			Entity e = (Entity) super.clone();
 			e.collisionBoxes = new ArrayList<>();
-			for (AABB box : this.collisionBoxes) {
-				e.collisionBoxes.add((AABB) box.clone());
+			for (OBB box : this.collisionBoxes) {
+				e.collisionBoxes.add((OBB) box.clone());
 			}
 			return e;
 
@@ -143,7 +150,7 @@ public class Entity implements Cloneable {
 	}
 
 	public void setPosition(Vector3f position) {
-		for (AABB collisionBox : this.collisionBoxes) {
+		for (OBB collisionBox : this.collisionBoxes) {
 			collisionBox.setNewCenter(new Vector3f(position));
 		}
 
@@ -156,6 +163,10 @@ public class Entity implements Cloneable {
 
 	public void setRotX(float rotX) {
 		this.rotX = rotX;
+
+		for (OBB box : this.collisionBoxes) {
+			box.rotX(rotX);
+		}
 	}
 
 	public float getRotY() {
@@ -164,6 +175,10 @@ public class Entity implements Cloneable {
 
 	public void setRotY(float rotY) {
 		this.rotY = rotY;
+
+		for (OBB box : this.collisionBoxes) {
+			box.rotY(rotY);
+		}
 	}
 
 	public float getRotZ() {
@@ -172,6 +187,10 @@ public class Entity implements Cloneable {
 
 	public void setRotZ(float rotZ) {
 		this.rotZ = rotZ;
+
+		for (OBB box : this.collisionBoxes) {
+			box.rotZ(rotZ);
+		}
 	}
 
 	public float getScale() {
@@ -182,7 +201,7 @@ public class Entity implements Cloneable {
 		this.scale = scale;
 	}
 
-	public List<AABB> getCollisionBoxes() {
+	public List<OBB> getCollisionBoxes() {
 		return collisionBoxes;
 	}
 

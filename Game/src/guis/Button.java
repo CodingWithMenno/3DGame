@@ -1,8 +1,5 @@
 package guis;
 
-import gameLoop.MainGameLoop;
-import gameLoop.MainManager;
-import guis.InteractableGui;
 import org.lwjgl.util.vector.Vector2f;
 
 public class Button extends InteractableGui {

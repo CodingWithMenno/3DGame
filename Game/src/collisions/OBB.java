@@ -1,6 +1,5 @@
 package collisions;
 
-import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import terrains.Terrain;
@@ -40,17 +39,17 @@ public abstract class OBB implements Cloneable {
     protected abstract void setNodes();
 
     public void rotX(float rotX) {
-        rotateX(rotX);
+        rotateX(Math.toRadians(rotX));
         this.rotX = rotX;
     }
 
     public void rotY(float rotY) {
-        rotateY(rotY);
+        rotateY(Math.toRadians(rotY));
         this.rotY = rotY;
     }
 
     public void rotZ(float rotZ) {
-        rotateZ(rotZ);
+        rotateZ(Math.toRadians(rotZ));
         this.rotZ = rotZ;
     }
 
@@ -65,7 +64,7 @@ public abstract class OBB implements Cloneable {
         Vector3f finalVelocity = Vector3f.sub(this.center, newCenter, null);
         this.center = newCenter;
         for (Vector3f node : this.nodes) {
-            Vector3f.add(node, finalVelocity, node);
+            Vector3f.sub(node, finalVelocity, node);
         }
     }
 
@@ -90,8 +89,31 @@ public abstract class OBB implements Cloneable {
         return rotZ;
     }
 
+    public List<Vector3f> getNodes() {
+        return nodes;
+    }
+
+    public Vector3f getDimensions() {
+        return dimensions;
+    }
+
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return super.clone();
+        OBB obb = (OBB) super.clone();
+
+        obb.center = new Vector3f(this.center);
+        obb.dimensions = new Vector3f(this.dimensions);
+
+        obb.nodes = new ArrayList<>();
+        for (Vector3f node : this.nodes) {
+            obb.nodes.add(new Vector3f(node));
+        }
+
+        obb.edges = new ArrayList<>();
+        for (Vector2f edge : this.edges) {
+            obb.edges.add(new Vector2f(edge));
+        }
+
+        return obb;
     }
 }

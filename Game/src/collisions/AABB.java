@@ -12,13 +12,6 @@ public class AABB implements Cloneable {
     public AABB(Vector3f center, Vector3f dimensions) {
         this.center = new Vector3f(center);
         this.dimensions = new Vector3f(dimensions);
-
-        this.dimensions.x /= 2.5;
-        this.dimensions.y /= 2.5;
-        this.dimensions.z /= 2.5;
-
-        this.center.x += this.dimensions.x;
-        this.center.y += this.dimensions.y;
     }
 
     public boolean isStandingAgainst(AABB box2) {

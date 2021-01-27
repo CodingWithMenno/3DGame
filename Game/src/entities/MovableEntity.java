@@ -3,6 +3,7 @@ package entities;
 import animation.AnimatedModel;
 import collisions.AABB;
 import collisions.Collision;
+import collisions.OBB;
 import models.TexturedModel;
 import org.lwjgl.util.vector.Vector3f;
 import terrains.Terrain;
@@ -42,8 +43,8 @@ public abstract class MovableEntity extends Entity {
         update(terrain);
         this.velocity = Vector3f.sub(super.getPosition(), oldPos, null);
 
-        for (AABB collisionBox : super.getCollisionBoxes()) {
-            collisionBox.move(this.velocity);
+        for (OBB collisionBox : super.getCollisionBoxes()) {
+            collisionBox.move(new Vector3f(this.velocity));
         }
 
         this.position = Maths.clamp(new Vector3f(this.position), new Vector3f(1, -1000, 1), new Vector3f(Terrain.getSIZE() - 1, 1000, Terrain.getSIZE() - 1));
@@ -59,13 +60,12 @@ public abstract class MovableEntity extends Entity {
     }
 
     public void onCollide(Collision collision) {
-        if (collision.getEntity1() == this) {
-            if (collision.isHitFromSide()) {
-                revertHorizontal();
-            } else {
-                revertVerticalDown();
-            }
-        }
+//        if (collision.isHitFromSide()) {
+//            revertHorizontal();
+//        } else {
+//            revertVerticalDown();
+//        }
+        revertPosition();
 
         onCollided(collision);
     }
@@ -77,8 +77,8 @@ public abstract class MovableEntity extends Entity {
 
         super.setPosition(revertVelocity);
 
-        for (AABB collisionBox : super.getCollisionBoxes()) {
-            collisionBox.move((Vector3f) this.velocity.negate());
+        for (OBB collisionBox : super.getCollisionBoxes()) {
+            collisionBox.move(new Vector3f((Vector3f) this.velocity.negate()));
         }
 
         this.velocity = new Vector3f(0, 0, 0);
@@ -88,7 +88,7 @@ public abstract class MovableEntity extends Entity {
         super.position.x -= this.velocity.x;
         super.position.z -= this.velocity.z;
 
-        for (AABB collisionBox : super.getCollisionBoxes()) {
+        for (OBB collisionBox : super.getCollisionBoxes()) {
             collisionBox.move(new Vector3f(-this.velocity.x, 0, -this.velocity.z));
         }
 
@@ -103,7 +103,7 @@ public abstract class MovableEntity extends Entity {
 
         super.position.y -= this.velocity.y;
 
-        for (AABB collisionBox : super.getCollisionBoxes()) {
+        for (OBB collisionBox : super.getCollisionBoxes()) {
             collisionBox.move(new Vector3f(0, -this.velocity.y, 0));
         }
 
@@ -123,6 +123,15 @@ public abstract class MovableEntity extends Entity {
         this.rotX += dx;
         this.rotY += dy;
         this.rotZ += dz;
+
+        for (OBB box : super.getCollisionBoxes()) {
+//            box.rotX(box.getRotX() + dx);
+            box.rotY(box.getRotY() + dy);
+//            box.rotZ(box.getRotZ() + dz);
+//            box.rotX(dx);
+//            box.rotY(dy);
+//            box.rotZ(dz);
+        }
     }
 
     public Vector3f getVelocity() {

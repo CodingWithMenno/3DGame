@@ -158,6 +158,9 @@ public class ObjLoader {
         }
 
         lastDimensions = Vector3f.sub(lastMaxDimensions, lastMinDimensions, null);
+        lastDimensions.x /= 2.5f;
+        lastDimensions.y /= 2.5f;
+        lastDimensions.z /= 2.5f;
     }
 
     public static Vector3f getLastDimensions() {

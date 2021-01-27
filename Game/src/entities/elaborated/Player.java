@@ -53,7 +53,7 @@ public class Player extends MovableEntity {
         super.increaseRotation(0, -this.modelRotation, 0);
         checkInputs();
 
-        increaseRotation(0, this.currentTurnSpeed, 0);
+        super.increaseRotation(0, this.currentTurnSpeed, 0);
 
         float verticalDistance = this.currentVerticalSpeed * DisplayManager.getDelta();
         float dxv = (float) (verticalDistance * Math.sin(Math.toRadians(super.getRotY())));

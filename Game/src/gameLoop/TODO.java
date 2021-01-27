@@ -4,7 +4,9 @@ public class TODO {
 
     /** TODO :
      *      Current:
-     *          -
+     *          -Goede GUI library uitbreiden (met animatie support & text rendering)
+     *          -Camera klasse flexibeler maken (makkelijk alle objecten in scene kunnen volgen & support voor cutscenes)
+     *          -Collision detectie fixen (OBB implementeren & je kan worden geduwd door andere entities) (support voor OBB of AABB)
      *      .
      *      .
      * 		Entities:

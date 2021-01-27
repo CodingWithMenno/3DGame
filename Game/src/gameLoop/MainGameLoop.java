@@ -3,6 +3,7 @@ package gameLoop;
 import animation.AnimatedModel;
 import animation.Animation;
 import collisions.CollisionHandler;
+import collisions.OBB;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
@@ -13,6 +14,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 import particles.ParticleMaster;
@@ -30,7 +32,6 @@ import textures.ModelTexture;
 import textures.TerrainTexture;
 import water.Water;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -43,6 +44,8 @@ public class MainGameLoop implements Scene {
     private Camera camera;
     private Player player;
     private World world;
+
+    private List<Entity> collisionLines;
 
     private GuiManager guiManager;
     private GuiRenderer guiRenderer;
@@ -61,6 +64,7 @@ public class MainGameLoop implements Scene {
 
         //*************PLAYER SETUP**************
         this.player = setupPlayer(this.loader);
+        this.player.setPosition(new Vector3f(100, terrain.getHeightOfTerrain(100, 140), 140));
         this.camera = new Camera(this.player, terrain);
         this.player.setCamera(this.camera);
 
@@ -76,11 +80,23 @@ public class MainGameLoop implements Scene {
         TexturedModel postModel = new TexturedModel(ObjLoader.loadObjModel("lamp/LampPost", this.loader),
                 new ModelTexture(this.loader.loadTexture("lamp/LampPostTexture")));
         Vector3f dimensions = ObjLoader.getLastDimensions();
-        this.world.addEntityToCorrectBiome(new Entity(postModel, 2, new Vector3f(100, terrain.getHeightOfTerrain(100, 150), 150), 0, 0, 0, 1f, dimensions));
+        Entity post = new Entity(postModel, 2, new Vector3f(100, terrain.getHeightOfTerrain(100, 150), 150), 0, 180, 0, 1f, dimensions);
+        this.world.addEntityToCorrectBiome(post);
 
         this.lights = new ArrayList<>();
         this.lights.add(new Light(new Vector3f(1000, 500000, -100000), new Vector3f(0.7f, 0.7f, 0.7f)));
         this.lights.add(new Light(new Vector3f(103.2f, terrain.getHeightOfTerrain(100, 150) + 4.5f, 150), new Vector3f(1f, 1f, 0), new Vector3f(1f, 0.01f, 0.002f)));
+
+
+
+
+        this.collisionLines = new ArrayList<>();
+        for (int i = 0; i < this.player.getCollisionBoxes().get(0).getNodes().size(); i++) {
+            Entity newEntity = new Entity(postModel, 1, new Vector3f(0, 0, 0), 0, 0, 0, 0.1f);
+            this.collisionLines.add(newEntity);
+            this.world.addEntityToCorrectBiome(newEntity);
+        }
+
 
 
         //**************GUI SETUP****************
@@ -102,8 +118,16 @@ public class MainGameLoop implements Scene {
 
     @Override
     public void update() {
+        for (int i = 0; i < this.collisionLines.size(); i++) {
+            OBB obb = this.player.getCollisionBoxes().get(0);
+            this.collisionLines.get(i).setPosition(new Vector3f(obb.getNodes().get(i)));
+        }
+
+
+
+
         if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
-            MainManager.stackScene(new PauseScreen());
+            SceneManager.stackScene(new PauseScreen());
         }
 
         this.camera.move();
@@ -164,7 +188,7 @@ public class MainGameLoop implements Scene {
         this.loader.cleanUp();
     }
 
-    private static Player setupPlayer(Loader loader) {
+    private Player setupPlayer(Loader loader) {
         ModelTexture foxTexture = new ModelTexture(loader.loadTexture("fox/FoxTexture"));
         TexturedModel foxModel = new TexturedModel(ObjLoader.loadObjModel("fox/Fox", loader), foxTexture);
         List<TexturedModel> foxIdle = new ArrayList<>();
@@ -184,11 +208,11 @@ public class MainGameLoop implements Scene {
         Animation foxRunningAnimation = new Animation(foxModels, 1);
         AnimatedModel foxAnimatedModel = new AnimatedModel(foxIdleAnimation, foxRunningAnimation);
 
-        return new Player(foxAnimatedModel, new Vector3f(500, 0, 200), 0, 0, 0, 0.4f, dimensions);
+        return new Player(foxAnimatedModel, new Vector3f(100, 0, 140), 0, 0, 0, 0.4f, dimensions);
     }
 
 
-    private static World setupWorld(Terrain terrain, Loader loader, MasterRenderer renderer, Random random, float waterHeight, float terrainSize) {
+    private World setupWorld(Terrain terrain, Loader loader, MasterRenderer renderer, Random random, float waterHeight, float terrainSize) {
         //Dirt biome
         TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("ground/DirtTexture"));
         BiomeBuilder dirtBiomeBuilder = new BiomeBuilder(rTexture, -5, false);
@@ -209,7 +233,7 @@ public class MainGameLoop implements Scene {
                 new ModelTexture(loader.loadTexture("tree/TreeTexture")));
         Vector3f dimensions = ObjLoader.getLastDimensions();
         Entity treeEntity = new Entity(treeModel, new Vector3f(0, 0, 0), 0, random.nextInt(360), 0, 0.2f, dimensions);
-        grassBiomeBuilder.addRandomEntities(terrain, waterHeight, treeEntity, 100);
+        //grassBiomeBuilder.addRandomEntities(terrain, waterHeight, treeEntity, 100);
         ParticleTexture pollTexture = new ParticleTexture(loader.loadTexture("particles/PollTexture"), 1, false);
         grassBiomeBuilder.addParticleSystem(new PollParticleSystem(pollTexture));
         Biome gBiome = grassBiomeBuilder.buildBiome();

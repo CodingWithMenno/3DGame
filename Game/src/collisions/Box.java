@@ -179,20 +179,7 @@ public class Box extends OBB {
                 point.z += zSteps;
             }
 
-            Vector3f closestPoint = null;
-            float distance = 1000000000;
-            for (Vector3f p : points) {
-                Vector3f distanceVec = Vector3f.sub(this.center, p, null);
-
-                if (distanceVec.length() < distance) {
-                    distance = distanceVec.length();
-                    closestPoint = p;
-                }
-            }
-
-            if (closestPoint != null) {
-                finalPoints.add(closestPoint);
-            }
+            finalPoints.addAll(points);
         }
 
         return finalPoints;
