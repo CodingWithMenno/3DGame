@@ -33,23 +33,24 @@ public abstract class OBB implements Cloneable {
     public abstract boolean isIntersecting(OBB obb);
     public abstract boolean isOnTopOf(OBB obb);
 
-    public abstract void rotateX(double rotation);
-    public abstract void rotateY(double rotation);
-    public abstract void rotateZ(double rotation);
+    protected abstract void rotateX(double rotation);
+    protected abstract void rotateY(double rotation);
+    protected abstract void rotateZ(double rotation);
 
-    public abstract void setNodes();
+    protected abstract void setNodes();
 
-    public void setRotX(float rotX) {
+    public void rotX(float rotX) {
         rotateX(rotX);
         this.rotX = rotX;
     }
 
-    public void setRotY(float rotY) {
+    public void rotY(float rotY) {
+        System.out.println(rotY);
         rotateY(rotY);
         this.rotY = rotY;
     }
 
-    public void setRotZ(float rotZ) {
+    public void rotZ(float rotZ) {
         rotateZ(rotZ);
         this.rotZ = rotZ;
     }
@@ -72,5 +73,26 @@ public abstract class OBB implements Cloneable {
     public void setNewCenter(Vector3f newCenter) {
         this.center = newCenter;
         setNodes();
+    }
+
+    public Vector3f getCenter() {
+        return center;
+    }
+
+    public float getRotX() {
+        return rotX;
+    }
+
+    public float getRotY() {
+        return rotY;
+    }
+
+    public float getRotZ() {
+        return rotZ;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }
