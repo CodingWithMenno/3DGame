@@ -44,25 +44,22 @@ public class Box extends OBB {
 
     @Override
     public boolean isIntersecting(OBB obb) {
-        Vector3f closestPoint = getClosestPoint(obb);
+        List<Vector3f> points = getClosestPointsFromEdges(obb);
 
-        if (closestPoint == null) {
-            return false;
+
+        for (Vector3f point : points) {
+            if (isIntersecting(point)) {
+                return true;
+            }
         }
 
-        return isIntersecting(closestPoint);
+        return false;
     }
 
 
     @Override
     public boolean isOnTopOf(OBB obb) {
-        Vector3f closestPoint = getClosestPoint(obb);
-
-        if (closestPoint == null) {
-            return false;
-        }
-
-        return (isIntersecting(closestPoint) && this.center.y > obb.center.y);
+        return (isIntersecting(obb) && this.center.y > obb.center.y);
     }
 
 
@@ -159,64 +156,45 @@ public class Box extends OBB {
     }
 
 
-    /**
-     * 1. Vind dichtstbijzijnde lijn van de obb (het dichtst bij de center)
-     * 2. split de lijn op in N aantal punten en vind dan het dichtstbijzijnde punt
-     * 3. Gebruikt de andere methode om te kijken of het punt in de box zit
-     */
-    private Vector3f getClosestPoint(OBB obb) {
-        //1
-        Vector2f closestEdge = null;
-        float closestDistance = 1000000000;
+    private List<Vector3f> getClosestPointsFromEdges(OBB obb) {
+        List<Vector3f> finalPoints = new ArrayList<>();
         for (Vector2f edge : obb.edges) {
-            Vector3f edgeVec = Vector3f.sub(obb.nodes.get((int) edge.x), obb.nodes.get((int) edge.y), null);
+            List<Vector3f> points = new ArrayList<>();
+            Vector3f point = new Vector3f(obb.nodes.get((int) edge.x));
 
-            Vector3f centerVec = Vector3f.sub(this.center, edgeVec, null);
-            if (centerVec.length() < closestDistance) {
-                closestDistance = centerVec.length();
-                closestEdge = edge;
+            float xDif = Maths.difference(point.x, obb.nodes.get((int) edge.y).x);
+            float xSteps = xDif / POINTS_IN_LINE;
+
+            float yDif = Maths.difference(point.y, obb.nodes.get((int) edge.y).y);
+            float ySteps = yDif / POINTS_IN_LINE;
+
+            float zDif = Maths.difference(point.z, obb.nodes.get((int) edge.y).z);
+            float zSteps = zDif / POINTS_IN_LINE;
+
+            for (int i = 0; i < POINTS_IN_LINE; i++) {
+                points.add(new Vector3f(point));
+
+                point.x += xSteps;
+                point.y += ySteps;
+                point.z += zSteps;
+            }
+
+            Vector3f closestPoint = null;
+            float distance = 1000000000;
+            for (Vector3f p : points) {
+                Vector3f distanceVec = Vector3f.sub(this.center, p, null);
+
+                if (distanceVec.length() < distance) {
+                    distance = distanceVec.length();
+                    closestPoint = p;
+                }
+            }
+
+            if (closestPoint != null) {
+                finalPoints.add(closestPoint);
             }
         }
 
-        if (closestEdge == null) {
-            return null;
-        }
-
-
-        //2
-        List<Vector3f> points = new ArrayList<>();
-        Vector3f point = obb.nodes.get((int) closestEdge.x);
-        Vector3f closestEdgeVec = Vector3f.sub(point, obb.nodes.get((int) closestEdge.y), null);
-        float steps = closestEdgeVec.length() / POINTS_IN_LINE;
-
-        float xDif = point.x - obb.nodes.get((int) closestEdge.y).x;
-        float xSteps = xDif / steps;
-
-        float yDif = Maths.difference(point.y, obb.nodes.get((int) closestEdge.y).y);
-        float ySteps = yDif / steps;
-
-        float zDif = Maths.difference(point.z, obb.nodes.get((int) closestEdge.y).z);
-        float zSteps = zDif / steps;
-
-        for (int i = 0; i < POINTS_IN_LINE; i++) {
-            points.add(new Vector3f(point));
-
-            point.x += xSteps;
-            point.y += ySteps;
-            point.z += zSteps;
-        }
-
-        Vector3f closestPoint = null;
-        float distance = 1000000000;
-        for (Vector3f p : points) {
-            Vector3f distanceVec = Vector3f.sub(this.center, p, null);
-
-            if (distanceVec.length() < distance) {
-                distance = distanceVec.length();
-                closestPoint = p;
-            }
-        }
-
-        return closestPoint;
+        return finalPoints;
     }
 }

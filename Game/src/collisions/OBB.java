@@ -45,7 +45,6 @@ public abstract class OBB implements Cloneable {
     }
 
     public void rotY(float rotY) {
-        System.out.println(rotY);
         rotateY(rotY);
         this.rotY = rotY;
     }
