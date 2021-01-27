@@ -6,6 +6,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.DisplayManager;
+import toolbox.Maths;
 
 import java.util.EmptyStackException;
 import java.util.Stack;
@@ -15,10 +16,9 @@ public class MainManager {
     private static Stack<Scene> scenes;
 
     public static void main(String[] args) {
-        OBB box = new Box(new Vector3f(0, 0, 0), new Vector3f(10, 10, 10));
-        box.rotateZ(Math.toRadians(180));
-        System.out.println(box.isIntersecting(new Vector3f(0, 11, 0)));
-
+        OBB box1 = new Box(new Vector3f(0, 0, 0), new Vector3f(10, 10, 10));
+        OBB box2 = new Box(new Vector3f(0, 0, 0), new Vector3f(10, 10, 10));
+        
 //        DisplayManager.createDisplay();
 //
 //        scenes = new Stack<>();

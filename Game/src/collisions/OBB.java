@@ -3,17 +3,19 @@ package collisions;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+import terrains.Terrain;
 import toolbox.Maths;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class OBB {
+public abstract class OBB implements Cloneable {
 
     protected Vector3f center;
     protected Vector3f dimensions;
 
     protected List<Vector3f> nodes;
+    protected List<Vector2f> edges;
 
     protected float rotX, rotY, rotZ;
 
@@ -21,16 +23,21 @@ public abstract class OBB {
         this.center = center;
         this.dimensions = dimensions;
         this.nodes = new ArrayList<>();
+        this.edges = new ArrayList<>();
         this.rotX = 0;
         this.rotY = 0;
         this.rotZ = 0;
     }
 
     public abstract boolean isIntersecting(Vector3f point);
+    public abstract boolean isIntersecting(OBB obb);
+    public abstract boolean isOnTopOf(OBB obb);
 
     public abstract void rotateX(double rotation);
     public abstract void rotateY(double rotation);
     public abstract void rotateZ(double rotation);
+
+    public abstract void setNodes();
 
     public void setRotX(float rotX) {
         rotateX(rotX);
@@ -47,7 +54,23 @@ public abstract class OBB {
         this.rotZ = rotZ;
     }
 
-    public List<Vector3f> getNodes() {
-        return nodes;
+    public void move(Vector3f velocity) {
+        Vector3f newCenter = new Vector3f(this.center);
+        newCenter.x += velocity.x;
+        newCenter.y += velocity.y;
+        newCenter.z += velocity.z;
+
+        newCenter = Maths.clamp(new Vector3f(newCenter), new Vector3f(1, -1000, 1), new Vector3f(Terrain.getSIZE() - 1, 1000, Terrain.getSIZE() - 1));
+
+        Vector3f finalVelocity = Vector3f.sub(this.center, newCenter, null);
+        this.center = newCenter;
+        for (Vector3f node : this.nodes) {
+            Vector3f.add(node, finalVelocity, node);
+        }
+    }
+
+    public void setNewCenter(Vector3f newCenter) {
+        this.center = newCenter;
+        setNodes();
     }
 }
