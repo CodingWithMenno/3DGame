@@ -12,6 +12,7 @@ public class TODO {
      * 		    -Vlinders en bijen maken als particles
      * 			-Geluid implementeren in entities en biomes
      * 		    -Grappige model maken voor de camera (zodat je een cameraman ziet in de reflectie)
+     * 		    -Camera klasse flexibeler maken (makkelijk alle objecten in scene kunnen volgen & support voor cutscenes)
      * 		.
      * 		Overig:
      * 			-Goede GUI library uitbreiden (met animatie support & text rendering)

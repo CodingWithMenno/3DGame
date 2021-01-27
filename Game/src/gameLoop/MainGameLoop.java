@@ -30,6 +30,7 @@ import textures.ModelTexture;
 import textures.TerrainTexture;
 import water.Water;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

@@ -1,7 +1,10 @@
 package gameLoop;
 
+import collisions.Box;
+import collisions.OBB;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Vector3f;
 import renderEngine.DisplayManager;
 
 import java.util.EmptyStackException;
@@ -12,34 +15,38 @@ public class MainManager {
     private static Stack<Scene> scenes;
 
     public static void main(String[] args) {
-        DisplayManager.createDisplay();
+        OBB box = new Box(new Vector3f(0, 0, 0), new Vector3f(10, 10, 10));
+        box.rotateZ(Math.toRadians(180));
+        System.out.println(box.isIntersecting(new Vector3f(0, 11, 0)));
 
-        scenes = new Stack<>();
-        scenes.push(new MainGameLoop());
-        scenes.peek().setup();
-
-
-        while(!Display.isCloseRequested()) {
-            try {
-                //updating
-                scenes.peek().update();
-
-                //rendering
-                renderTransparency();
-                scenes.peek().render();
-            } catch (EmptyStackException e) {
-                break;
-            }
-
-            DisplayManager.updateDisplay();
-        }
-
-
-        for (Scene scene : scenes) {
-            scene.cleanUp();
-        }
-
-        DisplayManager.closeDisplay();
+//        DisplayManager.createDisplay();
+//
+//        scenes = new Stack<>();
+//        scenes.push(new MainGameLoop());
+//        scenes.peek().setup();
+//
+//
+//        while(!Display.isCloseRequested()) {
+//            try {
+//                //updating
+//                scenes.peek().update();
+//
+//                //rendering
+//                renderTransparency();
+//                scenes.peek().render();
+//            } catch (EmptyStackException e) {
+//                break;
+//            }
+//
+//            DisplayManager.updateDisplay();
+//        }
+//
+//
+//        for (Scene scene : scenes) {
+//            scene.cleanUp();
+//        }
+//
+//        DisplayManager.closeDisplay();
     }
 
     public static void changeScene(Scene scene) {

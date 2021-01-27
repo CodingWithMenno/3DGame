@@ -30,8 +30,8 @@ public class Fish extends MovableEntity {
 
 
     public Fish(TexturedModel model, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ,
-                float scale, Vector3f... collisionBoxes) {
-        super(model, textureIndex, position, rotX, rotY, rotZ, scale, collisionBoxes);
+                float scale, Vector3f collisionBox) {
+        super(model, textureIndex, position, rotX, rotY, rotZ, scale, collisionBox);
 
         //this.destination = new Vector3f(position);
         this.destination = new Vector3f(super.getPosition());

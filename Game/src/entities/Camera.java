@@ -1,5 +1,7 @@
 package entities;
 
+import entities.Entity;
+import entities.MovableEntity;
 import entities.elaborated.Player;
 import input.Inputs;
 import org.lwjgl.input.Keyboard;

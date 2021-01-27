@@ -8,7 +8,6 @@ import org.lwjgl.util.vector.Vector4f;
 import terrains.Biome;
 import toolbox.Maths;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TerrainShader extends ShaderProgram {
