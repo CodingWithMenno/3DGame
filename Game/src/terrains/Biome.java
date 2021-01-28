@@ -3,7 +3,7 @@ package terrains;
 import audio.AudioSource;
 import entities.Entity;
 import entities.MovableEntity;
-import input.Settings;
+import user.Settings;
 import org.lwjgl.util.vector.Vector3f;
 import particles.ParticleSystem;
 import textures.TerrainTexture;
@@ -45,7 +45,7 @@ public class Biome {
 
     public Biome(TerrainTexture groundTexture, int separationHeight, boolean aboveSeparation, List<Entity> entities, int backgroundSound) {
         this(groundTexture, separationHeight, aboveSeparation, entities);
-        this.backgroundSound = new AudioSource();
+        this.backgroundSound = new AudioSource(0);
         this.soundBuffer = backgroundSound;
         this.backgroundSound.setLooping(true);
 

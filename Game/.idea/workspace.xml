@@ -6,13 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="1448daae-e5e5-4daf-966b-6006ecad8d18" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/audio/AudioSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/audio/AudioSource.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/audio/AudioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/audio/AudioTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/audio/Source.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/audio/AudioSource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameLoop/TODO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/TODO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Camera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/elaborated/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/elaborated/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guis/InteractableGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/guis/InteractableGui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/input/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/user/Settings.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/terrains/Biome.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/terrains/Biome.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/terrains/BiomeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/terrains/BiomeBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/terrains/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/terrains/World.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

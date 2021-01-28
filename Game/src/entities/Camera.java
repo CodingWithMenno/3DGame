@@ -1,6 +1,6 @@
 package entities;
 
-import input.Settings;
+import user.Settings;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector3f;

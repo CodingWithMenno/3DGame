@@ -13,7 +13,7 @@ public class AudioTest {
         AL10.alDistanceModel(AL10.AL_INVERSE_DISTANCE_CLAMPED);
 
         int buffer = AudioMaster.loadSound("audio/Bounce.wav");
-        AudioSource audioSource = new AudioSource();
+        AudioSource audioSource = new AudioSource(1);
         audioSource.setLooping(true);
         audioSource.play(buffer);
 

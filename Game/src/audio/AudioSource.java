@@ -8,11 +8,11 @@ public class AudioSource {
     private int sourceId;
     private float volume;
 
-    public AudioSource() {
+    public AudioSource(float volume) {
         this.sourceId = AL10.alGenSources();
-        this.volume = 1;
+        this.volume = volume;
 
-        AL10.alSourcef(this.sourceId, AL10.AL_GAIN, 1);
+        AL10.alSourcef(this.sourceId, AL10.AL_GAIN, this.volume);
         AL10.alSourcef(this.sourceId, AL10.AL_PITCH, 1);
         AL10.alSource3f(this.sourceId, AL10.AL_POSITION, 0, 0, 0);
 

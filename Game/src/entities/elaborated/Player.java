@@ -4,7 +4,7 @@ import animation.AnimatedModel;
 import collisions.Collision;
 import entities.Camera;
 import entities.MovableEntity;
-import input.Settings;
+import user.Settings;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector3f;
