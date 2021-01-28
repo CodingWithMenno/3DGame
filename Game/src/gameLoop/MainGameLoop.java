@@ -122,7 +122,7 @@ public class MainGameLoop implements Scene {
             OBB obb = this.player.getCollisionBoxes().get(0);
             this.collisionLines.get(i).setPosition(new Vector3f(obb.getNodes().get(i)));
         }
-
+        System.out.println(this.collisionLines.size());
 
 
 

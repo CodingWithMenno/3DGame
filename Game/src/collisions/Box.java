@@ -66,7 +66,7 @@ public class Box extends OBB {
     @Override
     protected void rotateX(double rotation) {
         double sinTheta = Math.sin(rotation);
-        double cosTheta = Math.cos(rotation);
+        double cosTheta = Math.cos(-rotation);
 
         for(int i = 0; i < super.nodes.size(); i++) {
             Vector3f vector = super.nodes.get(i);
@@ -82,8 +82,8 @@ public class Box extends OBB {
 
     @Override
     protected void rotateY(double rotation) {
-        double sinTheta = Math.sin(rotation);
-        double cosTheta = Math.cos(rotation);
+        double sinTheta = Math.sin(-rotation);
+        double cosTheta = Math.cos(-rotation);
 
         for(int i = 0; i < super.nodes.size(); i++) {
             Vector3f vector = super.nodes.get(i);
@@ -100,7 +100,7 @@ public class Box extends OBB {
     @Override
     protected void rotateZ(double rotation) {
         double sinTheta = Math.sin(rotation);
-        double cosTheta = Math.cos(rotation);
+        double cosTheta = Math.cos(-rotation);
 
         for(int i = 0; i < super.nodes.size(); i++) {
             Vector3f vector = super.nodes.get(i);
@@ -116,6 +116,7 @@ public class Box extends OBB {
 
     @Override
     protected void setNodes() {
+        super.nodes.clear();
         super.nodes.add(new Vector3f(super.center.x - super.dimensions.x, super.center.y - super.dimensions.y, super.center.z - super.dimensions.z));
         super.nodes.add(new Vector3f(super.center.x - super.dimensions.x, super.center.y - super.dimensions.y, super.center.z + super.dimensions.z));
         super.nodes.add(new Vector3f(super.center.x - super.dimensions.x, super.center.y + super.dimensions.y, super.center.z - super.dimensions.z));

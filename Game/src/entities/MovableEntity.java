@@ -126,11 +126,17 @@ public abstract class MovableEntity extends Entity {
 
         for (OBB box : super.getCollisionBoxes()) {
 //            box.rotX(box.getRotX() + dx);
-            box.rotY(box.getRotY() + dy);
+//            box.rotY(box.getRotY() + dy);
 //            box.rotZ(box.getRotZ() + dz);
-//            box.rotX(dx);
-//            box.rotY(dy);
-//            box.rotZ(dz);
+            if (dx != 0) {
+                box.rotX(dx);
+            }
+            if (dy != 0) {
+                box.rotY(dy);
+            }
+            if (dz != 0) {
+                box.rotZ(dz);
+            }
         }
     }
 
