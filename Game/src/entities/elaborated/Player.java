@@ -14,8 +14,8 @@ import toolbox.Maths;
 
 public class Player extends MovableEntity {
 
-    private static final float RUN_SPEED = 80;
-    private static final float JUMP_POWER = 50;
+    private static final float RUN_SPEED = 40;
+    private static final float JUMP_POWER = 30;
     private static final float ACCELERATION = 5;
     private static final float MODEL_ROTATION_SPEED = 20;
 

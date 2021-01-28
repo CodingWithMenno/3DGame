@@ -1,7 +1,6 @@
 package entities;
 
 import animation.AnimatedModel;
-import collisions.AABB;
 import collisions.Collision;
 import collisions.OBB;
 import models.TexturedModel;
@@ -60,12 +59,11 @@ public abstract class MovableEntity extends Entity {
     }
 
     public void onCollide(Collision collision) {
-//        if (collision.isHitFromSide()) {
-//            revertHorizontal();
-//        } else {
-//            revertVerticalDown();
-//        }
-        revertPosition();
+        if (collision.isHitFromSide()) {
+            revertHorizontal();
+        } else {
+            revertVerticalDown();
+        }
 
         onCollided(collision);
     }
@@ -125,9 +123,6 @@ public abstract class MovableEntity extends Entity {
         this.rotZ += dz;
 
         for (OBB box : super.getCollisionBoxes()) {
-//            box.rotX(box.getRotX() + dx);
-//            box.rotY(box.getRotY() + dy);
-//            box.rotZ(box.getRotZ() + dz);
             if (dx != 0) {
                 box.rotX(dx);
             }

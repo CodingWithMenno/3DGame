@@ -1,15 +1,11 @@
 package entities;
 
 import animation.AnimatedModel;
-import collisions.AABB;
 import collisions.Box;
-import collisions.Collision;
 import collisions.OBB;
 import models.TexturedModel;
 
 import org.lwjgl.util.vector.Vector3f;
-import renderEngine.ObjLoader;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +46,7 @@ public class Entity implements Cloneable {
 			box.y = (box.y * scale);
 			box.z = (box.z * scale);
 
-			OBB obb = new Box(new Vector3f(this.position.x + box.x / 2, this.position.y + box.y / 2, this.position.z + box.z / 2), box);
+			OBB obb = new Box(new Vector3f(this.position.x, this.position.y + 2, this.position.z), new Vector3f(box));
 			obb.rotX(rotX);
 			obb.rotY(rotY);
 			obb.rotZ(rotZ);
@@ -151,7 +147,7 @@ public class Entity implements Cloneable {
 
 	public void setPosition(Vector3f position) {
 		for (OBB collisionBox : this.collisionBoxes) {
-			collisionBox.setNewCenter(new Vector3f(position));
+			collisionBox.setNewCenter(new Vector3f(position.x, position.y + 2, position.z));
 		}
 
 		this.position = new Vector3f(position);

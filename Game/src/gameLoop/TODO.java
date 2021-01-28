@@ -6,7 +6,6 @@ public class TODO {
      *      Current:
      *          -Goede GUI library uitbreiden (met animatie support & text rendering)
      *          -Camera klasse flexibeler maken (makkelijk alle objecten in scene kunnen volgen & support voor cutscenes)
-     *          -Collision detectie fixen (OBB implementeren & je kan worden geduwd door andere entities) (support voor OBB of AABB)
      *      .
      *      .
      * 		Entities:
@@ -24,7 +23,7 @@ public class TODO {
      * 		Optioneel / Verbeteren:
      * 			-Water low poly maken
      * 			-Lampen die ingerendered/uitgerendered worden laten in/uit faden
-     * 			-Collision detectie verbeteren / physics verbeteren (OBB implementeren & je kan worden geduwd door andere entities)
+     * 			-Collision handling verbeteren (raycasting & je kan worden geduwd door andere entities & onTopOf methode fixen)
      * 			-Animaties met collada files (interpolaten tussen frames en werken met skeletten)
      * 			-Terrain generator verbeteren
      * 		.

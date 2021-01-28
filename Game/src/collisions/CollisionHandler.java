@@ -36,12 +36,12 @@ public class CollisionHandler {
 
                 for (OBB box1 : movableEntity.getCollisionBoxes()) {
                     for (OBB box2 : entity.getCollisionBoxes()) {
-                        if (box1.isOnTopOf(box2)) {
-                            movableEntity.onCollide(new Collision(movableEntity, entity, false, true));
-                            if (entity instanceof MovableEntity) {
-                                ((MovableEntity) entity).onCollide(new Collision(movableEntity, entity, false, true));
-                            }
-                        } else if (box1.isIntersecting(box2)) {
+//                        if (box1.isOnTopOf(box2)) {
+//                            movableEntity.onCollide(new Collision(movableEntity, entity, false, true));
+//                            if (entity instanceof MovableEntity) {
+//                                ((MovableEntity) entity).onCollide(new Collision(movableEntity, entity, false, true));
+//                            }
+                        if (box2.isIntersecting(box1)) {
                             movableEntity.onCollide(new Collision(movableEntity, entity, true, false));
                             if (entity instanceof MovableEntity) {
                                 ((MovableEntity) entity).onCollide(new Collision(movableEntity, entity, true, false));

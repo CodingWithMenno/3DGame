@@ -18,6 +18,8 @@ public abstract class OBB implements Cloneable {
 
     protected float rotX, rotY, rotZ;
 
+//    protected List<Vector3f> allNodes;
+
     public OBB(Vector3f center, Vector3f dimensions) {
         this.center = center;
         this.dimensions = dimensions;
@@ -26,6 +28,8 @@ public abstract class OBB implements Cloneable {
         this.rotX = 0;
         this.rotY = 0;
         this.rotZ = 0;
+
+//       this.allNodes = new ArrayList<>();
     }
 
     public abstract boolean isIntersecting(Vector3f point);
@@ -39,18 +43,18 @@ public abstract class OBB implements Cloneable {
     protected abstract void setNodes();
 
     public void rotX(float rotX) {
-        rotateX(Math.toRadians(rotX));
-        this.rotX = rotX;
+        rotateX((float) Math.toRadians(rotX));
+        this.rotX = (this.rotX + rotX);
     }
 
     public void rotY(float rotY) {
-        rotateY(Math.toRadians(rotY));
-        this.rotY = rotY;
+        rotateY((float) Math.toRadians(rotY));
+        this.rotY = (this.rotY + rotY);
     }
 
     public void rotZ(float rotZ) {
-        rotateZ(Math.toRadians(rotZ));
-        this.rotZ = rotZ;
+        rotateZ((float) Math.toRadians(rotZ));
+        this.rotZ = (this.rotZ + rotZ);
     }
 
     public void move(Vector3f velocity) {
@@ -96,6 +100,10 @@ public abstract class OBB implements Cloneable {
     public Vector3f getDimensions() {
         return dimensions;
     }
+
+//    public List<Vector3f> getAllNodes() {
+//        return allNodes;
+//    }
 
     @Override
     public Object clone() throws CloneNotSupportedException {

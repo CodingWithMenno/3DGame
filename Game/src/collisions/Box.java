@@ -3,14 +3,13 @@ package collisions;
 import javafx.util.Pair;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
-import toolbox.Maths;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Box extends OBB {
 
-    private static final int POINTS_IN_LINE = 20;
+    private static final int POINTS_IN_LINE = 15;
 
 
     public Box(Vector3f center, Vector3f dimensions) {
@@ -29,6 +28,8 @@ public class Box extends OBB {
         super.edges.add(new Vector2f(1, 5));
         super.edges.add(new Vector2f(2, 6));
         super.edges.add(new Vector2f(3, 7));
+
+//        this.allNodes.addAll(getAllPoints(this));
     }
 
 
@@ -44,8 +45,7 @@ public class Box extends OBB {
 
     @Override
     public boolean isIntersecting(OBB obb) {
-        List<Vector3f> points = getClosestPointsFromEdges(obb);
-
+        List<Vector3f> points = getAllPoints(obb);
 
         for (Vector3f point : points) {
             if (isIntersecting(point)) {
@@ -157,30 +157,52 @@ public class Box extends OBB {
     }
 
 
-    private List<Vector3f> getClosestPointsFromEdges(OBB obb) {
+    private List<Vector3f> getAllPoints(OBB obb) {
         List<Vector3f> finalPoints = new ArrayList<>();
-        for (Vector2f edge : obb.edges) {
-            List<Vector3f> points = new ArrayList<>();
-            Vector3f point = new Vector3f(obb.nodes.get((int) edge.x));
 
-            float xDif = Maths.difference(point.x, obb.nodes.get((int) edge.y).x);
-            float xSteps = xDif / POINTS_IN_LINE;
+        float minX = obb.nodes.get(0).x;
+        float maxX = obb.nodes.get(0).x;
 
-            float yDif = Maths.difference(point.y, obb.nodes.get((int) edge.y).y);
-            float ySteps = yDif / POINTS_IN_LINE;
+        float minY = obb.nodes.get(0).y;
+        float maxY = obb.nodes.get(0).y;
 
-            float zDif = Maths.difference(point.z, obb.nodes.get((int) edge.y).z);
-            float zSteps = zDif / POINTS_IN_LINE;
+        float minZ = obb.nodes.get(0).z;
+        float maxZ = obb.nodes.get(0).z;
 
-            for (int i = 0; i < POINTS_IN_LINE; i++) {
-                points.add(new Vector3f(point));
-
-                point.x += xSteps;
-                point.y += ySteps;
-                point.z += zSteps;
+        for (Vector3f node : obb.nodes) {
+            if (node.x < minX) {
+                minX = node.x;
+            } else if (node.x > maxX) {
+                maxX = node.x;
             }
 
-            finalPoints.addAll(points);
+            if (node.y < minY) {
+                minY = node.y;
+            } else if (node.y > maxY) {
+                maxY = node.y;
+            }
+
+            if (node.z < minZ) {
+                minZ = node.z;
+            } else if (node.z > maxZ) {
+                maxZ = node.z;
+            }
+        }
+
+        float xDif = maxX - minX;
+        float stepsX = xDif / POINTS_IN_LINE;
+        float yDif = maxY - minY;
+        float stepsY = yDif / POINTS_IN_LINE;
+        float zDif = maxZ - minZ;
+        float stepsZ = zDif / POINTS_IN_LINE;
+
+
+        for (float x = minX; x < maxX; x += stepsX) {
+            for (float y = minY; y < maxY; y += stepsY) {
+                for (float z = minZ; z < maxZ; z += stepsZ) {
+                    finalPoints.add(new Vector3f(x, y, z));
+                }
+            }
         }
 
         return finalPoints;
