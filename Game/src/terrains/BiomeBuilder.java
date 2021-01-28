@@ -1,5 +1,6 @@
 package terrains;
 
+import audio.AudioSource;
 import entities.Entity;
 import org.lwjgl.util.vector.Vector3f;
 import particles.ParticleSystem;
@@ -17,6 +18,7 @@ public class BiomeBuilder {
 
     private ParticleSystem particleSystem;
     private List<Entity> entities;
+    private int backgroundSound;
 
     private Random random;
 
@@ -26,6 +28,7 @@ public class BiomeBuilder {
         this.aboveSeparation = aboveSeparation;
         this.entities = new ArrayList<>();
         this.random = new Random();
+        this.backgroundSound = -1;
     }
 
     public BiomeBuilder addEntity(Entity entity) {
@@ -56,12 +59,25 @@ public class BiomeBuilder {
         return this;
     }
 
+    public BiomeBuilder addBackgroundSound(int backgroundSound) {
+        this.backgroundSound = backgroundSound;
+        return this;
+    }
+
     public Biome buildBiome() {
         if (this.particleSystem == null) {
-            return new Biome(this.groundTexture, this.separationHeight, this.aboveSeparation, this.entities);
+            if (this.backgroundSound == -1) {
+                return new Biome(this.groundTexture, this.separationHeight, this.aboveSeparation, this.entities);
+            } else {
+                return new Biome(this.groundTexture, this.separationHeight, this.aboveSeparation, this.entities, this.backgroundSound);
+            }
         }
 
-        return new Biome(this.groundTexture, this.separationHeight, this.aboveSeparation, this.entities, this.particleSystem);
+        if (this.backgroundSound == -1) {
+            return new Biome(this.groundTexture, this.separationHeight, this.aboveSeparation, this.entities, this.particleSystem);
+        }
+
+        return new Biome(this.groundTexture, this.separationHeight, this.aboveSeparation, this.entities, this.particleSystem, this.backgroundSound);
     }
 
     public int getSeparationHeight() {

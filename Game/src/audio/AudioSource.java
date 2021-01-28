@@ -3,12 +3,14 @@ package audio;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.util.vector.Vector3f;
 
-public class Source {
+public class AudioSource {
 
     private int sourceId;
+    private float volume;
 
-    public Source() {
+    public AudioSource() {
         this.sourceId = AL10.alGenSources();
+        this.volume = 1;
 
         AL10.alSourcef(this.sourceId, AL10.AL_GAIN, 1);
         AL10.alSourcef(this.sourceId, AL10.AL_PITCH, 1);
@@ -39,6 +41,11 @@ public class Source {
 
     public void setVolume(float volume) {
         AL10.alSourcef(this.sourceId, AL10.AL_GAIN, volume);
+        this.volume = volume;
+    }
+
+    public float getVolume() {
+        return this.volume;
     }
 
     public void setPitch(float pitch) {

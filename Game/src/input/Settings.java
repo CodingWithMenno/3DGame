@@ -5,7 +5,10 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
 import renderEngine.DisplayManager;
 
-public class Inputs {
+public class Settings {
+
+    //Sound
+    public static int MAX_BIOME_SOUND = 10;
 
     //Player controls
     public static int FORWARD = Keyboard.KEY_W;

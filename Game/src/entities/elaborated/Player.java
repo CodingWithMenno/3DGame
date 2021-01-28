@@ -4,7 +4,7 @@ import animation.AnimatedModel;
 import collisions.Collision;
 import entities.Camera;
 import entities.MovableEntity;
-import input.Inputs;
+import input.Settings;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector3f;
@@ -101,19 +101,19 @@ public class Player extends MovableEntity {
         float finalModelRotation = 0;
 
         boolean forwardPressed = false;
-        if (Keyboard.isKeyDown(Inputs.FORWARD)) {
+        if (Keyboard.isKeyDown(Settings.FORWARD)) {
             finalVerticalSpeed += RUN_SPEED;
             forwardPressed = true;
         }
 
         boolean backwardPressed = false;
-        if (Keyboard.isKeyDown(Inputs.BACKWARDS)) {
+        if (Keyboard.isKeyDown(Settings.BACKWARDS)) {
             finalVerticalSpeed -= RUN_SPEED;
             finalModelRotation += 180;
             backwardPressed = true;
         }
 
-        if (Keyboard.isKeyDown(Inputs.LEFT)) {
+        if (Keyboard.isKeyDown(Settings.LEFT)) {
             finalHorizontalSpeed += RUN_SPEED;
 
             if (forwardPressed) {
@@ -125,7 +125,7 @@ public class Player extends MovableEntity {
             }
         }
 
-        if (Keyboard.isKeyDown(Inputs.RIGHT)) {
+        if (Keyboard.isKeyDown(Settings.RIGHT)) {
             finalHorizontalSpeed -= RUN_SPEED;
 
             if (forwardPressed) {
@@ -137,8 +137,8 @@ public class Player extends MovableEntity {
             }
         }
 
-        if (!Keyboard.isKeyDown(Inputs.FREE_CAMERA_ANGLE)) {
-            finalTurnSpeed -= Mouse.getDX() * Inputs.SENSITIVITY;
+        if (!Keyboard.isKeyDown(Settings.FREE_CAMERA_ANGLE)) {
+            finalTurnSpeed -= Mouse.getDX() * Settings.SENSITIVITY;
         }
 
         this.currentVerticalSpeed = Maths.lerp(this.currentVerticalSpeed, finalVerticalSpeed, ACCELERATION * DisplayManager.getDelta());
@@ -151,7 +151,7 @@ public class Player extends MovableEntity {
             this.modelRotation = finalModelRotation;
         }
 
-        if (Keyboard.isKeyDown(Inputs.JUMP)) {
+        if (Keyboard.isKeyDown(Settings.JUMP)) {
             jump();
         }
     }

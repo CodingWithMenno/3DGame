@@ -2,6 +2,7 @@ package gameLoop;
 
 import animation.AnimatedModel;
 import animation.Animation;
+import audio.AudioMaster;
 import collisions.CollisionHandler;
 import collisions.OBB;
 import entities.Camera;
@@ -12,6 +13,7 @@ import guis.*;
 import models.TexturedModel;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.openal.AL10;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Vector3f;
@@ -65,6 +67,12 @@ public class MainGameLoop implements Scene {
         this.loader = new Loader();
         Terrain terrain = new Terrain(0, 0, this.loader);
         Random random = new Random();
+
+
+        //*************AUDIO SETUP**************
+        AudioMaster.init();
+        AudioMaster.setListenerData(new Vector3f(0, 0, 0));
+        AL10.alDistanceModel(AL10.AL_INVERSE_DISTANCE_CLAMPED);
 
 
         //*************PLAYER SETUP**************
@@ -132,6 +140,7 @@ public class MainGameLoop implements Scene {
 
     @Override
     public void update() {
+        //Collision Box testing
 //        for (int i = 0; i < this.playerBox.size(); i++) {
 //            OBB obb = this.player.getCollisionBoxes().get(0);
 //            this.playerBox.get(i).setPosition(new Vector3f(obb.getNodes().get(i)));
@@ -160,7 +169,7 @@ public class MainGameLoop implements Scene {
         this.guiManager.update();
         ParticleMaster.update(this.camera);
 
-        List<Entity> entities = new ArrayList<>(this.world.getEntitiesFromDistance(new Vector3f(this.camera.getPosition()), MasterRenderer.FAR_PLANE));
+        List<Entity> entities = new ArrayList<>(this.world.getEntitiesFromDistance(new Vector3f(this.camera.getPosition()), 50));
         entities.add(this.player);
         this.collisionHandler.setEntities(entities);
         this.collisionHandler.checkCollisions();
@@ -204,11 +213,11 @@ public class MainGameLoop implements Scene {
     @Override
     public void cleanUp() {
         ParticleMaster.cleanUp();
-        this.world.getWater().getWaterFrameBuffers().cleanUp();
-        this.world.getWater().getWaterShader().cleanUp();
+        this.world.cleanUp();
         this.guiRenderer.cleanUp();
         this.renderer.cleanUp();
         this.loader.cleanUp();
+        AudioMaster.cleanUp();
     }
 
     private Player setupPlayer(Loader loader) {
@@ -260,7 +269,9 @@ public class MainGameLoop implements Scene {
 
         //Stone biome
         TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("ground/StoneTexture"));
-        Biome bBiome = new Biome(bTexture, 150, false);
+        BiomeBuilder stoneBiomeBuilder = new BiomeBuilder(bTexture, 150, false);
+        stoneBiomeBuilder.addBackgroundSound(AudioMaster.loadSound("audio/Bounce.wav"));
+        Biome bBiome = stoneBiomeBuilder.buildBiome();
 
         //Snow biome
         TerrainTexture aTexture = new TerrainTexture(loader.loadTexture("ground/SnowTexture"));

@@ -31,8 +31,10 @@ public class World {
         List<Biome> biomes = this.terrain.getBiomes();
         for (int i = 0; i < biomes.size(); i++) {
             if (currentBiome == biomes.get(i)) {
+                biomes.get(i).resumeBackgroundSound();
                 biomes.get(i).update(this.terrain, new Vector3f(playerPos), true);
             } else {
+                biomes.get(i).pauseBackgroundSound();
                 biomes.get(i).update(this.terrain, new Vector3f(playerPos), false);
             }
         }
@@ -95,6 +97,15 @@ public class World {
             }
         }
         return null;
+    }
+
+    public void cleanUp() {
+        for (Biome biome : this.terrain.getBiomes()) {
+            biome.cleanUp();
+        }
+
+        this.water.getWaterFrameBuffers().cleanUp();
+        this.water.getWaterShader().cleanUp();
     }
 
     public static float getWaterHeight() {
