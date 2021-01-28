@@ -23,7 +23,7 @@ public class TODO {
      * 		Optioneel / Verbeteren:
      * 			-Water low poly maken
      * 			-Lampen die ingerendered/uitgerendered worden laten in/uit faden
-     * 			-Collision handling verbeteren (raycasting & je kan worden geduwd door andere entities & onTopOf methode fixen)
+     * 			-Collision handling verbeteren (raycasting & je kan worden geduwd door andere entities)
      * 			-Animaties met collada files (interpolaten tussen frames en werken met skeletten)
      * 			-Terrain generator verbeteren
      * 		.

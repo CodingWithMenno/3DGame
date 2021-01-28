@@ -33,8 +33,8 @@ public abstract class OBB implements Cloneable {
     }
 
     public abstract boolean isIntersecting(Vector3f point);
-    public abstract boolean isIntersecting(OBB obb);
-    public abstract boolean isOnTopOf(OBB obb);
+    //returns 0 if no collision, 1 if normal collision, 2 if object is on top of the other
+    public abstract int isIntersecting(OBB obb);
 
     protected abstract void rotateX(double rotation);
     protected abstract void rotateY(double rotation);

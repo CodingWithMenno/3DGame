@@ -3,6 +3,7 @@ package collisions;
 import javafx.util.Pair;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+import toolbox.Maths;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,22 +45,22 @@ public class Box extends OBB {
 
 
     @Override
-    public boolean isIntersecting(OBB obb) {
-        List<Vector3f> points = getAllPoints(obb);
+    public int isIntersecting(OBB obb) {
+        List<Vector2f> minMaxOther = getMinMax(obb);
+        List<Vector2f> minMaxThis = getMinMax(this);
+        List<Vector3f> points = getAllPoints(minMaxOther, obb);
 
         for (Vector3f point : points) {
             if (isIntersecting(point)) {
-                return true;
+                if (Maths.difference(minMaxOther.get(1).x, minMaxThis.get(1).y) < 1) {
+                    return 2;
+                } else {
+                    return 1;
+                }
             }
         }
 
-        return false;
-    }
-
-
-    @Override
-    public boolean isOnTopOf(OBB obb) {
-        return (isIntersecting(obb) && this.center.y > obb.center.y);
+        return 0;
     }
 
 
@@ -156,9 +157,8 @@ public class Box extends OBB {
         return new Pair<>(new Vector3f(px, py, pz), new Vector3f(size1, size2, size3));
     }
 
-
-    private List<Vector3f> getAllPoints(OBB obb) {
-        List<Vector3f> finalPoints = new ArrayList<>();
+    private List<Vector2f> getMinMax(OBB obb) {
+        List<Vector2f> minMax = new ArrayList<>();
 
         float minX = obb.nodes.get(0).x;
         float maxX = obb.nodes.get(0).x;
@@ -168,6 +168,46 @@ public class Box extends OBB {
 
         float minZ = obb.nodes.get(0).z;
         float maxZ = obb.nodes.get(0).z;
+
+        for (Vector3f node : obb.nodes) {
+            if (node.x < minX) {
+                minX = node.x;
+            } else if (node.x > maxX) {
+                maxX = node.x;
+            }
+
+            if (node.y < minY) {
+                minY = node.y;
+            } else if (node.y > maxY) {
+                maxY = node.y;
+            }
+
+            if (node.z < minZ) {
+                minZ = node.z;
+            } else if (node.z > maxZ) {
+                maxZ = node.z;
+            }
+        }
+
+        minMax.add(new Vector2f(minX, maxX));
+        minMax.add(new Vector2f(minY, maxY));
+        minMax.add(new Vector2f(minZ, maxZ));
+
+        return minMax;
+    }
+
+
+    private List<Vector3f> getAllPoints(List<Vector2f> minMax, OBB obb) {
+        List<Vector3f> finalPoints = new ArrayList<>();
+
+        float minX = minMax.get(0).x;
+        float maxX = minMax.get(0).y;
+
+        float minY = minMax.get(1).x;
+        float maxY = minMax.get(1).y;
+
+        float minZ = minMax.get(2).x;
+        float maxZ = minMax.get(2).y;
 
         for (Vector3f node : obb.nodes) {
             if (node.x < minX) {
