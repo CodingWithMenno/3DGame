@@ -145,7 +145,7 @@ public class Player extends MovableEntity {
         this.currentHorizontalSpeed = Maths.lerp(this.currentHorizontalSpeed, finalHorizontalSpeed, ACCELERATION * DisplayManager.getDelta());
         this.currentTurnSpeed = finalTurnSpeed;
 
-        if (Maths.difference(this.modelRotation, finalModelRotation) < 180) {
+        if (Maths.difference(this.modelRotation, finalModelRotation) < 200) {
             this.modelRotation = Maths.lerp(this.modelRotation, finalModelRotation, MODEL_ROTATION_SPEED * DisplayManager.getDelta());
         } else {
             this.modelRotation = finalModelRotation;

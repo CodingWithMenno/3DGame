@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Box extends OBB {
 
-    private static final int POINTS_IN_LINE = 15;
+    private static final int PIXELS_PER_POINT = 1;
 
 
     public Box(Vector3f center, Vector3f dimensions) {
@@ -30,7 +30,7 @@ public class Box extends OBB {
         super.edges.add(new Vector2f(2, 6));
         super.edges.add(new Vector2f(3, 7));
 
-//        this.allNodes.addAll(getAllPoints(this));
+//        this.collisionPoints.addAll(getAllCollisionPoints(getMinMax(this)));
     }
 
 
@@ -45,10 +45,10 @@ public class Box extends OBB {
 
 
     @Override
-    public int isIntersecting(OBB obb) {
-        List<Vector2f> minMaxOther = getMinMax(obb);
+    public int isIntersecting(OBB obb2) {
+        List<Vector2f> minMaxOther = getMinMax(obb2);
         List<Vector2f> minMaxThis = getMinMax(this);
-        List<Vector3f> points = getAllPoints(minMaxOther, obb);
+        List<Vector3f> points = getAllCollisionPoints(minMaxOther);
 
         for (Vector3f point : points) {
             if (isIntersecting(point)) {
@@ -197,7 +197,7 @@ public class Box extends OBB {
     }
 
 
-    private List<Vector3f> getAllPoints(List<Vector2f> minMax, OBB obb) {
+    private List<Vector3f> getAllCollisionPoints(List<Vector2f> minMax) {
         List<Vector3f> finalPoints = new ArrayList<>();
 
         float minX = minMax.get(0).x;
@@ -209,37 +209,9 @@ public class Box extends OBB {
         float minZ = minMax.get(2).x;
         float maxZ = minMax.get(2).y;
 
-        for (Vector3f node : obb.nodes) {
-            if (node.x < minX) {
-                minX = node.x;
-            } else if (node.x > maxX) {
-                maxX = node.x;
-            }
-
-            if (node.y < minY) {
-                minY = node.y;
-            } else if (node.y > maxY) {
-                maxY = node.y;
-            }
-
-            if (node.z < minZ) {
-                minZ = node.z;
-            } else if (node.z > maxZ) {
-                maxZ = node.z;
-            }
-        }
-
-        float xDif = maxX - minX;
-        float stepsX = xDif / POINTS_IN_LINE;
-        float yDif = maxY - minY;
-        float stepsY = yDif / POINTS_IN_LINE;
-        float zDif = maxZ - minZ;
-        float stepsZ = zDif / POINTS_IN_LINE;
-
-
-        for (float x = minX; x < maxX; x += stepsX) {
-            for (float y = minY; y < maxY; y += stepsY) {
-                for (float z = minZ; z < maxZ; z += stepsZ) {
+        for (float x = minX; x < maxX; x += PIXELS_PER_POINT) {
+            for (float y = minY; y < maxY; y += PIXELS_PER_POINT) {
+                for (float z = minZ; z < maxZ; z += PIXELS_PER_POINT) {
                     finalPoints.add(new Vector3f(x, y, z));
                 }
             }

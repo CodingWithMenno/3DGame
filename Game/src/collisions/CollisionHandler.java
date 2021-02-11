@@ -40,16 +40,8 @@ public class CollisionHandler {
 
                         if (collisionValue == 1) {
                             movableEntity.onCollide(new Collision(movableEntity, entity, true, false));
-                            if (entity instanceof MovableEntity) {
-                                ((MovableEntity) entity).onCollide(new Collision(movableEntity, entity, true, false));
-                            }
-                        }
-
-                        else if (collisionValue == 2) {
+                        } else if (collisionValue == 2) {
                             movableEntity.onCollide(new Collision(movableEntity, entity, false, true));
-                            if (entity instanceof MovableEntity) {
-                                ((MovableEntity) entity).onCollide(new Collision(movableEntity, entity, false, true));
-                            }
                         }
                     }
                 }

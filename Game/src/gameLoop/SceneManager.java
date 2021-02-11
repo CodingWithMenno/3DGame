@@ -46,6 +46,7 @@ public class SceneManager {
         for (Scene sceneToRemove : scenes) {
             sceneToRemove.cleanUp();
         }
+
         scenes.clear();
 
         scenes.push(scene);

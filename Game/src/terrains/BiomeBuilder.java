@@ -22,7 +22,7 @@ public class BiomeBuilder {
 
     private Random random;
 
-    public BiomeBuilder(TerrainTexture groundTexture, int separationHeight, boolean aboveSeparation) {
+    BiomeBuilder(TerrainTexture groundTexture, int separationHeight, boolean aboveSeparation) {
         this.groundTexture = groundTexture;
         this.separationHeight = separationHeight;
         this.aboveSeparation = aboveSeparation;
@@ -78,9 +78,5 @@ public class BiomeBuilder {
         }
 
         return new Biome(this.groundTexture, this.separationHeight, this.aboveSeparation, this.entities, this.particleSystem, this.backgroundSound);
-    }
-
-    public int getSeparationHeight() {
-        return separationHeight;
     }
 }

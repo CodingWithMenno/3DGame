@@ -4,7 +4,6 @@ import animation.AnimatedModel;
 import animation.Animation;
 import audio.AudioMaster;
 import collisions.CollisionHandler;
-import collisions.OBB;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
@@ -26,7 +25,6 @@ import renderEngine.Loader;
 import renderEngine.MasterRenderer;
 import renderEngine.ObjLoader;
 import terrains.Biome;
-import terrains.BiomeBuilder;
 import terrains.Terrain;
 import terrains.World;
 import textures.ModelTexture;
@@ -36,7 +34,6 @@ import water.Water;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Vector;
 
 public class MainGameLoop implements Scene {
 
@@ -114,7 +111,7 @@ public class MainGameLoop implements Scene {
 //        this.world.addEntityToCorrectBiome(this.testEntity);
 //
 //        this.testEntityBox = new ArrayList<>();
-//        for (int i = 0; i < this.testEntity.getCollisionBoxes().get(0).getAllNodes().size(); i++) {
+//        for (int i = 0; i < this.testEntity.getCollisionBoxes().get(0).getCollisionPoints().size(); i++) {
 //            Entity newEntity = new Entity(postModel, 1, new Vector3f(0, 0, 0), 0, 0, 0, 0.1f);
 //            this.testEntityBox.add(newEntity);
 //            this.world.addEntityToCorrectBiome(newEntity);
@@ -151,7 +148,7 @@ public class MainGameLoop implements Scene {
 //
 //        for (int i = 0; i < this.testEntityBox.size(); i++) {
 //            OBB obb = this.testEntity.getCollisionBoxes().get(0);
-//            this.testEntityBox.get(i).setPosition(new Vector3f(obb.getAllNodes().get(i)));
+//            this.testEntityBox.get(i).setPosition(new Vector3f(obb.getCollisionPoints().get(i)));
 //            this.testEntityBox.get(i).setRotY(obb.getRotY());
 //            this.testEntityBox.get(i).setRotX(obb.getRotX());
 //            this.testEntityBox.get(i).setRotZ(obb.getRotZ());
@@ -169,7 +166,8 @@ public class MainGameLoop implements Scene {
         this.guiManager.update();
         ParticleMaster.update(this.camera);
 
-        List<Entity> entities = new ArrayList<>(this.world.getEntitiesFromDistance(new Vector3f(this.camera.getPosition()), 50));
+        //List<Entity> entities = new ArrayList<>(this.world.getEntitiesFromDistance(new Vector3f(this.camera.getPosition()), 50));
+        List<Entity> entities = new ArrayList<>(this.world.getEntities());
         entities.add(this.player);
         this.collisionHandler.setEntities(entities);
         this.collisionHandler.checkCollisions();
@@ -245,40 +243,40 @@ public class MainGameLoop implements Scene {
     private World setupWorld(Terrain terrain, Loader loader, MasterRenderer renderer, Random random, float waterHeight, float terrainSize) {
         //Dirt biome
         TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("ground/DirtTexture"));
-        BiomeBuilder dirtBiomeBuilder = new BiomeBuilder(rTexture, -5, false);
         TexturedModel grassModel = new TexturedModel(ObjLoader.loadObjModel("grass/GrassModel", loader),
                 new ModelTexture(loader.loadTexture("grass/GrassTexture")));
         grassModel.getTexture().setHasTransparency(true);
         grassModel.getTexture().setUseFakeLighting(true);
         grassModel.getTexture().setNumberOfRows(2);
         Entity grassEntity = new Entity(grassModel, random.nextInt(5), new Vector3f(0, 0, 0), 0, random.nextInt(360), 0, 1);
-        dirtBiomeBuilder.addRandomEntities(terrain, waterHeight, grassEntity, 1000);
-        Biome rBiome = dirtBiomeBuilder.buildBiome();
+        Biome rBiome = Biome.builder(rTexture, -5, false)
+                .addRandomEntities(terrain, waterHeight, grassEntity, 1000)
+                .buildBiome();
 
         //Grass biome
         TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("ground/GrassTexture"));
-        BiomeBuilder grassBiomeBuilder = new BiomeBuilder(gTexture, 80, false);
-        grassBiomeBuilder.addRandomEntities(terrain, waterHeight, grassEntity, 1000);
         TexturedModel treeModel = new TexturedModel(ObjLoader.loadObjModel("tree/Tree", loader),
                 new ModelTexture(loader.loadTexture("tree/TreeTexture")));
         Entity treeEntity = new Entity(treeModel, new Vector3f(0, 0, 0), 0, random.nextInt(360), 0, 0.2f, new Vector3f(10, 30, 10));
-        grassBiomeBuilder.addRandomEntities(terrain, waterHeight, treeEntity, 100);
         ParticleTexture pollTexture = new ParticleTexture(loader.loadTexture("particles/PollTexture"), 1, false);
-        grassBiomeBuilder.addParticleSystem(new PollParticleSystem(pollTexture));
-        Biome gBiome = grassBiomeBuilder.buildBiome();
+        Biome gBiome = Biome.builder(gTexture, 80, false)
+                .addRandomEntities(terrain, waterHeight, grassEntity, 1000)
+                .addRandomEntities(terrain, waterHeight, treeEntity, 100)
+                .addParticleSystem(new PollParticleSystem(pollTexture))
+                .buildBiome();
 
         //Stone biome
         TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("ground/StoneTexture"));
-        BiomeBuilder stoneBiomeBuilder = new BiomeBuilder(bTexture, 150, false);
-        stoneBiomeBuilder.addBackgroundSound(AudioMaster.loadSound("audio/Bounce.wav"));
-        Biome bBiome = stoneBiomeBuilder.buildBiome();
+        Biome bBiome = Biome.builder(bTexture, 150, false)
+                .addBackgroundSound(AudioMaster.loadSound("audio/Bounce.wav"))
+                .buildBiome();
 
         //Snow biome
         TerrainTexture aTexture = new TerrainTexture(loader.loadTexture("ground/SnowTexture"));
-        BiomeBuilder snowBiomeBuilder = new BiomeBuilder(aTexture, 150, true);
         ParticleTexture snowTexture = new ParticleTexture(loader.loadTexture("particles/SnowTexture"), 1, false);
-        snowBiomeBuilder.addParticleSystem(new SnowParticleSystem(snowTexture));
-        Biome aBiome = snowBiomeBuilder.buildBiome();
+        Biome aBiome = Biome.builder(aTexture, 150, true)
+                .addParticleSystem(new SnowParticleSystem(snowTexture))
+                .buildBiome();
 
         //Adding all the biomes
         terrain.addBiomes(rBiome, gBiome, bBiome, aBiome);

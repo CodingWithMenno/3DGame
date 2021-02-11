@@ -18,7 +18,7 @@ public abstract class OBB implements Cloneable {
 
     protected float rotX, rotY, rotZ;
 
-//    protected List<Vector3f> allNodes;
+//    protected List<Vector3f> collisionPoints;
 
     public OBB(Vector3f center, Vector3f dimensions) {
         this.center = center;
@@ -29,12 +29,12 @@ public abstract class OBB implements Cloneable {
         this.rotY = 0;
         this.rotZ = 0;
 
-//       this.allNodes = new ArrayList<>();
+//       this.collisionPoints = new ArrayList<>();
     }
 
     public abstract boolean isIntersecting(Vector3f point);
-    //returns 0 if no collision, 1 if normal collision, 2 if object is on top of the other
-    public abstract int isIntersecting(OBB obb);
+    //returns 0 if no collision, 1 if normal collision, 2 if obb2 is on top of this
+    public abstract int isIntersecting(OBB obb2);
 
     protected abstract void rotateX(double rotation);
     protected abstract void rotateY(double rotation);
@@ -101,8 +101,8 @@ public abstract class OBB implements Cloneable {
         return dimensions;
     }
 
-//    public List<Vector3f> getAllNodes() {
-//        return allNodes;
+//    public List<Vector3f> getCollisionPoints() {
+//        return collisionPoints;
 //    }
 
     @Override

@@ -2,6 +2,8 @@ package audio;
 
 import org.lwjgl.openal.AL10;
 import org.lwjgl.util.vector.Vector3f;
+import renderEngine.DisplayManager;
+import toolbox.Maths;
 
 public class AudioSource {
 
@@ -42,6 +44,10 @@ public class AudioSource {
     public void setVolume(float volume) {
         AL10.alSourcef(this.sourceId, AL10.AL_GAIN, volume);
         this.volume = volume;
+    }
+
+    public void fadeTo(float finalVolume, float fadeFactor) {
+        setVolume(Maths.lerp(this.volume, finalVolume, fadeFactor * DisplayManager.getDelta()));
     }
 
     public float getVolume() {

@@ -10,7 +10,7 @@ public class TODO {
      * 		Entities:
      * 			-Vissen/vogels maken met boids algoritme
      * 		    -Vlinders en bijen maken als particles
-     * 			-Geluid implementeren in entities
+     * 			-Geluid implementeren in entities/frames van animaties
      * 		    -Grappige model maken voor de camera (zodat je een cameraman ziet in de reflectie)
      * 		    -Camera klasse flexibeler maken (makkelijk alle objecten in scene kunnen volgen & support voor cutscenes)
      * 		.
@@ -22,7 +22,7 @@ public class TODO {
      * 		Optioneel / Verbeteren:
      * 			-Water low poly maken
      * 			-Lampen die ingerendered/uitgerendered worden laten in/uit faden
-     * 			-Collision handling/detection verbeteren (raycasting & je kan worden geduwd door andere entities & detection detection efficiënter maken)
+     * 			-Collision handling/detection verbeteren (raycasting & je kan worden geduwd door andere entities)
      * 			-Animaties met collada files (interpolaten tussen frames en werken met skeletten)
      * 			-Terrain generator verbeteren
      * 		.
