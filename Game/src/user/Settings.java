@@ -7,6 +7,20 @@ import renderEngine.DisplayManager;
 
 public class Settings {
 
+    //Overall graphic settings
+    public static final int WIDTH = 1920;
+    public static final int HEIGHT = 1080;
+    public static final int FPS_CAP = 2000;
+    public static final boolean VSYNC = false;
+    public static final int ANTIALIASING_AMOUNT = 8;
+
+    //Water graphics settings
+    public static final boolean USE_WATER_REFLECTION = true;
+    public static final int REFLECTION_WIDTH = 1920;
+    public static final int REFLECTION_HEIGHT = 1080;
+    public static final int REFRACTION_WIDTH = 1920;
+    public static final int REFRACTION_HEIGHT = 1080;
+
     //Sound
     public static int MAX_BIOME_SOUND = 10;
 

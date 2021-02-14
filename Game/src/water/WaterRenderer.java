@@ -17,6 +17,7 @@ import renderEngine.Loader;
 import renderEngine.MasterRenderer;
 import toolbox.Maths;
 import entities.Camera;
+import user.Settings;
 
 public class WaterRenderer {
 
@@ -66,6 +67,7 @@ public class WaterRenderer {
 		this.shader.loadMoveFactor(this.moveFactor);
 
 		this.shader.loadLight(sun);
+		this.shader.loadUserSettings(Settings.USE_WATER_REFLECTION);
 
 		GL30.glBindVertexArray(this.quad.getVaoID());
 		GL20.glEnableVertexAttribArray(0);

@@ -16,6 +16,8 @@ uniform vec3 lightColour;
 uniform float near;
 uniform float far;
 
+uniform bool useReflection;
+
 uniform float moveFactor;
 
 //const vec4 murkyWaterColour = vec4(0.2, 0.16, 0.16, 1.0);
@@ -49,7 +51,10 @@ void main(void) {
     reflectTexCoords.x = clamp(reflectTexCoords.x, 0.001, 0.999);
     reflectTexCoords.y = clamp(reflectTexCoords.y, -0.999, -0.001);
 
-    vec4 reflectColour = texture(reflectionTexture, reflectTexCoords);
+    vec4 reflectColour = vec4(0, 0, 0, 0);
+    if (useReflection) {
+        reflectColour = texture(reflectionTexture, reflectTexCoords);
+    }
     vec4 refractColour = texture(refractionTexture, refractTexCoords);
     //refractColour = mix(refractColour, murkyWaterColour, clamp(waterDepth / 250.0, 0.0, 1.0));
 
@@ -66,8 +71,11 @@ void main(void) {
     specular = pow(specular, shineDamper);
     vec3 specularHighlights = lightColour * specular * reflectivity * clamp(waterDepth / 5.0, 0.0, 1.0);
 
-
-    out_Color = mix(reflectColour, refractColour, refractiveFactor);
+    if (useReflection) {
+        out_Color = mix(reflectColour, refractColour, refractiveFactor);
+    } else {
+        out_Color = refractColour;
+    }
     out_Color = mix(out_Color, waterColour, 0.2) + vec4(specularHighlights, 0.0);
     out_Color.a = clamp(waterDepth / 4.0, 0.0, 1.0);
 }

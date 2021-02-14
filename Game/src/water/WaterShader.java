@@ -25,6 +25,7 @@ public class WaterShader extends ShaderProgram {
 	private int location_depthMap;
 	private int location_near;
 	private int location_far;
+	private int location_useReflection;
 
 	public WaterShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
@@ -51,6 +52,11 @@ public class WaterShader extends ShaderProgram {
 		this.location_depthMap = super.getUniformLocation("depthMap");
 		this.location_near = super.getUniformLocation("near");
 		this.location_far = super.getUniformLocation("far");
+		this.location_useReflection = super.getUniformLocation("useReflection");
+	}
+
+	public void loadUserSettings(boolean useReflection) {
+		super.loadBoolean(this.location_useReflection, useReflection);
 	}
 
 	public void loadRenderDistances(float near, float far) {

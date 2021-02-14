@@ -30,6 +30,7 @@ import terrains.Terrain;
 import terrains.World;
 import textures.ModelTexture;
 import textures.TerrainTexture;
+import user.Settings;
 import water.Water;
 
 import java.util.ArrayList;
@@ -186,14 +187,16 @@ public class MainGameLoop implements Scene {
         //Water reflection and refraction rendering
         GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
 
-        this.world.getWater().getWaterFrameBuffers().bindReflectionFrameBuffer();
-        float distance = 2 * (this.camera.getPosition().y - World.getWaterHeight());
-        this.camera.getPosition().y -= distance;
-        this.camera.invertPitch();
-        this.renderer.renderScene(entities, this.world.getTerrain(), this.lights, this.camera, new Vector4f(0, 1, 0, -World.getWaterHeight()));
+        if (Settings.USE_WATER_REFLECTION) {
+            this.world.getWater().getWaterFrameBuffers().bindReflectionFrameBuffer();
+            float distance = 2 * (this.camera.getPosition().y - World.getWaterHeight());
+            this.camera.getPosition().y -= distance;
+            this.camera.invertPitch();
+            this.renderer.renderScene(entities, this.world.getTerrain(), this.lights, this.camera, new Vector4f(0, 1, 0, -World.getWaterHeight()));
 
-        this.camera.getPosition().y += distance;
-        this.camera.invertPitch();
+            this.camera.getPosition().y += distance;
+            this.camera.invertPitch();
+        }
         this.world.getWater().getWaterFrameBuffers().bindRefractionFrameBuffer();
         this.renderer.renderScene(entities, this.world.getTerrain(), this.lights, this.camera, new Vector4f(0, -1, 0, World.getWaterHeight() + 0.5f));
 

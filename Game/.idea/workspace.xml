@@ -6,10 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="1448daae-e5e5-4daf-966b-6006ecad8d18" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/collisions/CollisionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/collisions/CollisionHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameLoop/PauseScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/PauseScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderEngine/MasterRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/MasterRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderEngine/DisplayManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/DisplayManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/user/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/user/Settings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/water/WaterFrameBuffers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/water/WaterFrameBuffers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/water/WaterRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/water/WaterRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/water/WaterShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/water/WaterShader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/water/waterFragmentShader.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/src/water/waterFragmentShader.glsl" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
