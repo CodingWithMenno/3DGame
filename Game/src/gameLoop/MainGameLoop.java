@@ -4,6 +4,7 @@ import animation.AnimatedModel;
 import animation.Animation;
 import audio.AudioMaster;
 import collisions.CollisionHandler;
+import collisions.OBB;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;

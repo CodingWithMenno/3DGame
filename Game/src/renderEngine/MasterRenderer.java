@@ -23,7 +23,7 @@ public class MasterRenderer {
 
     public static final float FOV = 70;
     public static final float NEAR_PLANE = 0.01f;
-    public static final float FAR_PLANE = 700;
+    public static final float FAR_PLANE = 500;
 
     private static final float SKY_COLOR_RED = 0.005f;
     private static final float SKY_COLOR_GREEN = 0.4f;

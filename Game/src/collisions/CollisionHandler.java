@@ -2,6 +2,8 @@ package collisions;
 
 import entities.Entity;
 import entities.MovableEntity;
+import org.lwjgl.util.vector.Vector3f;
+import toolbox.Maths;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,10 @@ public class CollisionHandler {
 
             for (Entity entity : this.entities) {
                 if (entity == movableEntity || !entity.hasCollisions()) {
+                    continue;
+                }
+
+                if (Maths.getDistanceBetween(new Vector3f(movableEntity.getPosition()), new Vector3f(entity.getPosition())) > 250) {
                     continue;
                 }
 
