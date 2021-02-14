@@ -5,13 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1448daae-e5e5-4daf-966b-6006ecad8d18" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/guis/GuiContainer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/user/Input.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game/water/waterFragmentShader.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Game/water/waterFragmentShader.glsl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderEngine/DisplayManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/DisplayManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameLoop/PauseScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/PauseScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameLoop/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/Scene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameLoop/SceneManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/SceneManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameLoop/TODO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/TODO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guis/GuiManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/guis/GuiManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guis/GuiRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/guis/GuiRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guis/GuiTexture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/guis/GuiElement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guis/InteractableGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/guis/InteractableGui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/terrains/Biome.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/terrains/Biome.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/terrains/HeightGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/terrains/HeightGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/terrains/Terrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/terrains/Terrain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/terrains/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/terrains/World.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/user/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/user/Settings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/water/WaterFrameBuffers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/water/WaterFrameBuffers.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/water/WaterRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/water/WaterRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/water/WaterShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/water/WaterShader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/water/waterFragmentShader.glsl" beforeDir="false" afterPath="$PROJECT_DIR$/src/water/waterFragmentShader.glsl" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />

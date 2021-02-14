@@ -19,12 +19,15 @@ public class PauseScreen implements TransparentScene, Comparable {
         this.loader = new Loader();
 
         this.guiManager = new GuiManager();
+        GuiContainer container = new GuiContainer(0, 0, 0, new Vector2f(0, 0), new Vector2f(1, 1));
+
         Button button = new Button(this.loader.loadTexture("button/button0"), this.loader.loadTexture("button/button1"), this.loader.loadTexture("button/button2"), new Vector2f(-0.5f, -0.5f), new Vector2f(0.25f, 0.25f));
         button.setOnClickAction(() -> {
             SceneManager.changeScene(new MainGameLoop());
         });
+        container.addTextures(button);
 
-        this.guiManager.addTexture(button);
+        this.guiManager.addContainer(container);
 
         this.guiRenderer = new GuiRenderer(this.loader);
     }
@@ -32,6 +35,11 @@ public class PauseScreen implements TransparentScene, Comparable {
     @Override
     public void resume() {
         Mouse.setGrabbed(false);
+    }
+
+    @Override
+    public void pause() {
+
     }
 
     @Override
@@ -49,7 +57,7 @@ public class PauseScreen implements TransparentScene, Comparable {
 
     @Override
     public void render() {
-        this.guiRenderer.render(this.guiManager.getGuiTextures());
+        this.guiRenderer.render(this.guiManager.getGuiElements());
     }
 
     @Override

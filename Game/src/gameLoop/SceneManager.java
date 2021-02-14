@@ -59,6 +59,7 @@ public class SceneManager {
             return;
         }
 
+        scenes.peek().pause();
         scenes.push(scene);
         scenes.peek().setup();
     }

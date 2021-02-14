@@ -4,7 +4,7 @@ public class TODO {
 
     /** TODO :
      *      Current:
-     *          -
+     *          -GuiContainer afmaken (zorgen dat guiElementen alleen in de container kan blijven + transparency en enabled afmaken)
      *      .
      *      .
      * 		Entities:

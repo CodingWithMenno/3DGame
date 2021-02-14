@@ -101,6 +101,12 @@ public class Biome {
         }
     }
 
+    public void pauseBiome() {
+        if (this.backgroundSound != null) {
+            this.backgroundSound.setVolume(0);
+        }
+    }
+
     public void cleanUp() {
         if (this.backgroundSound != null) {
             this.backgroundSound.delete();

@@ -47,8 +47,8 @@ public class WaterRenderer {
 		setUpVAO(loader);
 	}
 
-	public void render(List<WaterTile> water, Camera camera, Light sun) {
-		prepareRender(camera, sun);
+	public void render(List<WaterTile> water, Camera camera, Light sun, boolean useReflection) {
+		prepareRender(camera, sun, useReflection);
 		for (WaterTile tile : water) {
 			Matrix4f modelMatrix =
 					Maths.createTransformationMatrix(new Vector3f(tile.getX(), tile.getHeight(), tile.getZ()), 0, 0, 0, WaterTile.TILE_SIZE);
@@ -58,7 +58,7 @@ public class WaterRenderer {
 		unbind();
 	}
 	
-	private void prepareRender(Camera camera, Light sun) {
+	private void prepareRender(Camera camera, Light sun, boolean useReflection) {
 		this.shader.start();
 		this.shader.loadViewMatrix(camera);
 
@@ -67,7 +67,7 @@ public class WaterRenderer {
 		this.shader.loadMoveFactor(this.moveFactor);
 
 		this.shader.loadLight(sun);
-		this.shader.loadUserSettings(Settings.USE_WATER_REFLECTION);
+		this.shader.loadUserSettings(useReflection);
 
 		GL30.glBindVertexArray(this.quad.getVaoID());
 		GL20.glEnableVertexAttribArray(0);

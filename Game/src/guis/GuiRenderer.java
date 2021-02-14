@@ -6,7 +6,6 @@ import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
-import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import toolbox.Maths;
 
@@ -23,7 +22,7 @@ public class GuiRenderer {
         this.shader = new GuiShader();
     }
 
-    public void render(List<GuiTexture> guis) {
+    public void render(List<GuiElement> guis) {
         this.shader.start();
         GL30.glBindVertexArray(this.quad.getVaoID());
         GL20.glEnableVertexAttribArray(0);
@@ -31,12 +30,14 @@ public class GuiRenderer {
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
 
-        for (GuiTexture guiTexture : guis) {
-            GL13.glActiveTexture(GL13.GL_TEXTURE0);
-            GL11.glBindTexture(GL11.GL_TEXTURE_2D, guiTexture.getTexture());
-            Matrix4f matrix = Maths.createTransformationMatrix(guiTexture.getPosition(), guiTexture.getScale());
-            this.shader.loadTransformation(matrix);
-            GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, this.quad.getVertexCount());
+        for (GuiElement guiElement : guis) {
+            if (guiElement.getTexture() != 0) {
+                GL13.glActiveTexture(GL13.GL_TEXTURE0);
+                GL11.glBindTexture(GL11.GL_TEXTURE_2D, guiElement.getTexture());
+                Matrix4f matrix = Maths.createTransformationMatrix(guiElement.getPosition(), guiElement.getScale());
+                this.shader.loadTransformation(matrix);
+                GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, this.quad.getVertexCount());
+            }
         }
 
         GL11.glEnable(GL11.GL_DEPTH_TEST);

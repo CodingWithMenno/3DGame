@@ -40,6 +40,13 @@ public class World {
         }
     }
 
+    public void pauseWorld() {
+        List<Biome> biomes = this.terrain.getBiomes();
+        for (int i = 0; i < biomes.size(); i++) {
+            biomes.get(i).pauseBiome();
+        }
+    }
+
     private void setAllEntities() {
         this.entities.clear();
 

@@ -5,25 +5,33 @@ import java.util.List;
 
 public class GuiManager {
 
-    private List<GuiTexture> guiTextures;
+    private List<GuiContainer> guiContainers;
 
     public GuiManager() {
-        this.guiTextures = new ArrayList<>();
+        this.guiContainers = new ArrayList<>();
     }
 
-    public void addTexture(GuiTexture guiTexture) {
-        this.guiTextures.add(guiTexture);
+    public void addContainer(GuiContainer guiContainer) {
+        this.guiContainers.add(guiContainer);
     }
 
     public void update() {
-        for (GuiTexture texture : this.guiTextures) {
-            if (texture instanceof InteractableGui) {
-                ((InteractableGui) texture).update();
+        for (GuiContainer container : this.guiContainers) {
+            for (GuiElement element : container.getGuiElements()) {
+                if (element instanceof InteractableGui) {
+                    ((InteractableGui) element).update();
+                }
             }
         }
     }
 
-    public List<GuiTexture> getGuiTextures() {
-        return guiTextures;
+    public List<GuiElement> getGuiElements() {
+        List<GuiElement> elements = new ArrayList<>();
+        for (GuiContainer container : this.guiContainers) {
+            elements.add(container);
+            elements.addAll(container.getGuiElements());
+        }
+
+        return elements;
     }
 }

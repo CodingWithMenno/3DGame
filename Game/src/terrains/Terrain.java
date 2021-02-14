@@ -14,7 +14,7 @@ public class Terrain {
 
     private static final float SIZE = 1000;
 
-    private static final int VERTEX_COUNT = 128;
+    private static final int VERTEX_COUNT = 200;
 
     private float x;
     private float z;

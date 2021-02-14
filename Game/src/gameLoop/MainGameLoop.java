@@ -4,7 +4,6 @@ import animation.AnimatedModel;
 import animation.Animation;
 import audio.AudioMaster;
 import collisions.CollisionHandler;
-import collisions.OBB;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
@@ -138,6 +137,11 @@ public class MainGameLoop implements Scene {
     }
 
     @Override
+    public void pause() {
+        this.world.pauseWorld();
+    }
+
+    @Override
     public void update() {
         //Collision Box testing
 //        for (int i = 0; i < this.playerBox.size(); i++) {
@@ -168,7 +172,6 @@ public class MainGameLoop implements Scene {
         this.guiManager.update();
         ParticleMaster.update(this.camera);
 
-        //List<Entity> entities = new ArrayList<>(this.world.getEntitiesFromDistance(new Vector3f(this.camera.getPosition()), 50));
         List<Entity> entities = new ArrayList<>(this.world.getEntities());
         entities.add(this.player);
         this.collisionHandler.setEntities(entities);
@@ -205,11 +208,11 @@ public class MainGameLoop implements Scene {
 
         //World and water rendering
         this.renderer.renderScene(entities, this.world.getTerrain(), this.lights, this.camera, new Vector4f(0, -1, 0, 100000));
-        this.world.getWater().getWaterRenderer().render(this.world.getWater().getWaterTiles(), this.camera, this.lights.get(0));
+        this.world.getWater().getWaterRenderer().render(this.world.getWater().getWaterTiles(), this.camera, this.lights.get(0), Settings.USE_WATER_REFLECTION);
 
         //Particle and GUI rendering
         ParticleMaster.renderParticles(this.camera);
-        this.guiRenderer.render(this.guiManager.getGuiTextures());
+        this.guiRenderer.render(this.guiManager.getGuiElements());
     }
 
     @Override
