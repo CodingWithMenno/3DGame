@@ -48,14 +48,41 @@ public class World {
         List<Biome> biomes = this.terrain.getBiomes();
         for (int i = 0; i < biomes.size(); i++) {
             if (this.currentBiome == biomes.get(i)) {
-                if (this.backgroundSoundTimer.hasFinished()) {
-                    biomes.get(i).resumeBackgroundSound();
-                }
-
                 biomes.get(i).update(this.terrain, new Vector3f(playerPos), true);
             } else {
-                biomes.get(i).pauseBackgroundSound();
                 biomes.get(i).update(this.terrain, new Vector3f(playerPos), false);
+            }
+
+
+            //Sound fading between biomes
+            if (biomes.get(i).isAboveSeparation()) {
+                if (playerPos.y < biomes.get(i).getSeparationHeight()) {
+                    biomes.get(i).playBackgroundSounds(Maths.difference(playerPos.y, biomes.get(i).getSeparationHeight()));
+                } else {
+                    try {
+                        if (playerPos.y < biomes.get(i + 1).getSeparationHeight()) {
+                            biomes.get(i).playBackgroundSounds(0);
+                        } else {
+                            biomes.get(i).playBackgroundSounds(Maths.difference(playerPos.y, biomes.get(i + 1).getSeparationHeight()));
+                        }
+                    } catch (IndexOutOfBoundsException e) {
+                        biomes.get(i).playBackgroundSounds(0);
+                    }
+                }
+            } else {
+                if (playerPos.y < biomes.get(i).getSeparationHeight()) {
+                    try {
+                        if (playerPos.y > biomes.get(i - 1).getSeparationHeight()) {
+                            biomes.get(i).playBackgroundSounds(0);
+                        } else {
+                            biomes.get(i).playBackgroundSounds(Maths.difference(playerPos.y, biomes.get(i - 1).getSeparationHeight()));
+                        }
+                    } catch (IndexOutOfBoundsException e) {
+                        biomes.get(i).playBackgroundSounds(0);
+                    }
+                } else {
+                    biomes.get(i).playBackgroundSounds(Maths.difference(playerPos.y, biomes.get(i).getSeparationHeight()));
+                }
             }
         }
     }

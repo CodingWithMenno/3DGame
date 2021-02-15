@@ -19,7 +19,7 @@ public class Settings {
     public static final int REFRACTION_HEIGHT = 1080;
 
     //Sound
-    public static int MAX_BIOME_SOUND = 10;
+    public static final float BIOME_SOUND = 0.5f;
 
     //Player controls
     public static int FORWARD = Keyboard.KEY_W;

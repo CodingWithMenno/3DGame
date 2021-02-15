@@ -14,10 +14,10 @@ import toolbox.Maths;
 
 public class Player extends MovableEntity {
 
-    private static final float RUN_SPEED = 80;
-    private static final float JUMP_POWER = 50;
+    private static final float RUN_SPEED = 20;
+    private static final float JUMP_POWER = 25;
     private static final float ACCELERATION = 5;
-    private static final float MODEL_ROTATION_SPEED = 20;
+    private static final float LERP_ROTATION_SPEED = 15;
 
     private float currentVerticalSpeed = 0;
     private float currentHorizontalSpeed;
@@ -34,7 +34,7 @@ public class Player extends MovableEntity {
     }
 
     private void doAnimations() {
-        if (Maths.difference(this.currentVerticalSpeed, 0) > 20 || Maths.difference(this.currentHorizontalSpeed, 0) > 20) {
+        if (Maths.difference(this.currentVerticalSpeed, 0) > (RUN_SPEED / 4) || Maths.difference(this.currentHorizontalSpeed, 0) > (RUN_SPEED / 4)) {
             super.setAnimation(1);
         } else {
             super.setAnimation(0);
@@ -146,7 +146,7 @@ public class Player extends MovableEntity {
         this.currentTurnSpeed = finalTurnSpeed;
 
         if (Maths.difference(this.modelRotation, finalModelRotation) < 200) {
-            this.modelRotation = Maths.lerp(this.modelRotation, finalModelRotation, MODEL_ROTATION_SPEED * DisplayManager.getDelta());
+            this.modelRotation = Maths.lerp(this.modelRotation, finalModelRotation, LERP_ROTATION_SPEED * DisplayManager.getDelta());
         } else {
             this.modelRotation = finalModelRotation;
         }

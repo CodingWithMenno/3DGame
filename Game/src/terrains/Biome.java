@@ -1,9 +1,9 @@
 package terrains;
 
+import audio.AudioMaster;
 import audio.AudioSource;
 import entities.Entity;
 import entities.MovableEntity;
-import renderEngine.DisplayManager;
 import user.Settings;
 import org.lwjgl.util.vector.Vector3f;
 import particles.ParticleSystem;
@@ -15,8 +15,8 @@ import java.util.List;
 
 public class Biome {
 
-    private static final float FADE_IN = 0.1f;
-    private static final float FADE_OUT = 3f;
+    private static final float MAX_SOUND_DISTANCE = 10;
+    private static final float FADE_FACTOR = 17;
 
     private TerrainTexture groundTexture;
     private final int separationHeight;
@@ -79,26 +79,22 @@ public class Biome {
         }
     }
 
-    public void pauseBackgroundSound() {
+    public void playBackgroundSounds(float distanceFromBiome) {
         if (this.backgroundSound == null) {
             return;
         }
 
-        this.backgroundSound.fadeTo(0, FADE_OUT);
-        if (this.backgroundSound.getVolume() == 0) {
+        if (distanceFromBiome > MAX_SOUND_DISTANCE) {
             this.backgroundSound.pause();
-        }
-    }
-
-    public void resumeBackgroundSound() {
-        if (this.backgroundSound == null) {
             return;
         }
 
-        this.backgroundSound.fadeTo(Settings.MAX_BIOME_SOUND, FADE_IN);
         if (!this.backgroundSound.isPlaying()) {
             this.backgroundSound.resume();
         }
+
+        float inverted = -Maths.map(distanceFromBiome, 0, MAX_SOUND_DISTANCE, -MAX_SOUND_DISTANCE / FADE_FACTOR, 0);
+        this.backgroundSound.setVolume(inverted * Settings.BIOME_SOUND);
     }
 
     public void continueBiome() {

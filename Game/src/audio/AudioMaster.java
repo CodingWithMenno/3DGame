@@ -11,6 +11,8 @@ import java.util.List;
 
 public class AudioMaster {
 
+    private static Vector3f listenerPosition;
+
     private static List<Integer> buffers = new ArrayList<>();
 
     public static void init() {
@@ -19,11 +21,15 @@ public class AudioMaster {
         } catch (LWJGLException e) {
             e.printStackTrace();
         }
+
+        listenerPosition = new Vector3f(0, 0, 0);
     }
 
     public static void setListenerData(Vector3f position) {
         AL10.alListener3f(AL10.AL_POSITION, position.x, position.y, position.z);
         AL10.alListener3f(AL10.AL_VELOCITY, 0, 0, 0);
+
+        listenerPosition = position;
     }
 
     public static int loadSound(String file) {
@@ -43,5 +49,9 @@ public class AudioMaster {
         }
 
         AL.destroy();
+    }
+
+    public static Vector3f getListenerPosition() {
+        return listenerPosition;
     }
 }

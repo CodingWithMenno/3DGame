@@ -5,25 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1448daae-e5e5-4daf-966b-6006ecad8d18" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/res/particles/bee.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/toolbox/InGameTimer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/audio/sounds/Water.wav" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game/button/button0.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game/button/button1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game/button/button2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/button/button0.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/gui/button/button0.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/button/button1.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/gui/button/button1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/button/button2.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/gui/button/button2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game/audio/Bounce.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/audio/AudioMaster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/audio/AudioMaster.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/audio/AudioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/audio/AudioTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/audio/Bounce.wav" beforeDir="false" afterPath="$PROJECT_DIR$/src/audio/sounds/Bounce.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/elaborated/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/elaborated/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameLoop/PauseScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/PauseScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameLoop/TODO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/TODO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/guis/Button.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/guis/Button.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/guis/GuiContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/guis/GuiContainer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/guis/GuiManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/guis/GuiManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/guis/InteractableGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/guis/InteractableGui.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/terrains/Biome.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/terrains/Biome.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/terrains/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/terrains/World.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/toolbox/Maths.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/toolbox/Maths.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/user/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/user/Settings.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -47,7 +38,7 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../DiscordBot/Github/discordBot" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/audio/sounds" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15566503" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -59,18 +50,18 @@
       <recent name="particles" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\src\audio\sounds" />
       <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\particles" />
       <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\ground" />
       <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\fox" />
       <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\src\audio" />
-      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\src\audio\sounds" />
       <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\particles" />
       <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\gui\button" />
       <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\gui" />
       <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\water" />
-      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\ground" />
     </key>
   </component>
   <component name="RunDashboard">

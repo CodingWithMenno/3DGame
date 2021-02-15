@@ -260,6 +260,7 @@ public class MainGameLoop implements Scene {
         Entity grassEntity = new Entity(grassModel, random.nextInt(5), new Vector3f(0, 0, 0), 0, random.nextInt(360), 0, 1);
         Biome rBiome = Biome.builder(rTexture, -5, false)
                 .addRandomEntities(terrain, waterHeight, grassEntity, 1000)
+                .addBackgroundSound(AudioMaster.loadSound("audio/sounds/Water.wav"))
                 .buildBiome();
 
         //Grass biome
@@ -269,6 +270,7 @@ public class MainGameLoop implements Scene {
         Entity treeEntity = new Entity(treeModel, new Vector3f(0, 0, 0), 0, random.nextInt(360), 0, 0.2f, new Vector3f(10, 30, 10));
         ParticleTexture pollTexture = new ParticleTexture(loader.loadTexture("particles/PollTexture"), 1, false);
         Biome gBiome = Biome.builder(gTexture, 80, false)
+                .addBackgroundSound(AudioMaster.loadSound("audio/sounds/Bounce.wav"))
                 .addRandomEntities(terrain, waterHeight, grassEntity, 1000)
                 .addRandomEntities(terrain, waterHeight, treeEntity, 100)
                 .addParticleSystem(new PollParticleSystem(pollTexture))
@@ -277,13 +279,14 @@ public class MainGameLoop implements Scene {
         //Stone biome
         TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("ground/StoneTexture"));
         Biome bBiome = Biome.builder(bTexture, 150, false)
-                .addBackgroundSound(AudioMaster.loadSound("audio/Bounce.wav"))
+                .addBackgroundSound(AudioMaster.loadSound("audio/sounds/Water.wav"))
                 .buildBiome();
 
         //Snow biome
         TerrainTexture aTexture = new TerrainTexture(loader.loadTexture("ground/SnowTexture"));
         ParticleTexture snowTexture = new ParticleTexture(loader.loadTexture("particles/SnowTexture"), 1, false);
         Biome aBiome = Biome.builder(aTexture, 150, true)
+                .addBackgroundSound(AudioMaster.loadSound("audio/sounds/Bounce.wav"))
                 .addParticleSystem(new SnowParticleSystem(snowTexture))
                 .buildBiome();
 
