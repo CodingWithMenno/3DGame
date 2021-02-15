@@ -1,6 +1,6 @@
 ## 3D Java Game using OpenGL
 
-## Features in game:
+### Features in game:
 - A 3D rotating collision detection system
 - An animation system
 - Random terrain generation with terrain color based on the height
