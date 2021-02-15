@@ -2,6 +2,7 @@ package terrains;
 
 import entities.Entity;
 import org.lwjgl.util.vector.Vector3f;
+import toolbox.InGameTimer;
 import toolbox.Maths;
 import water.Water;
 
@@ -16,22 +17,41 @@ public class World {
     private Water water;
     private List<Entity> entities;
 
+    private Biome currentBiome;
+
+    private InGameTimer backgroundSoundTimer;
+    private static final float TIME_TO_START_BACKGROUND_SOUNDS = 1.5f;
+
     public World(Terrain terrain, Water water) {
         this.terrain = terrain;
         this.water = water;
 
         this.entities = new ArrayList<>();
         setAllEntities();
+
+        this.currentBiome = this.terrain.getBiomes().get(0);
+
+        this.backgroundSoundTimer = new InGameTimer(TIME_TO_START_BACKGROUND_SOUNDS);
     }
 
     public void update(Vector3f playerPos) {
         setAllEntities();
 
         Biome currentBiome = isInBiome(playerPos.y);
+        if (this.currentBiome != currentBiome) {
+            this.currentBiome = currentBiome;
+            this.backgroundSoundTimer = new InGameTimer(TIME_TO_START_BACKGROUND_SOUNDS);
+        }
+
+        this.backgroundSoundTimer.updateTimer();
+
         List<Biome> biomes = this.terrain.getBiomes();
         for (int i = 0; i < biomes.size(); i++) {
-            if (currentBiome == biomes.get(i)) {
-                biomes.get(i).resumeBackgroundSound();
+            if (this.currentBiome == biomes.get(i)) {
+                if (this.backgroundSoundTimer.hasFinished()) {
+                    biomes.get(i).resumeBackgroundSound();
+                }
+
                 biomes.get(i).update(this.terrain, new Vector3f(playerPos), true);
             } else {
                 biomes.get(i).pauseBackgroundSound();
@@ -44,6 +64,13 @@ public class World {
         List<Biome> biomes = this.terrain.getBiomes();
         for (int i = 0; i < biomes.size(); i++) {
             biomes.get(i).pauseBiome();
+        }
+    }
+
+    public void continueWorld() {
+        List<Biome> biomes = this.terrain.getBiomes();
+        for (int i = 0; i < biomes.size(); i++) {
+            biomes.get(i).continueBiome();
         }
     }
 

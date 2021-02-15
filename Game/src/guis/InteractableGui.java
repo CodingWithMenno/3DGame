@@ -16,12 +16,12 @@ public abstract class InteractableGui extends GuiElement {
     private Vector2f minXY;
     private Vector2f maxXY;
 
-    public InteractableGui(int defaultTexture, int hoverTexture, int clickedTexture, Vector2f position, Vector2f scale) {
+    public InteractableGui(int defaultTexture, Vector2f position, Vector2f scale) {
         super(defaultTexture, position, scale);
 
         this.defaultTexture = defaultTexture;
-        this.hoverTexture = hoverTexture;
-        this.clickedTexture = clickedTexture;
+        this.hoverTexture = 0;
+        this.clickedTexture = 0;
 
         this.isHovering = false;
         this.isClicking = false;
@@ -36,7 +36,11 @@ public abstract class InteractableGui extends GuiElement {
         if (mousePos.x >= this.minXY.x && mousePos.x <= this.maxXY.x &&
             mousePos.y >= this.minXY.y && mousePos.y <= this.maxXY.y) {
 
-            this.texture = this.hoverTexture;
+            if (this.hoverTexture != 0) {
+                this.texture = this.hoverTexture;
+            } else {
+                this.texture = this.defaultTexture;
+            }
 
             if (!this.isHovering) {
                 onEnter();
@@ -58,7 +62,11 @@ public abstract class InteractableGui extends GuiElement {
 
     public void update() {
        if (isHoveringAbove() && Mouse.isButtonDown(0)) {
-           this.texture = this.clickedTexture;
+           if (this.clickedTexture != 0) {
+               this.texture = this.clickedTexture;
+           } else {
+               this.texture = this.defaultTexture;
+           }
 
            if (!this.isClicking) {
                onClick();
@@ -74,4 +82,17 @@ public abstract class InteractableGui extends GuiElement {
     protected abstract void onClick();
     protected abstract void onEnter();
     protected abstract void onExit();
+
+    public void setClickedTexture(int clickedTexture) {
+        this.clickedTexture = clickedTexture;
+    }
+
+    public void setHoverTexture(int hoverTexture) {
+        this.hoverTexture = hoverTexture;
+    }
+
+    public void updateHitbox() {
+        this.minXY = new Vector2f(this.position.x - this.scale.x, this.position.y - this.scale.y);
+        this.maxXY = new Vector2f(this.position.x + this.scale.x, this.position.y + this.scale.y);
+    }
 }

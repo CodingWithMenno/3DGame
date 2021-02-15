@@ -16,7 +16,7 @@ import java.util.List;
 public class Biome {
 
     private static final float FADE_IN = 0.1f;
-    private static final float FADE_OUT = 2f;
+    private static final float FADE_OUT = 3f;
 
     private TerrainTexture groundTexture;
     private final int separationHeight;
@@ -101,9 +101,15 @@ public class Biome {
         }
     }
 
+    public void continueBiome() {
+        if (this.backgroundSound != null) {
+            this.backgroundSound.resume();
+        }
+    }
+
     public void pauseBiome() {
         if (this.backgroundSound != null) {
-            this.backgroundSound.setVolume(0);
+            this.backgroundSound.pause();
         }
     }
 

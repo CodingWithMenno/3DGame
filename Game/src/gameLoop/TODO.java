@@ -4,12 +4,11 @@ public class TODO {
 
     /** TODO :
      *      Current:
-     *          -GuiContainer afmaken (zorgen dat guiElementen alleen in de container kan blijven + transparency en enabled afmaken)
+     *          -
      *      .
      *      .
      * 		Entities:
      * 			-Vissen/vogels maken met boids algoritme
-     * 		    -Vlinders en bijen maken als particles
      * 			-Geluid implementeren in entities/frames van animaties
      * 		    -Grappige model maken voor de camera (zodat je een cameraman ziet in de reflectie)
      * 		    -Camera klasse flexibeler maken (makkelijk alle objecten in scene kunnen volgen & support voor cutscenes)
@@ -30,7 +29,6 @@ public class TODO {
      * 			-Nieuwe objLoader gebruiken (zie normal mapping filmpje)
      * 			-De vertexen/fragments van het water alleen renderen als ze hoger zijn dan het terrein
      * 			-Instanced rendering voor particles toevoegen
-     * 		    -Optie voor user maken voor het uitzetten van reflectie van het water
      * 		    -Collision detectie efficiënter maken
      */
 

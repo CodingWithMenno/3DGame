@@ -8,7 +8,7 @@ public class Settings {
     public static final int WIDTH = 1920;
     public static final int HEIGHT = 1080;
     public static final int FPS_CAP = 2000;
-    public static final boolean VSYNC = false;
+    public static final boolean VSYNC = true;
     public static final int ANTIALIASING_AMOUNT = 8;
 
     //Water graphics settings

@@ -8,8 +8,8 @@ public class Button extends InteractableGui {
     private GuiAction onEnterAction;
     private GuiAction onExitAction;
 
-    public Button(int defaultTexture, int hoverTexture, int clickedTexture, Vector2f position, Vector2f scale) {
-        super(defaultTexture, hoverTexture, clickedTexture, position, scale);
+    public Button(int defaultTexture, Vector2f position, Vector2f scale) {
+        super(defaultTexture, position, scale);
     }
 
     @Override

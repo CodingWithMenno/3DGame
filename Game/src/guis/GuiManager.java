@@ -17,11 +17,7 @@ public class GuiManager {
 
     public void update() {
         for (GuiContainer container : this.guiContainers) {
-            for (GuiElement element : container.getGuiElements()) {
-                if (element instanceof InteractableGui) {
-                    ((InteractableGui) element).update();
-                }
-            }
+            container.update();
         }
     }
 

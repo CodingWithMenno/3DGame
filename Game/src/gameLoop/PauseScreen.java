@@ -19,9 +19,11 @@ public class PauseScreen implements TransparentScene, Comparable {
         this.loader = new Loader();
 
         this.guiManager = new GuiManager();
-        GuiContainer container = new GuiContainer(0, 0, 0, new Vector2f(0, 0), new Vector2f(1, 1));
+        GuiContainer container = new GuiContainer(this.loader.loadTexture("gui/container/transparent_grey"), new Vector2f(0, 0), new Vector2f(15, 15));
 
-        Button button = new Button(this.loader.loadTexture("button/button0"), this.loader.loadTexture("button/button1"), this.loader.loadTexture("button/button2"), new Vector2f(-0.5f, -0.5f), new Vector2f(0.25f, 0.25f));
+        Button button = new Button(this.loader.loadTexture("gui/button/button0"), new Vector2f(-0.5f, -0.5f), new Vector2f(0.25f, 0.25f));
+        button.setHoverTexture(this.loader.loadTexture("gui/button/button1"));
+        button.setClickedTexture(this.loader.loadTexture("gui/button/button2"));
         button.setOnClickAction(() -> {
             SceneManager.changeScene(new MainGameLoop());
         });

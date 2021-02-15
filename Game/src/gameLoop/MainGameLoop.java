@@ -134,6 +134,7 @@ public class MainGameLoop implements Scene {
     @Override
     public void resume() {
         Mouse.setGrabbed(true);
+        this.world.continueWorld();
     }
 
     @Override
@@ -163,6 +164,7 @@ public class MainGameLoop implements Scene {
 
         if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
             SceneManager.stackScene(new PauseScreen());
+            return;
         }
 
         this.camera.move();
