@@ -93,8 +93,8 @@ public class Biome {
             this.backgroundSound.resume();
         }
 
-        float inverted = -Maths.map(distanceFromBiome, 0, MAX_SOUND_DISTANCE, -MAX_SOUND_DISTANCE / FADE_FACTOR, 0);
-        this.backgroundSound.setVolume(inverted * Settings.BIOME_SOUND);
+        float newVolume = -Maths.map(distanceFromBiome, 0, MAX_SOUND_DISTANCE, -MAX_SOUND_DISTANCE / FADE_FACTOR, 0);
+        this.backgroundSound.setVolume(newVolume * Settings.BIOME_SOUND);
     }
 
     public void continueBiome() {

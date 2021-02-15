@@ -2,7 +2,7 @@ package terrains;
 
 import entities.Entity;
 import org.lwjgl.util.vector.Vector3f;
-import toolbox.InGameTimer;
+import toolbox.GameTimer;
 import toolbox.Maths;
 import water.Water;
 
@@ -19,7 +19,7 @@ public class World {
 
     private Biome currentBiome;
 
-    private InGameTimer backgroundSoundTimer;
+    private GameTimer backgroundSoundTimer;
     private static final float TIME_TO_START_BACKGROUND_SOUNDS = 1.5f;
 
     public World(Terrain terrain, Water water) {
@@ -31,7 +31,7 @@ public class World {
 
         this.currentBiome = this.terrain.getBiomes().get(0);
 
-        this.backgroundSoundTimer = new InGameTimer(TIME_TO_START_BACKGROUND_SOUNDS);
+        this.backgroundSoundTimer = new GameTimer(TIME_TO_START_BACKGROUND_SOUNDS);
     }
 
     public void update(Vector3f playerPos) {
@@ -40,7 +40,7 @@ public class World {
         Biome currentBiome = isInBiome(playerPos.y);
         if (this.currentBiome != currentBiome) {
             this.currentBiome = currentBiome;
-            this.backgroundSoundTimer = new InGameTimer(TIME_TO_START_BACKGROUND_SOUNDS);
+            this.backgroundSoundTimer = new GameTimer(TIME_TO_START_BACKGROUND_SOUNDS);
         }
 
         this.backgroundSoundTimer.updateTimer();
@@ -49,6 +49,8 @@ public class World {
         for (int i = 0; i < biomes.size(); i++) {
             if (this.currentBiome == biomes.get(i)) {
                 biomes.get(i).update(this.terrain, new Vector3f(playerPos), true);
+                biomes.get(i).playBackgroundSounds(0);
+                continue;
             } else {
                 biomes.get(i).update(this.terrain, new Vector3f(playerPos), false);
             }
@@ -60,11 +62,7 @@ public class World {
                     biomes.get(i).playBackgroundSounds(Maths.difference(playerPos.y, biomes.get(i).getSeparationHeight()));
                 } else {
                     try {
-                        if (playerPos.y < biomes.get(i + 1).getSeparationHeight()) {
-                            biomes.get(i).playBackgroundSounds(0);
-                        } else {
-                            biomes.get(i).playBackgroundSounds(Maths.difference(playerPos.y, biomes.get(i + 1).getSeparationHeight()));
-                        }
+                        biomes.get(i).playBackgroundSounds(Maths.difference(playerPos.y, biomes.get(i + 1).getSeparationHeight()));
                     } catch (IndexOutOfBoundsException e) {
                         biomes.get(i).playBackgroundSounds(0);
                     }
@@ -72,11 +70,7 @@ public class World {
             } else {
                 if (playerPos.y < biomes.get(i).getSeparationHeight()) {
                     try {
-                        if (playerPos.y > biomes.get(i - 1).getSeparationHeight()) {
-                            biomes.get(i).playBackgroundSounds(0);
-                        } else {
-                            biomes.get(i).playBackgroundSounds(Maths.difference(playerPos.y, biomes.get(i - 1).getSeparationHeight()));
-                        }
+                        biomes.get(i).playBackgroundSounds(Maths.difference(playerPos.y, biomes.get(i - 1).getSeparationHeight()));
                     } catch (IndexOutOfBoundsException e) {
                         biomes.get(i).playBackgroundSounds(0);
                     }
