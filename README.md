@@ -1,15 +1,15 @@
 ## 3D Java Game using OpenGL
 
 ## Features in game:
-- Een 3d roterend botsing detectie systeem
-- Een animatie systeem
-- Willekeurig terrein generatie met terrein kleur a.d.h.v. hoogte
-- Water met reflectie en breking
-- Schaduwen
-- Een entiteit systeem
-- Een particlesysteem
-- Biomes in het terrein (met geluid en particles)
-- Een lichtsysteem
+- A 3D rotating collision detection system
+- An animation system
+- Random terrain generation with terrain color based on the height
+- Water with reflection and refraction
+- Shadows
+- An entity system
+- A particlesystem
+- Biomes in the terrain (with particles and background sound)
+- A lighting system
 
 ### Game idea:
 An open world forester/hunting game with a low poly look.
