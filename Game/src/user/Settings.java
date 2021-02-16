@@ -18,6 +18,10 @@ public class Settings {
     public static final int REFRACTION_WIDTH = 1920;
     public static final int REFRACTION_HEIGHT = 1080;
 
+    //Shadow graphics settings
+    public static final int SHADOW_MAP_SIZE = 16384;
+    public static final float SHADOW_DISTANCE = 150;
+
     //Sound
     public static final float BIOME_SOUND = 0.5f;
 

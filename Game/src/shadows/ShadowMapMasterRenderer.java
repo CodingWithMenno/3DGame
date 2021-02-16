@@ -12,10 +12,9 @@ import entities.Camera;
 import entities.Entity;
 import entities.Light;
 import models.TexturedModel;
+import user.Settings;
 
 public class ShadowMapMasterRenderer {
-
-	public static final int SHADOW_MAP_SIZE = 16384;
 
 	private ShadowFrameBuffer shadowFbo;
 	private ShadowShader shader;
@@ -30,7 +29,7 @@ public class ShadowMapMasterRenderer {
 	public ShadowMapMasterRenderer(Camera camera) {
 		shader = new ShadowShader();
 		shadowBox = new ShadowBox(lightViewMatrix, camera);
-		shadowFbo = new ShadowFrameBuffer(SHADOW_MAP_SIZE, SHADOW_MAP_SIZE);
+		shadowFbo = new ShadowFrameBuffer(Settings.SHADOW_MAP_SIZE, Settings.SHADOW_MAP_SIZE);
 		entityRenderer = new ShadowMapEntityRenderer(shader, projectionViewMatrix);
 	}
 

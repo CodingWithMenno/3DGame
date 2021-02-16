@@ -30,6 +30,7 @@ public class TODO {
      * 			-De vertexen/fragments van het water alleen renderen als ze hoger zijn dan het terrein
      * 			-Instanced rendering voor particles toevoegen
      * 		    -Collision detectie efficiënter maken
+     * 		    -Multithreading
      */
 
 }

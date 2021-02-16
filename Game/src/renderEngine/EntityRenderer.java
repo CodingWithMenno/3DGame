@@ -18,6 +18,7 @@ import textures.ModelTexture;
 import toolbox.Maths;
 
 import entities.Entity;
+import user.Settings;
 
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class EntityRenderer {
 		this.shader.start();
 		this.shader.loadProjectionMatrix(projectionMatrix);
 		this.shader.connectTextureUnits();
-		this.shader.loadShadowDistanceAndSize(ShadowBox.SHADOW_DISTANCE, ShadowMapMasterRenderer.SHADOW_MAP_SIZE);
+		this.shader.loadShadowDistanceAndSize(Settings.SHADOW_DISTANCE, Settings.SHADOW_MAP_SIZE);
 		this.shader.stop();
 	}
 

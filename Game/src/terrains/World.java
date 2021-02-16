@@ -81,6 +81,12 @@ public class World {
         }
     }
 
+    public void updateBackGroundSoundsPos(Vector3f pos) {
+        for (Biome biome : this.terrain.getBiomes()) {
+            biome.setSoundsPosition(new Vector3f(pos));
+        }
+    }
+
     public void pauseWorld() {
         List<Biome> biomes = this.terrain.getBiomes();
         for (int i = 0; i < biomes.size(); i++) {

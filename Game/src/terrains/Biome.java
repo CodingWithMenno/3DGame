@@ -16,7 +16,7 @@ import java.util.List;
 public class Biome {
 
     private static final float MAX_SOUND_DISTANCE = 10;
-    private static final float FADE_FACTOR = 17;
+    private static final float FADE_FACTOR = 25;
 
     private TerrainTexture groundTexture;
     private final int separationHeight;
@@ -95,6 +95,14 @@ public class Biome {
 
         float newVolume = -Maths.map(distanceFromBiome, 0, MAX_SOUND_DISTANCE, -MAX_SOUND_DISTANCE / FADE_FACTOR, 0);
         this.backgroundSound.setVolume(newVolume * Settings.BIOME_SOUND);
+    }
+
+    public void setSoundsPosition(Vector3f pos) {
+        if (this.backgroundSound == null) {
+            return;
+        }
+
+        this.backgroundSound.setPosition(new Vector3f(pos));
     }
 
     public void continueBiome() {

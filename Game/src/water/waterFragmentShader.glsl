@@ -73,7 +73,7 @@ void main(void) {
 
     if (useReflection) {
         out_Color = mix(reflectColour, refractColour, refractiveFactor);
-        out_Color = mix(out_Color, waterColour, 0.1) + vec4(specularHighlights, 0.0);
+        out_Color = mix(out_Color, waterColour, refractiveFactor / 2) + vec4(specularHighlights, 0.0);
     } else {
         out_Color = refractColour;
         out_Color = mix(out_Color, waterColour, 0.4) + vec4(specularHighlights, 0.0);

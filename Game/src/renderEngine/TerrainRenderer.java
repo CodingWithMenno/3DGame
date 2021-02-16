@@ -13,6 +13,7 @@ import shadows.ShadowMapMasterRenderer;
 import terrains.Biome;
 import terrains.Terrain;
 import toolbox.Maths;
+import user.Settings;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class TerrainRenderer {
         this.shader.start();
         this.shader.loadProjectionMatrix(projectionMatrix);
         this.shader.connectTextureUnits();
-        this.shader.loadShadowDistanceAndSize(ShadowBox.SHADOW_DISTANCE, ShadowMapMasterRenderer.SHADOW_MAP_SIZE);
+        this.shader.loadShadowDistanceAndSize(Settings.SHADOW_DISTANCE, Settings.SHADOW_MAP_SIZE);
         this.shader.stop();
     }
 

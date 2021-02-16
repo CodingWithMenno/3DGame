@@ -12,7 +12,7 @@ public class AudioTest {
         AudioMaster.setListenerData(new Vector3f(0, 0, -1));
         AL10.alDistanceModel(AL10.AL_INVERSE_DISTANCE_CLAMPED);
 
-        int buffer = AudioMaster.loadSound("audio/sounds/Bounce.wav");
+        int buffer = AudioMaster.loadSound("audio/sounds/Water.wav");
         AudioSource audioSource = new AudioSource(1);
         audioSource.setLooping(true);
         audioSource.play(buffer);
