@@ -2,6 +2,7 @@ package entities.elaborated;
 
 import animation.AnimatedModel;
 import collisions.Collision;
+import collisions.OBB;
 import entities.Camera;
 import entities.MovableEntity;
 import user.Settings;
@@ -15,7 +16,7 @@ import toolbox.Maths;
 public class Player extends MovableEntity {
 
     private static final float RUN_SPEED = 30;
-    private static final float JUMP_POWER = 25;
+    private static final float JUMP_POWER = 45;
     private static final float ACCELERATION = 5;
     private static final float LERP_ROTATION_SPEED = 15;
 
@@ -29,7 +30,7 @@ public class Player extends MovableEntity {
 
     private Camera camera;
 
-    public Player(AnimatedModel animatedModel, Vector3f position, float rotX, float rotY, float rotZ, float scale, Vector3f collisionBox) {
+    public Player(AnimatedModel animatedModel, Vector3f position, float rotX, float rotY, float rotZ, float scale, OBB collisionBox) {
         super(animatedModel, position, rotX, rotY, rotZ, scale, collisionBox);
     }
 

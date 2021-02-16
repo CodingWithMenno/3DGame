@@ -14,25 +14,25 @@ public abstract class MovableEntity extends Entity {
 
 
     public MovableEntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ,
-                         float scale, Vector3f collisionBox) {
+                         float scale, OBB collisionBox) {
         super(model, position, rotX, rotY, rotZ, scale, collisionBox);
         this.velocity = new Vector3f(0, 0, 0);
     }
 
     public MovableEntity(TexturedModel model, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ,
-                         float scale, Vector3f collisionBox) {
+                         float scale, OBB collisionBox) {
         super(model, textureIndex, position, rotX, rotY, rotZ, scale, collisionBox);
         this.velocity = new Vector3f(0, 0, 0);
     }
 
     public MovableEntity(AnimatedModel animatedModel, Vector3f position, float rotX, float rotY, float rotZ,
-                         float scale, Vector3f collisionBox) {
+                         float scale, OBB collisionBox) {
         super(animatedModel, position, rotX, rotY, rotZ, scale, collisionBox);
         this.velocity = new Vector3f(0, 0, 0);
     }
 
     public MovableEntity(AnimatedModel animatedModel, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ,
-                         float scale, Vector3f collisionBox) {
+                         float scale, OBB collisionBox) {
         super(animatedModel, textureIndex, position, rotX, rotY, rotZ, scale, collisionBox);
         this.velocity = new Vector3f(0, 0, 0);
     }

@@ -3,10 +3,13 @@ package gameLoop;
 import animation.AnimatedModel;
 import animation.Animation;
 import audio.AudioMaster;
+import collisions.Box;
 import collisions.CollisionHandler;
+import collisions.OBB;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
+import entities.elaborated.Bird;
 import entities.elaborated.Player;
 import guis.*;
 import models.TexturedModel;
@@ -89,13 +92,32 @@ public class MainGameLoop implements Scene {
         //**********LIGHTS SETUP*****************
         TexturedModel postModel = new TexturedModel(ObjLoader.loadObjModel("lamp/LampPost", this.loader),
                 new ModelTexture(this.loader.loadTexture("lamp/LampPostTexture")));
-        Entity post = new Entity(postModel, 2, new Vector3f(100, terrain.getHeightOfTerrain(100, 150), 150), 0, 0, 0, 1f, new Vector3f(2.5f, 3.8f, 0.5f));
+        Vector3f postPosition = new Vector3f(100, terrain.getHeightOfTerrain(100, 150), 150);
+        OBB postCollisionBox = new Box(postPosition, new Vector3f(2.5f, 3.8f, 0.5f));
+        Entity post = new Entity(postModel, postPosition, 0, 90, 0, 1f, postCollisionBox);
+        //post.setRotY(90);
         this.world.addEntityToCorrectBiome(post);
 
         this.lights = new ArrayList<>();
         this.lights.add(new Light(new Vector3f(1000, 500000, -100000), new Vector3f(0.7f, 0.7f, 0.7f)));
         this.lights.add(new Light(new Vector3f(103.2f, terrain.getHeightOfTerrain(100, 150) + 4.5f, 150), new Vector3f(1f, 1f, 0), new Vector3f(1f, 0.01f, 0.002f)));
 
+
+        //Birds setup
+        TexturedModel birdModel = new TexturedModel(ObjLoader.loadObjModel("fish/Fish", this.loader),
+                new ModelTexture(this.loader.loadTexture("fish/FishTexture")));
+        birdModel.getTexture().setNumberOfRows(2);
+        Vector3f birdPosition = new Vector3f(100, this.world.getTerrain().getHeightOfTerrain(100, 120) + 5, 120);
+
+        List<Bird> birds = new ArrayList<>();
+        for (int i = 0; i < 200; i+= 4) {
+            OBB birdCollisionBox = new Box(new Vector3f(birdPosition.x, birdPosition.y, birdPosition.z + i), new Vector3f(1, 1, 1));
+            birds.add(new Bird(birdModel, i == 0 ? 0 : 1, new Vector3f(birdPosition.x, birdPosition.y - 1, birdPosition.z + i), 0, 90, 0, 1f, birdCollisionBox));
+        }
+        for (Bird bird : birds) {
+            bird.setOtherBirds(birds);
+            this.world.addEntityToCorrectBiome(bird);
+        }
 
 
         //**********COLLISION BOX TESTING*********
@@ -248,7 +270,10 @@ public class MainGameLoop implements Scene {
         Animation foxRunningAnimation = new Animation(foxModels, 1);
         AnimatedModel foxAnimatedModel = new AnimatedModel(foxIdleAnimation, foxRunningAnimation);
 
-        return new Player(foxAnimatedModel, new Vector3f(100, 0, 120), 0, 0, 0, 0.4f, new Vector3f(3, 5, 3));
+        Vector3f playerPosition = new Vector3f(100, 0, 120);
+        float playerScale = 0.4f;
+        OBB playerCollisionBox = new Box(playerPosition, new Vector3f(3 * playerScale, 5 * playerScale, 2.5f * playerScale));
+        return new Player(foxAnimatedModel, playerPosition, 0, 0, 0, playerScale, playerCollisionBox);
     }
 
 
@@ -270,7 +295,10 @@ public class MainGameLoop implements Scene {
         TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("ground/GrassTexture"));
         TexturedModel treeModel = new TexturedModel(ObjLoader.loadObjModel("tree/Tree", loader),
                 new ModelTexture(loader.loadTexture("tree/TreeTexture")));
-        Entity treeEntity = new Entity(treeModel, new Vector3f(0, 0, 0), 0, random.nextInt(360), 0, 0.2f, new Vector3f(10, 30, 10));
+        Vector3f treePos = new Vector3f(0, 0, 0);
+        float treeScale = 0.2f;
+        OBB treeCollisionBox = new Box(treePos, new Vector3f(10 * treeScale, 26 * treeScale, 10 * treeScale));
+        Entity treeEntity = new Entity(treeModel, new Vector3f(treePos), 0, random.nextInt(360), 0, treeScale, treeCollisionBox);
         ParticleTexture pollTexture = new ParticleTexture(loader.loadTexture("particles/PollTexture"), 1, false);
         Biome gBiome = Biome.builder(gTexture, 80, false)
                 .addBackgroundSound(AudioMaster.loadSound("audio/sounds/Forest.wav"))

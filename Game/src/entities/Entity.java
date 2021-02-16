@@ -27,7 +27,7 @@ public class Entity implements Cloneable {
 	protected int textureIndex = 0;
 
 	private void init(Vector3f position, float rotX, float rotY, float rotZ,
-					float scale, Vector3f... collisionBoxes) {
+					float scale, OBB... collisionBoxes) {
 
 		this.position = position;
 		this.rotX = rotX;
@@ -40,42 +40,36 @@ public class Entity implements Cloneable {
 			return;
 		}
 
-		for (Vector3f collisionBox : collisionBoxes) {
-			Vector3f box = new Vector3f(collisionBox);
-			box.x = (box.x * scale);
-			box.y = (box.y * scale);
-			box.z = (box.z * scale);
-
-			OBB obb = new Box(new Vector3f(this.position.x, this.position.y + 2, this.position.z), new Vector3f(box));
-			obb.rotX(rotX);
-			obb.rotY(rotY);
-			obb.rotZ(rotZ);
-			this.collisionBoxes.add(obb);
+		for (OBB collisionBox : collisionBoxes) {
+			collisionBox.rotX(this.rotX);
+			collisionBox.rotY(this.rotY);
+			collisionBox.rotZ(this.rotZ);
+			this.collisionBoxes.add(collisionBox);
 		}
 	}
 
 	public Entity(TexturedModel staticModel, Vector3f position, float rotX, float rotY, float rotZ,
-				  float scale, Vector3f... collisionBoxes) {
+				  float scale, OBB... collisionBoxes) {
 		this.staticModel = staticModel;
 		this.isAnimated = false;
 		init(position, rotX, rotY, rotZ, scale, collisionBoxes);
 	}
 
 	public Entity(TexturedModel staticModel, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ,
-				  float scale, Vector3f... collisionBoxes) {
+				  float scale, OBB... collisionBoxes) {
 		this(staticModel, position, rotX, rotY, rotZ, scale, collisionBoxes);
 		this.textureIndex = textureIndex;
 	}
 
 	public Entity(AnimatedModel animatedModel, Vector3f position, float rotX, float rotY, float rotZ,
-				  float scale, Vector3f... collisionBoxes) {
+				  float scale, OBB... collisionBoxes) {
 		this.animatedModel = animatedModel;
 		this.isAnimated = true;
 		init(position, rotX, rotY, rotZ, scale, collisionBoxes);
 	}
 
 	public Entity(AnimatedModel animatedModel, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ,
-				  float scale, Vector3f... collisionBoxes) {
+				  float scale, OBB... collisionBoxes) {
 		this(animatedModel, position, rotX, rotY, rotZ, scale, collisionBoxes);
 		this.textureIndex = textureIndex;
 	}
