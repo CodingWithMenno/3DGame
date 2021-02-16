@@ -30,21 +30,18 @@ public class Bird extends MovableEntity {
 
     private static final float SMOOTH_FACTOR = 0.3f;
 
-    private static Vector3f destination;
-    private Random random;
+    private BirdGroup birdGroup;
 
-    private List<Bird> otherBirds;
-
-    public Bird(TexturedModel model, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ, float scale, OBB collisionBox) {
+    public Bird(TexturedModel model, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ, float scale, OBB collisionBox, BirdGroup birdGroup) {
         super(model, textureIndex, position, rotX, rotY, rotZ, scale, collisionBox);
-        this.random = new Random();
+        this.birdGroup = birdGroup;
     }
 
     @Override
     protected void update(Terrain terrain) {
-        Vector3f separationVelocity = separation(this.otherBirds);
-        Vector3f alignmentVelocity = alignment(this.otherBirds);
-        Vector3f cohesionVelocity = cohesion(this.otherBirds);
+        Vector3f separationVelocity = separation(this.birdGroup.getBirds());
+        Vector3f alignmentVelocity = alignment(this.birdGroup.getBirds());
+        Vector3f cohesionVelocity = cohesion(this.birdGroup.getBirds());
         Vector3f destinationVelocity = destination(terrain);
 
         this.velocity = Maths.add(this.getVelocity(), separationVelocity, alignmentVelocity, cohesionVelocity, destinationVelocity);
@@ -73,15 +70,15 @@ public class Bird extends MovableEntity {
     }
 
     private Vector3f destination(Terrain terrain) {
-        if (destination == null) {
-            destination = setNewDestination(terrain);
+        if (this.birdGroup.getDestination() == null) {
+            this.birdGroup.setNewDestination(terrain, new Vector3f(this.getPosition()), DESTINATION_DISTANCE, MIN_HEIGHT, MAX_HEIGHT);
         }
 
-        if (Maths.getDistanceBetween(this.getPosition(), destination) < DESTINATION_DISTANCE / 2.0) {
-            destination = setNewDestination(terrain);
+        if (Maths.getDistanceBetween(this.getPosition(), this.birdGroup.getDestination()) < DESTINATION_DISTANCE / 2.0) {
+            this.birdGroup.setNewDestination(terrain, new Vector3f(this.getPosition()), DESTINATION_DISTANCE, MIN_HEIGHT, MAX_HEIGHT);
         }
 
-        Vector3f velocity = Vector3f.sub(destination, super.getPosition(), null);
+        Vector3f velocity = Vector3f.sub(this.birdGroup.getDestination(), this.getPosition(), null);
 
         velocity.x /= DESTINATION_SCALE;
         velocity.y /= DESTINATION_SCALE;
@@ -160,19 +157,15 @@ public class Bird extends MovableEntity {
 
     }
 
-    private Vector3f setNewDestination(Terrain terrain) {
-        float x = (float) ((this.random.nextInt(DESTINATION_DISTANCE) - DESTINATION_DISTANCE / 2.0) + this.getPosition().x);
-        float z = (float) ((this.random.nextInt(DESTINATION_DISTANCE) - DESTINATION_DISTANCE / 2.0) + this.getPosition().z);
-        float y = (float) ((this.random.nextInt(DESTINATION_DISTANCE) - DESTINATION_DISTANCE / 2.0) + this.getPosition().y);
-
-        x = Maths.clamp(x, 0, Terrain.getSIZE() - 1);
-        z = Maths.clamp(z, 0, Terrain.getSIZE() - 1);
-        y = Maths.clamp(y, Math.max(terrain.getHeightOfTerrain(x, z) + MIN_HEIGHT, World.getWaterHeight()) + MIN_HEIGHT, MAX_HEIGHT);
-
-        return new Vector3f(x, y, z);
-    }
-
-    public void setOtherBirds(List<Bird> otherBirds) {
-        this.otherBirds = otherBirds;
-    }
+//    private Vector3f setNewDestination(Terrain terrain) {
+//        float x = (float) ((this.random.nextInt(DESTINATION_DISTANCE) - DESTINATION_DISTANCE / 2.0) + this.getPosition().x);
+//        float z = (float) ((this.random.nextInt(DESTINATION_DISTANCE) - DESTINATION_DISTANCE / 2.0) + this.getPosition().z);
+//        float y = (float) ((this.random.nextInt(DESTINATION_DISTANCE) - DESTINATION_DISTANCE / 2.0) + this.getPosition().y);
+//
+//        x = Maths.clamp(x, 0, Terrain.getSIZE() - 1);
+//        z = Maths.clamp(z, 0, Terrain.getSIZE() - 1);
+//        y = Maths.clamp(y, Math.max(terrain.getHeightOfTerrain(x, z) + MIN_HEIGHT, World.getWaterHeight()) + MIN_HEIGHT, MAX_HEIGHT);
+//
+//        return new Vector3f(x, y, z);
+//    }
 }

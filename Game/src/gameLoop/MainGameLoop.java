@@ -10,6 +10,7 @@ import entities.Camera;
 import entities.Entity;
 import entities.Light;
 import entities.elaborated.Bird;
+import entities.elaborated.BirdGroup;
 import entities.elaborated.Player;
 import guis.*;
 import models.TexturedModel;
@@ -104,20 +105,22 @@ public class MainGameLoop implements Scene {
 
 
         //Birds setup
-        TexturedModel birdModel = new TexturedModel(ObjLoader.loadObjModel("fish/Fish", this.loader),
-                new ModelTexture(this.loader.loadTexture("fish/FishTexture")));
-        birdModel.getTexture().setNumberOfRows(2);
-        Vector3f birdPosition = new Vector3f(100, this.world.getTerrain().getHeightOfTerrain(100, 120) + 5, 120);
-
-        List<Bird> birds = new ArrayList<>();
-        for (int i = 0; i < 200; i+= 4) {
-            OBB birdCollisionBox = new Box(new Vector3f(birdPosition.x, birdPosition.y, birdPosition.z + i), new Vector3f(1, 1, 1));
-            birds.add(new Bird(birdModel, i == 0 ? 0 : 1, new Vector3f(birdPosition.x, birdPosition.y - 1, birdPosition.z + i), 0, 90, 0, 1f, birdCollisionBox));
-        }
-        for (Bird bird : birds) {
-            bird.setOtherBirds(birds);
-            this.world.addEntityToCorrectBiome(bird);
-        }
+        BirdGroup birdGroup = new BirdGroup(new Vector3f(100, 0, 20), 20, this.loader, this.world);
+        BirdGroup birdGroup2 = new BirdGroup(new Vector3f(100, 0, 20), 20, this.loader, this.world);
+//        TexturedModel birdModel = new TexturedModel(ObjLoader.loadObjModel("fish/Fish", this.loader),
+//                new ModelTexture(this.loader.loadTexture("fish/FishTexture")));
+//        birdModel.getTexture().setNumberOfRows(2);
+//        Vector3f birdPosition = new Vector3f(100, this.world.getTerrain().getHeightOfTerrain(100, 120) + 5, 120);
+//
+//        List<Bird> birds = new ArrayList<>();
+//        for (int i = 0; i < 200; i+= 4) {
+//            OBB birdCollisionBox = new Box(new Vector3f(birdPosition.x, birdPosition.y, birdPosition.z + i), new Vector3f(1, 1, 1));
+//            birds.add(new Bird(birdModel, i == 0 ? 0 : 1, new Vector3f(birdPosition.x, birdPosition.y - 1, birdPosition.z + i), 0, 90, 0, 1f, birdCollisionBox));
+//        }
+//        for (Bird bird : birds) {
+//            bird.setOtherBirds(birds);
+//            this.world.addEntityToCorrectBiome(bird);
+//        }
 
 
         //**********COLLISION BOX TESTING*********
