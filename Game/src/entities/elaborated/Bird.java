@@ -20,7 +20,8 @@ public class Bird extends MovableEntity {
     private static final float MAX_HEIGHT = 150;
     private static final float MIN_HEIGHT = 15;
 
-    private static final float SEPARATION_DISTANCE = 8;
+    private static final float MAX_HEIGHT_DIFFERENCE = 15;
+    private static final float SEPARATION_DISTANCE = 13;
     private static final int DESTINATION_DISTANCE = (int) Terrain.getSIZE();
 
     private static final float SEPARATION_SCALE = 10;
@@ -32,8 +33,8 @@ public class Bird extends MovableEntity {
 
     private BirdGroup birdGroup;
 
-    public Bird(TexturedModel model, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ, float scale, OBB collisionBox, BirdGroup birdGroup) {
-        super(model, textureIndex, position, rotX, rotY, rotZ, scale, collisionBox);
+    public Bird(TexturedModel model, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ, float scale, BirdGroup birdGroup) {
+        super(model, textureIndex, position, rotX, rotY, rotZ, scale);
         this.birdGroup = birdGroup;
     }
 
@@ -47,6 +48,7 @@ public class Bird extends MovableEntity {
         this.velocity = Maths.add(this.getVelocity(), separationVelocity, alignmentVelocity, cohesionVelocity, destinationVelocity);
         this.velocity.scale(SPEED * DisplayManager.getDelta());
         Vector3f newPosition = Vector3f.add(this.getPosition(), this.getVelocity(), null);
+
         newPosition.y = Maths.clamp(newPosition.y,
                 Math.max(terrain.getHeightOfTerrain(newPosition.x, newPosition.z) + MIN_HEIGHT, World.getWaterHeight() + MIN_HEIGHT), MAX_HEIGHT);
 
@@ -55,7 +57,6 @@ public class Bird extends MovableEntity {
 
         lookTo(newPosition);
 
-//        this.position = newPosition;
         this.position = Maths.lerp(this.getPosition(), newPosition, SMOOTH_FACTOR);
     }
 
@@ -138,7 +139,16 @@ public class Bird extends MovableEntity {
                 continue;
             }
 
-            velocity = Vector3f.add(velocity, bird.getPosition(), null);
+            Vector3f birdPosition = new Vector3f(bird.getPosition());
+            if (Maths.difference(birdPosition.y, super.getPosition().y) > MAX_HEIGHT_DIFFERENCE) {
+                if (birdPosition.y > super.getPosition().y) {
+                    birdPosition.y *= 10;
+                } else {
+                    birdPosition.y *= -10;
+                }
+            }
+
+            velocity = Vector3f.add(velocity, birdPosition, null);
         }
 
         velocity.x /= birds.size() - 1;

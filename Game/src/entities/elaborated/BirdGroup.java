@@ -32,8 +32,7 @@ public class BirdGroup {
 
         this.birds = new ArrayList<>();
         for (int i = 0; i < birdsInGroup * 4; i+= 4) {
-            OBB birdCollisionBox = new Box(new Vector3f(birdPosition.x, birdPosition.y, birdPosition.z + i), new Vector3f(1, 1, 1));
-            Bird bird = new Bird(birdModel, this.random.nextInt(4), new Vector3f(birdPosition.x, birdPosition.y - 1, birdPosition.z + i), 0, 0, 0, 1f, birdCollisionBox, this);
+            Bird bird = new Bird(birdModel, this.random.nextInt(4), new Vector3f(birdPosition.x, birdPosition.y, birdPosition.z + i), 0, 0, 0, 1f, this);
             world.addEntityToCorrectBiome(bird);
             this.birds.add(bird);
         }

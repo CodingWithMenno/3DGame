@@ -37,6 +37,16 @@ public abstract class MovableEntity extends Entity {
         this.velocity = new Vector3f(0, 0, 0);
     }
 
+    public MovableEntity(TexturedModel model, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
+        super(model, textureIndex, position, rotX, rotY, rotZ, scale);
+        this.velocity = new Vector3f(0, 0, 0);
+    }
+
+    public MovableEntity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
+        super(model, position, rotX, rotY, rotZ, scale);
+        this.velocity = new Vector3f(0, 0, 0);
+    }
+
     public void updateEntity(Terrain terrain) {
         Vector3f oldPos = new Vector3f(super.getPosition());
         update(terrain);
