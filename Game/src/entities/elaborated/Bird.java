@@ -1,7 +1,6 @@
 package entities.elaborated;
 
 import collisions.Collision;
-import collisions.OBB;
 import entities.MovableEntity;
 import models.TexturedModel;
 import org.lwjgl.util.vector.Vector3f;
@@ -11,23 +10,21 @@ import terrains.World;
 import toolbox.Maths;
 
 import java.util.List;
-import java.util.Random;
 
 public class Bird extends MovableEntity {
 
-    private static final float SPEED = 30;
+    private static final float SPEED = 100;
     private static final float MAX_SPEED = 1f;
     private static final float MAX_HEIGHT = 150;
     private static final float MIN_HEIGHT = 15;
 
-    private static final float MAX_HEIGHT_DIFFERENCE = 15;
-    private static final float SEPARATION_DISTANCE = 13;
+    private static final float SEPARATION_DISTANCE = 20;
     private static final int DESTINATION_DISTANCE = (int) Terrain.getSIZE();
 
-    private static final float SEPARATION_SCALE = 10;
-    private static final float COHESION_SCALE = 20;
+    private static final float SEPARATION_SCALE = 1f;
+    private static final float COHESION_SCALE = 100;
     private static final float ALIGNMENT_SCALE = 8;
-    private static final float DESTINATION_SCALE = 90;
+    private static final float DESTINATION_SCALE = 100;
 
     private static final float SMOOTH_FACTOR = 0.3f;
 
@@ -45,23 +42,26 @@ public class Bird extends MovableEntity {
         Vector3f cohesionVelocity = cohesion(this.birdGroup.getBirds());
         Vector3f destinationVelocity = destination(terrain);
 
-        this.velocity = Maths.add(this.getVelocity(), separationVelocity, alignmentVelocity, cohesionVelocity, destinationVelocity);
+        this.velocity = Maths.add(this.getVelocity(), separationVelocity, cohesionVelocity, destinationVelocity);
+
         this.velocity.scale(SPEED * DisplayManager.getDelta());
         Vector3f newPosition = Vector3f.add(this.getPosition(), this.getVelocity(), null);
-
-        newPosition.y = Maths.clamp(newPosition.y,
-                Math.max(terrain.getHeightOfTerrain(newPosition.x, newPosition.z) + MIN_HEIGHT, World.getWaterHeight() + MIN_HEIGHT), MAX_HEIGHT);
 
         newPosition = Maths.clamp(newPosition, Vector3f.sub(this.position, new Vector3f(MAX_SPEED, MAX_SPEED, MAX_SPEED), null),
                 Vector3f.add(this.position, new Vector3f(MAX_SPEED, MAX_SPEED, MAX_SPEED), null));
 
-        lookTo(newPosition);
+        newPosition.y = Maths.clamp(newPosition.y,
+                Math.max(terrain.getHeightOfTerrain(newPosition.x, newPosition.z) + MIN_HEIGHT, World.getWaterHeight() + MIN_HEIGHT), MAX_HEIGHT);
+        newPosition.x = Maths.clamp(newPosition.x, 0, Terrain.getSIZE());
+        newPosition.z = Maths.clamp(newPosition.z, 0, Terrain.getSIZE());
 
-        this.position = Maths.lerp(this.getPosition(), newPosition, SMOOTH_FACTOR);
+        this.position = Maths.lerp(this.position, newPosition, SMOOTH_FACTOR);
+
+        lookTo(newPosition);
     }
 
     @Override
-    protected void onCollided(Collision collision) {
+    public void onCollided(Collision collision) {
 
     }
 
@@ -139,21 +139,12 @@ public class Bird extends MovableEntity {
                 continue;
             }
 
-            Vector3f birdPosition = new Vector3f(bird.getPosition());
-            if (Maths.difference(birdPosition.y, super.getPosition().y) > MAX_HEIGHT_DIFFERENCE) {
-                if (birdPosition.y > super.getPosition().y) {
-                    birdPosition.y *= 10;
-                } else {
-                    birdPosition.y *= -10;
-                }
-            }
-
-            velocity = Vector3f.add(velocity, birdPosition, null);
+            velocity = Vector3f.add(velocity, bird.getPosition(), null);
         }
 
-        velocity.x /= birds.size() - 1;
-        velocity.y /= birds.size() - 1;
-        velocity.z /= birds.size() - 1;
+        velocity.x /= (birds.size() - 1);
+        velocity.y /= (birds.size() - 1);
+        velocity.z /= (birds.size() - 1);
 
         velocity = Vector3f.sub(velocity, this.getPosition(), null);
         velocity.x /= COHESION_SCALE;
@@ -163,19 +154,22 @@ public class Bird extends MovableEntity {
         return velocity;
     }
 
-    private void lookTo(Vector3f lookTo) {
+    private void lookTo(Vector3f target) {
+        float rotX = (float) Math.toDegrees(-Math.atan2(target.y, target.z));
+        float rotY = (float) Math.toDegrees(Math.atan2(target.x, Math.sqrt(target.y * target.y + target.z * target.z))) - 180;
 
+        float addX = rotX - super.getRotX();
+        float addY = rotY - super.getRotY();
+
+        increaseRotation(addX, addY, 0);
+
+//        if (rotX < -90) {
+//            super.rotZ = Maths.lerp(super.rotZ, 180, 0.05f);
+//        } else {
+//            super.rotZ = Maths.lerp(super.rotZ, 0, 0.05f);;
+//        }
+//
+//        super.rotX = Maths.lerp(super.rotX, rotX, 0.01f);
+//        super.rotY = Maths.lerp(super.rotY, rotY, 0.01f);
     }
-
-//    private Vector3f setNewDestination(Terrain terrain) {
-//        float x = (float) ((this.random.nextInt(DESTINATION_DISTANCE) - DESTINATION_DISTANCE / 2.0) + this.getPosition().x);
-//        float z = (float) ((this.random.nextInt(DESTINATION_DISTANCE) - DESTINATION_DISTANCE / 2.0) + this.getPosition().z);
-//        float y = (float) ((this.random.nextInt(DESTINATION_DISTANCE) - DESTINATION_DISTANCE / 2.0) + this.getPosition().y);
-//
-//        x = Maths.clamp(x, 0, Terrain.getSIZE() - 1);
-//        z = Maths.clamp(z, 0, Terrain.getSIZE() - 1);
-//        y = Maths.clamp(y, Math.max(terrain.getHeightOfTerrain(x, z) + MIN_HEIGHT, World.getWaterHeight()) + MIN_HEIGHT, MAX_HEIGHT);
-//
-//        return new Vector3f(x, y, z);
-//    }
 }

@@ -31,8 +31,8 @@ public class BirdGroup {
         Vector3f birdPosition = new Vector3f(startPosition.x, world.getTerrain().getHeightOfTerrain(100, 120) + 25, startPosition.z);
 
         this.birds = new ArrayList<>();
-        for (int i = 0; i < birdsInGroup * 4; i+= 4) {
-            Bird bird = new Bird(birdModel, this.random.nextInt(4), new Vector3f(birdPosition.x, birdPosition.y, birdPosition.z + i), 0, 0, 0, 1f, this);
+        for (int i = 0; i < birdsInGroup * 4; i += 4) {
+            Bird bird = new Bird(birdModel, this.random.nextInt(4), new Vector3f(birdPosition.x + this.random.nextInt(5), birdPosition.y + this.random.nextInt(5), birdPosition.z + this.random.nextInt(5)), 0, 0, 0, 1f, this);
             world.addEntityToCorrectBiome(bird);
             this.birds.add(bird);
         }

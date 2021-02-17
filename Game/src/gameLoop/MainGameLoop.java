@@ -9,9 +9,7 @@ import collisions.OBB;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
-import entities.elaborated.Bird;
-import entities.elaborated.BirdGroup;
-import entities.elaborated.Player;
+import entities.elaborated.*;
 import guis.*;
 import models.TexturedModel;
 import org.lwjgl.input.Keyboard;
@@ -105,9 +103,19 @@ public class MainGameLoop implements Scene {
 
 
         //Birds setup
-        for (int i = 0; i < 5; i++) {
-            new BirdGroup(new Vector3f(200 * i, 200 * i, 200 * i), 25, this.loader, this.world);
+        for (int i = 1; i < 2; i++) {
+            new BirdGroup2(new Vector3f(400 * i, 400 * i, 400 * i), 10, this.loader, this.world);
         }
+
+//        TexturedModel birdModel = new TexturedModel(ObjLoader.loadObjModel("fish/Fish", loader),
+//                new ModelTexture(loader.loadTexture("fish/FishTexture")));
+//        birdModel.getTexture().setNumberOfRows(2);
+//        Vector3f birdPosition = new Vector3f(20, world.getTerrain().getHeightOfTerrain(100, 120) + 25, 20);
+//
+//        for (int i = 0; i < 500 * 4; i += 4) {
+//            Bird2 bird = new Bird2(birdModel, random.nextInt(4), new Vector3f(birdPosition.x + random.nextInt(200), birdPosition.y + random.nextInt(200), birdPosition.z + random.nextInt(200)), 0, 0, 0, 1f);
+//            world.addEntityToCorrectBiome(bird);
+//        }
 
 
         //**********COLLISION BOX TESTING*********
@@ -260,7 +268,7 @@ public class MainGameLoop implements Scene {
         Animation foxRunningAnimation = new Animation(foxModels, 1);
         AnimatedModel foxAnimatedModel = new AnimatedModel(foxIdleAnimation, foxRunningAnimation);
 
-        Vector3f playerPosition = new Vector3f(100, 0, 120);
+        Vector3f playerPosition = new Vector3f(400, 0, 400);
         float playerScale = 0.4f;
         OBB playerCollisionBox = new Box(playerPosition, new Vector3f(3 * playerScale, 5 * playerScale, 2.5f * playerScale));
         return new Player(foxAnimatedModel, playerPosition, 0, 0, 0, playerScale, playerCollisionBox);

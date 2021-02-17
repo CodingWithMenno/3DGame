@@ -5,6 +5,7 @@ import collisions.Collision;
 import collisions.OBB;
 import entities.Camera;
 import entities.MovableEntity;
+import user.Input;
 import user.Settings;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -85,8 +86,8 @@ public class Player extends MovableEntity {
     }
 
     @Override
-    protected void onCollided(Collision collision) {
-
+    public void onCollided(Collision collision) {
+        defaultOnCollide(collision);
     }
 
     @Override
@@ -102,19 +103,19 @@ public class Player extends MovableEntity {
         float finalModelRotation = 0;
 
         boolean forwardPressed = false;
-        if (Keyboard.isKeyDown(Settings.FORWARD)) {
+        if (Keyboard.isKeyDown(Input.FORWARD)) {
             finalVerticalSpeed += RUN_SPEED;
             forwardPressed = true;
         }
 
         boolean backwardPressed = false;
-        if (Keyboard.isKeyDown(Settings.BACKWARDS)) {
+        if (Keyboard.isKeyDown(Input.BACKWARDS)) {
             finalVerticalSpeed -= RUN_SPEED;
             finalModelRotation += 180;
             backwardPressed = true;
         }
 
-        if (Keyboard.isKeyDown(Settings.LEFT)) {
+        if (Keyboard.isKeyDown(Input.LEFT)) {
             finalHorizontalSpeed += RUN_SPEED;
 
             if (forwardPressed) {
@@ -126,7 +127,7 @@ public class Player extends MovableEntity {
             }
         }
 
-        if (Keyboard.isKeyDown(Settings.RIGHT)) {
+        if (Keyboard.isKeyDown(Input.RIGHT)) {
             finalHorizontalSpeed -= RUN_SPEED;
 
             if (forwardPressed) {
@@ -138,8 +139,8 @@ public class Player extends MovableEntity {
             }
         }
 
-        if (!Keyboard.isKeyDown(Settings.FREE_CAMERA_ANGLE)) {
-            finalTurnSpeed -= Mouse.getDX() * Settings.SENSITIVITY;
+        if (!Keyboard.isKeyDown(Input.FREE_CAMERA_ANGLE)) {
+            finalTurnSpeed -= Mouse.getDX() * Input.SENSITIVITY;
         }
 
         this.currentVerticalSpeed = Maths.lerp(this.currentVerticalSpeed, finalVerticalSpeed, ACCELERATION * DisplayManager.getDelta());
@@ -152,7 +153,7 @@ public class Player extends MovableEntity {
             this.modelRotation = finalModelRotation;
         }
 
-        if (Keyboard.isKeyDown(Settings.JUMP)) {
+        if (Keyboard.isKeyDown(Input.JUMP)) {
             jump();
         }
     }

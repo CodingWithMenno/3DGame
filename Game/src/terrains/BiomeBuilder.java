@@ -36,10 +36,10 @@ public class BiomeBuilder {
         return this;
     }
 
-    public BiomeBuilder addRandomEntities(Terrain terrain, float waterHeight, Entity entity, int totalEntities) {
-        for (int i = 0; i < totalEntities; i++) {
-            float x = random.nextFloat() * Terrain.getSIZE();
-            float z = random.nextFloat() * Terrain.getSIZE();
+    public BiomeBuilder addRandomEntities(Terrain terrain, float waterHeight, Entity entity, int maxEntities) {
+        for (int i = 0; i < maxEntities; i++) {
+            float x = this.random.nextFloat() * Terrain.getSIZE();
+            float z = this.random.nextFloat() * Terrain.getSIZE();
             float y = terrain.getHeightOfTerrain(x, z);
 
             if (y <= waterHeight) { continue; }
@@ -48,6 +48,7 @@ public class BiomeBuilder {
 
             Entity newEntity = (Entity) entity.clone();
             newEntity.setPosition(new Vector3f(x, y, z));
+            newEntity.setRotY(this.random.nextInt(360));
             this.entities.add(newEntity);
         }
 

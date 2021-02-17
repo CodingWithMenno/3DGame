@@ -1,5 +1,6 @@
 package entities;
 
+import user.Input;
 import user.Settings;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -100,13 +101,13 @@ public class Camera {
 	}
 
 	private void calculatePitch() {
-		float pitchChange = Mouse.getDY() * Settings.SENSITIVITY;
+		float pitchChange = Mouse.getDY() * Input.SENSITIVITY;
 		this.pitch -= pitchChange;
 	}
 
 	private void calculateAngleAroundPlayer() {
-		if (Keyboard.isKeyDown(Settings.FREE_CAMERA_ANGLE)) {
-			float angleChange = Mouse.getDX() * Settings.SENSITIVITY * 3f;
+		if (Keyboard.isKeyDown(Input.FREE_CAMERA_ANGLE)) {
+			float angleChange = Mouse.getDX() * Input.SENSITIVITY * 3f;
 			this.angleAroundEntity -= angleChange;
 		}
 

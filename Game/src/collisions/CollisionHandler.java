@@ -45,9 +45,9 @@ public class CollisionHandler {
                         int collisionValue = box2.isIntersecting(box1);
 
                         if (collisionValue == 1) {
-                            movableEntity.onCollide(new Collision(movableEntity, entity, true, false));
+                            movableEntity.onCollided(new Collision(movableEntity, entity, true, false));
                         } else if (collisionValue == 2) {
-                            movableEntity.onCollide(new Collision(movableEntity, entity, false, true));
+                            movableEntity.onCollided(new Collision(movableEntity, entity, false, true));
                         }
                     }
                 }

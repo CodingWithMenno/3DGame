@@ -68,17 +68,15 @@ public abstract class MovableEntity extends Entity {
         return false;
     }
 
-    public void onCollide(Collision collision) {
+    protected void defaultOnCollide(Collision collision) {
         if (collision.isHitFromSide()) {
             revertHorizontal();
         } else {
             revertVerticalDown();
         }
-
-        onCollided(collision);
     }
 
-    protected abstract void onCollided(Collision collision);
+    public abstract void onCollided(Collision collision);
 
     public void revertPosition() {
         Vector3f revertVelocity = Vector3f.sub(super.getPosition(), this.velocity, null);

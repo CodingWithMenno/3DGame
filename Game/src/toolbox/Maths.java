@@ -98,12 +98,36 @@ public class Maths {
 		return (float) Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point2.y, 2) + Math.pow(point2.z - point1.z, 2));
 	}
 
-	//Returns the vector of all the vectors added
+	//Returns the 3D vector of all the 3D vectors added
 	public static Vector3f add(Vector3f... vectors) {
 		Vector3f finalVector = new Vector3f(0, 0, 0);
 		for (Vector3f vector : vectors) {
 			finalVector = Vector3f.add(finalVector, vector, null);
 		}
 		return finalVector;
+	}
+
+	//Returns the 2D vector of all the 2D vectors added
+	public static Vector2f add(Vector2f... vectors) {
+		Vector2f finalVector = new Vector2f(0, 0);
+		for (Vector2f vector : vectors) {
+			finalVector = Vector2f.add(finalVector, vector, null);
+		}
+		return finalVector;
+	}
+
+	//Divides a 3D vector by the given number
+	public static Vector3f divide(Vector3f vector, float number) {
+		vector.x /= number;
+		vector.y /= number;
+		vector.z /= number;
+		return vector;
+	}
+
+	//Divides a 2D vector by the given number
+	public static Vector2f divide(Vector2f vector, float number) {
+		vector.x /= number;
+		vector.y /= number;
+		return vector;
 	}
 }
