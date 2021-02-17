@@ -1,7 +1,5 @@
 package entities.elaborated;
 
-import collisions.Box;
-import collisions.OBB;
 import models.TexturedModel;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.Loader;
@@ -25,14 +23,17 @@ public class BirdGroup {
     public BirdGroup(Vector3f startPosition, int birdsInGroup, Loader loader, World world) {
         this.random = new Random();
 
-        TexturedModel birdModel = new TexturedModel(ObjLoader.loadObjModel("fish/Fish", loader),
-                new ModelTexture(loader.loadTexture("fish/FishTexture")));
+        TexturedModel birdModel = new TexturedModel(ObjLoader.loadObjModel("bird/Bird", loader),
+                new ModelTexture(loader.loadTexture("bird/BirdTexture")));
         birdModel.getTexture().setNumberOfRows(2);
-        Vector3f birdPosition = new Vector3f(startPosition.x, world.getTerrain().getHeightOfTerrain(100, 120) + 25, startPosition.z);
+        Vector3f birdPosition = new Vector3f(startPosition.x, world.getTerrain().getHeightOfTerrain(startPosition.x, startPosition.z) + 25, startPosition.z);
 
         this.birds = new ArrayList<>();
         for (int i = 0; i < birdsInGroup * 4; i += 4) {
-            Bird bird = new Bird(birdModel, this.random.nextInt(4), new Vector3f(birdPosition.x + this.random.nextInt(5), birdPosition.y + this.random.nextInt(5), birdPosition.z + this.random.nextInt(5)), 0, 0, 0, 1f, this);
+            Bird bird = new Bird(birdModel, this.random.nextInt(4),
+                    new Vector3f(birdPosition.x + this.random.nextInt(100), birdPosition.y + this.random.nextInt(100), birdPosition.z + this.random.nextInt(100)),
+                    0, this.random.nextInt(360), 0, 0.01f, this);
+
             world.addEntityToCorrectBiome(bird);
             this.birds.add(bird);
         }
@@ -43,8 +44,8 @@ public class BirdGroup {
         float z = (float) ((this.random.nextInt(maxDestinationDistance) - maxDestinationDistance / 2.0) + birdPosition.z);
         float y = (float) ((this.random.nextInt(maxDestinationDistance) - maxDestinationDistance / 2.0) + birdPosition.y);
 
-        x = Maths.clamp(x, 0, Terrain.getSIZE() - 1);
-        z = Maths.clamp(z, 0, Terrain.getSIZE() - 1);
+        x = Maths.clamp(x, 40, Terrain.getSIZE() - 40);
+        z = Maths.clamp(z, 40, Terrain.getSIZE() - 40);
         y = Maths.clamp(y, Math.max(terrain.getHeightOfTerrain(x, z) + minHeight, World.getWaterHeight()) + minHeight, maxHeight);
 
         this.destination = new Vector3f(x, y, z);

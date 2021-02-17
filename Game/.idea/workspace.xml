@@ -5,20 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1448daae-e5e5-4daf-966b-6006ecad8d18" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/entities/elaborated/Bird2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/entities/elaborated/BirdGroup2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/collisions/CollisionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/collisions/CollisionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Camera.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/MovableEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/MovableEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game/fish/Fish.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Game/fish/FishTexture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/fish/Fish.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/fish/FishTexture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/audio/AudioMaster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/audio/AudioMaster.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/elaborated/Bird.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/elaborated/Bird.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/elaborated/Bird2.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/elaborated/BirdGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/elaborated/BirdGroup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/elaborated/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/elaborated/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/elaborated/BirdGroup2.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/terrains/BiomeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/terrains/BiomeBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/toolbox/Maths.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/toolbox/Maths.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/user/Input.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/user/Input.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/user/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/user/Settings.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -49,13 +46,6 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\src\audio\sounds" />
-      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\particles" />
-      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\gui\button" />
-      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\gui" />
-      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\water" />
-    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="particles" />
     </key>
@@ -65,6 +55,13 @@
       <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\ground" />
       <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\fox" />
       <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\src\audio" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\src\audio\sounds" />
+      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\audio" />
+      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\particles" />
+      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\gui\button" />
+      <recent name="C:\Users\Bil\Documents\School\3D Java Game\Game\3DGame\Game\res\gui" />
     </key>
   </component>
   <component name="RunDashboard">

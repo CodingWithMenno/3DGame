@@ -104,7 +104,7 @@ public class MainGameLoop implements Scene {
 
         //Birds setup
         for (int i = 1; i < 2; i++) {
-            new BirdGroup2(new Vector3f(400 * i, 400 * i, 400 * i), 10, this.loader, this.world);
+            new BirdGroup(new Vector3f(400 * i, 400 * i, 400 * i), 50, this.loader, this.world);
         }
 
 //        TexturedModel birdModel = new TexturedModel(ObjLoader.loadObjModel("fish/Fish", loader),
@@ -286,7 +286,7 @@ public class MainGameLoop implements Scene {
         Entity grassEntity = new Entity(grassModel, random.nextInt(5), new Vector3f(0, 0, 0), 0, random.nextInt(360), 0, 1);
         Biome rBiome = Biome.builder(rTexture, -5, false)
                 .addRandomEntities(terrain, waterHeight, grassEntity, 1000)
-                .addBackgroundSound(AudioMaster.loadSound("audio/sounds/Water.wav"))
+                .addBackgroundSound(AudioMaster.loadSound("audio/sounds/Water"))
                 .buildBiome();
 
         //Grass biome
@@ -299,7 +299,7 @@ public class MainGameLoop implements Scene {
         Entity treeEntity = new Entity(treeModel, new Vector3f(treePos), 0, random.nextInt(360), 0, treeScale, treeCollisionBox);
         ParticleTexture pollTexture = new ParticleTexture(loader.loadTexture("particles/PollTexture"), 1, false);
         Biome gBiome = Biome.builder(gTexture, 80, false)
-                .addBackgroundSound(AudioMaster.loadSound("audio/sounds/Forest.wav"))
+                .addBackgroundSound(AudioMaster.loadSound("audio/sounds/Forest"))
                 .addRandomEntities(terrain, waterHeight, grassEntity, 1000)
                 .addRandomEntities(terrain, waterHeight, treeEntity, 100)
                 .addParticleSystem(new PollParticleSystem(pollTexture))
@@ -314,7 +314,7 @@ public class MainGameLoop implements Scene {
         TerrainTexture aTexture = new TerrainTexture(loader.loadTexture("ground/SnowTexture"));
         ParticleTexture snowTexture = new ParticleTexture(loader.loadTexture("particles/SnowTexture"), 1, false);
         Biome aBiome = Biome.builder(aTexture, 150, true)
-                .addBackgroundSound(AudioMaster.loadSound("audio/sounds/Snow.wav"))
+                .addBackgroundSound(AudioMaster.loadSound("audio/sounds/Snow"))
                 .addParticleSystem(new SnowParticleSystem(snowTexture))
                 .buildBiome();
 
