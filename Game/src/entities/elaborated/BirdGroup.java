@@ -20,7 +20,7 @@ public class BirdGroup {
     private Vector3f destination;
 
     private GameTimer destinationTimer;
-    private static final int DESTINATION_TIME = 10;
+    private static final int DESTINATION_TIME = 15;
 
     private Random random;
 
@@ -36,7 +36,7 @@ public class BirdGroup {
         for (int i = 0; i < birdsInGroup * 4; i += 4) {
             Bird bird = new Bird(birdModel, this.random.nextInt(4),
                     new Vector3f(birdPosition.x + this.random.nextInt(100), birdPosition.y + this.random.nextInt(50), birdPosition.z + this.random.nextInt(100)),
-                    this.random.nextInt(90) - 45, 0, 0, 0.01f, this);
+                    this.random.nextInt(90) - 45, this.random.nextInt(360), 0, 0.01f, this);
 
             world.addEntityToCorrectBiome(bird);
             this.birds.add(bird);

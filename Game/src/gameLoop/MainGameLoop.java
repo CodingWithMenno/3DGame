@@ -17,6 +17,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 import particles.ParticleMaster;
@@ -44,7 +45,7 @@ public class MainGameLoop implements Scene {
     private Loader loader;
 
     private Camera camera;
-    public static Player player;
+    private Player player;
     private World world;
 
     private GuiManager guiManager;
@@ -87,35 +88,21 @@ public class MainGameLoop implements Scene {
         //***********WORLD SETUP****************
         this.world = setupWorld(terrain, this.loader, this.renderer, random, World.getWaterHeight(), Terrain.getSIZE());
 
+        //Birds setup
+        new BirdGroup(new Vector3f(400, 400, 400), 100, this.loader, this.world);
+
 
         //**********LIGHTS SETUP*****************
         TexturedModel postModel = new TexturedModel(ObjLoader.loadObjModel("lamp/LampPost", this.loader),
                 new ModelTexture(this.loader.loadTexture("lamp/LampPostTexture")));
         Vector3f postPosition = new Vector3f(100, terrain.getHeightOfTerrain(100, 150), 150);
         OBB postCollisionBox = new Box(postPosition, new Vector3f(2.5f, 3.8f, 0.5f));
-        Entity post = new Entity(postModel, postPosition, 0, 90, 0, 1f, postCollisionBox);
-        //post.setRotY(90);
+        Entity post = new Entity(postModel, postPosition, 0, 0, 0, 1f, postCollisionBox);
         this.world.addEntityToCorrectBiome(post);
 
         this.lights = new ArrayList<>();
         this.lights.add(new Light(new Vector3f(1000, 500000, -100000), new Vector3f(0.7f, 0.7f, 0.7f)));
-        this.lights.add(new Light(new Vector3f(103.2f, terrain.getHeightOfTerrain(100, 150) + 4.5f, 150), new Vector3f(1f, 1f, 0), new Vector3f(1f, 0.01f, 0.002f)));
-
-
-        //Birds setup
-        for (int i = 1; i < 2; i++) {
-            new BirdGroup(new Vector3f(400 * i, 400 * i, 400 * i), 50, this.loader, this.world);
-        }
-
-//        TexturedModel birdModel = new TexturedModel(ObjLoader.loadObjModel("fish/Fish", loader),
-//                new ModelTexture(loader.loadTexture("fish/FishTexture")));
-//        birdModel.getTexture().setNumberOfRows(2);
-//        Vector3f birdPosition = new Vector3f(20, world.getTerrain().getHeightOfTerrain(100, 120) + 25, 20);
-//
-//        for (int i = 0; i < 500 * 4; i += 4) {
-//            Bird2 bird = new Bird2(birdModel, random.nextInt(4), new Vector3f(birdPosition.x + random.nextInt(200), birdPosition.y + random.nextInt(200), birdPosition.z + random.nextInt(200)), 0, 0, 0, 1f);
-//            world.addEntityToCorrectBiome(bird);
-//        }
+        this.lights.add(new Light(new Vector3f(103.3f, terrain.getHeightOfTerrain(103.3f, 150) + 2f, 150), new Vector3f(1f, 1f, 0), new Vector3f(1f, 0.01f, 0.002f)));
 
 
         //**********COLLISION BOX TESTING*********
@@ -141,8 +128,6 @@ public class MainGameLoop implements Scene {
 
         //**************GUI SETUP****************
         this.guiManager = new GuiManager();
-//        Button button = new Button(this.loader.loadTexture("button/button0"), this.loader.loadTexture("button/button1"), this.loader.loadTexture("button/button2"), new Vector2f(-0.5f, -0.5f), new Vector2f(0.25f, 0.25f));
-//        this.guiManager.addTexture(button);
 
         this.guiRenderer = new GuiRenderer(this.loader);
 

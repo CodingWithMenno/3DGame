@@ -8,7 +8,6 @@ import org.lwjgl.util.vector.Vector3f;
 import renderEngine.DisplayManager;
 import terrains.Terrain;
 import terrains.World;
-import toolbox.GameTimer;
 import toolbox.Maths;
 
 import java.util.ArrayList;
@@ -19,17 +18,17 @@ public class Bird extends MovableEntity {
     private static final int FLY_SPEED = 20;
     private static final float MAX_SPEED = 0.1f;
 
-    private static final int VISION = 30;
+    private static final int VISION = 50;
     private static final int DESTINATION_DISTANCE = (int) Terrain.getSIZE();
 
     private static final float MAX_HEIGHT = 250;
     private static final float MIN_HEIGHT = 20;
     private static final float MIN_BORDER_DISTANCE = 50;
 
-    private static final int RANDOM_SCALE = 1;
-    private static final int COHESION_SCALE = 8;
-    private static final int ALIGNMENT_SCALE = 15;
-    private static final int SEPARATION_SCALE = 1;
+    private static final int RANDOM_SCALE = 3;
+    private static final int COHESION_SCALE = 15;
+    private static final int ALIGNMENT_SCALE = 20;
+    private static final int SEPARATION_SCALE = 2;
     private static final float DESTINATION_SCALE = 1;
 
     private Vector2f currentTurnSpeed;
