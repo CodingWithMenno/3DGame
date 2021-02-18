@@ -7,6 +7,7 @@
 - Water with reflection and refraction
 - Shadows
 - An entity system
+- Birds with the boids algorithm
 - A particlesystem
 - Biomes in the terrain (with particles and background sound)
 - A lighting system
@@ -20,5 +21,6 @@ An open world forester/hunting game with a low poly look.
 ---
 ### Current screenshots of the game
 
+![Birds](https://cdn.discordapp.com/attachments/574188492272173076/811932790416998400/unknown.png)
 ![Water](https://media.discordapp.net/attachments/378603538009292820/802181808888348722/unknown.png?width=1623&height=910)
 ![Snow](https://media.discordapp.net/attachments/574188492272173076/802487939783327754/unknown.png?width=1625&height=910)
