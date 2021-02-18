@@ -7,6 +7,7 @@
 - Water with reflection and refraction
 - Shadows
 - An entity system
+- Birds with the boids algorithm
 - A particlesystem
 - Biomes in the terrain (with particles and background sound)
 - A lighting system
