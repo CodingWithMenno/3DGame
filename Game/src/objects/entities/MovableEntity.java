@@ -1,4 +1,4 @@
-package entities;
+package objects.entities;
 
 import animation.AnimatedModel;
 import collisions.Collision;

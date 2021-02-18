@@ -1,7 +1,7 @@
-package entities.elaborated;
+package objects.entities.elaborated;
 
 import collisions.Collision;
-import entities.MovableEntity;
+import objects.entities.MovableEntity;
 import models.TexturedModel;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;

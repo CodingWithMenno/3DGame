@@ -1,4 +1,4 @@
-package entities.elaborated;
+package objects.entities.elaborated;
 
 import models.TexturedModel;
 import org.lwjgl.util.vector.Vector3f;

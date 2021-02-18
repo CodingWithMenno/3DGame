@@ -1,10 +1,10 @@
-package entities.elaborated;
+package objects.entities.elaborated;
 
 import animation.AnimatedModel;
 import collisions.Collision;
 import collisions.OBB;
 import objects.Camera;
-import entities.MovableEntity;
+import objects.entities.MovableEntity;
 import user.Input;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;

@@ -1,4 +1,4 @@
-package objects.entities.elaborated;
+package objects.entities.inverseKinematic;
 
 import collisions.Collision;
 import objects.entities.MovableEntity;
