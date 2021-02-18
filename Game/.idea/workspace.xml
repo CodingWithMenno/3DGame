@@ -6,15 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="1448daae-e5e5-4daf-966b-6006ecad8d18" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game/fish/Fish.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Game/fish/FishTexture.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/fish/Fish.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/fish/FishTexture.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/audio/AudioMaster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/audio/AudioMaster.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Camera.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/elaborated/Bird.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/elaborated/Bird.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/elaborated/Bird2.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/elaborated/BirdGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/elaborated/BirdGroup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/elaborated/BirdGroup2.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />

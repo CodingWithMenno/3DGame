@@ -15,7 +15,7 @@ public class Camera {
 	private static float AUTO_ZOOM = 5;
 	private static float DEFAULT_PITCH = 12;
 	private static float MAX_ZOOM_IN = 8;
-	private static float MAX_ZOOM_OUT = 100;
+	private static float MAX_ZOOM_OUT = 300;
 	private static float ROTATION_SPEED = 15;
 
 	private float distanceFromEntity = 14;

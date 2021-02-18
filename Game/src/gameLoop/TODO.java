@@ -4,7 +4,7 @@ public class TODO {
 
     /** TODO :
      *      Current:
-     *          -Vissen/vogels maken met boids algoritme
+     *          -
      *      .
      *      .
      * 		Entities:

@@ -44,7 +44,7 @@ public class MainGameLoop implements Scene {
     private Loader loader;
 
     private Camera camera;
-    private Player player;
+    public static Player player;
     private World world;
 
     private GuiManager guiManager;
