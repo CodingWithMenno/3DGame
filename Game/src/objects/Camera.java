@@ -1,7 +1,8 @@
-package entities;
+package objects;
 
+import objects.entities.Entity;
+import objects.entities.MovableEntity;
 import user.Input;
-import user.Settings;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector3f;
@@ -10,7 +11,7 @@ import terrains.Terrain;
 import terrains.World;
 import toolbox.Maths;
 
-public class Camera {
+public class Camera extends GameObject {
 
 	private static float AUTO_ZOOM = 5;
 	private static float DEFAULT_PITCH = 12;
@@ -24,13 +25,10 @@ public class Camera {
 	private float subtractRotation = 0;
 	private float targetRotation = 0;
 
-	private Vector3f position;
-	private float pitch = DEFAULT_PITCH;
-	private float yaw;
-
 	private Terrain terrain;
 
 	public Camera(Entity entityToFollow, Terrain terrain) {
+		super(entityToFollow.getPosition(), DEFAULT_PITCH, 0, 0);
 		this.terrain = terrain;
 		this.entityToFollow = entityToFollow;
 		Vector3f pos = this.entityToFollow.getPosition();
@@ -52,16 +50,16 @@ public class Camera {
 		if (newPos.y < terrainHeight + 1f) {
 			newPos.y = terrainHeight + 1f;
 
-			this.pitch += heightDifference;
+			this.rotX += heightDifference;
 		}
 
 		heightDifference = Maths.difference(newPos.y, -12);
 		if (newPos.y < World.getWaterHeight() + 1) {
 			newPos.y = World.getWaterHeight() + 1;
-			this.pitch += heightDifference;
+			this.rotX += heightDifference;
 		}
 
-		this.pitch = Maths.clamp(this.pitch, -20, 85);
+		this.rotX = Maths.clamp(this.rotX, -20, 85);
 
 		this.position = newPos;
 		this.position = Maths.clamp(new Vector3f(this.position), new Vector3f(1, -1000, 1), new Vector3f(Terrain.getSIZE() - 1, 1000, Terrain.getSIZE() - 1));
@@ -69,7 +67,7 @@ public class Camera {
 			this.position.y = terrainHeight + 1f;
 		}
 
-		this.yaw = 180 - (this.targetRotation + this.angleAroundEntity);
+		this.rotY = 180 - (this.targetRotation + this.angleAroundEntity);
 	}
 
 	private Vector3f calculateCameraPosition(float horizontalDistance, float verticalDistance) {
@@ -87,11 +85,11 @@ public class Camera {
 	}
 
 	private float calculateHorizontalDistance() {
-		return (float) (this.distanceFromEntity * Math.cos(Math.toRadians(this.pitch)));
+		return (float) (this.distanceFromEntity * Math.cos(Math.toRadians(this.rotX)));
 	}
 
 	private float calculateVerticalDistance() {
-		return (float) (this.distanceFromEntity * Math.sin(Math.toRadians(this.pitch)));
+		return (float) (this.distanceFromEntity * Math.sin(Math.toRadians(this.rotX)));
 	}
 
 	private void calculateZoom() {
@@ -102,7 +100,7 @@ public class Camera {
 
 	private void calculatePitch() {
 		float pitchChange = Mouse.getDY() * Input.SENSITIVITY;
-		this.pitch -= pitchChange;
+		this.rotX -= pitchChange;
 	}
 
 	private void calculateAngleAroundPlayer() {
@@ -121,19 +119,19 @@ public class Camera {
 	}
 
 	public void invertPitch() {
-		this.pitch = -pitch;
+		this.rotX = -rotX;
 	}
 
 	public Vector3f getPosition() {
 		return position;
 	}
 
-	public float getPitch() {
-		return pitch;
+	public float getRotX() {
+		return rotX;
 	}
 
-	public float getYaw() {
-		return yaw;
+	public float getRotY() {
+		return rotY;
 	}
 
 	public void setSubtractRotation(float subtractRotation) {

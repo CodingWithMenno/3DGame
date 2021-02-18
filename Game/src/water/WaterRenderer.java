@@ -2,7 +2,7 @@ package water;
 
 import java.util.List;
 
-import entities.Light;
+import objects.Light;
 import models.RawModel;
 
 import org.lwjgl.opengl.GL11;
@@ -16,8 +16,7 @@ import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.MasterRenderer;
 import toolbox.Maths;
-import entities.Camera;
-import user.Settings;
+import objects.Camera;
 
 public class WaterRenderer {
 

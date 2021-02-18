@@ -1,10 +1,8 @@
 package renderEngine;
 
-import entities.elaborated.Player;
 import models.RawModel;
 import models.TexturedModel;
 
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
@@ -12,12 +10,10 @@ import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 
 import shaders.StaticShader;
-import shadows.ShadowBox;
-import shadows.ShadowMapMasterRenderer;
 import textures.ModelTexture;
 import toolbox.Maths;
 
-import entities.Entity;
+import objects.entities.Entity;
 import user.Settings;
 
 import java.util.List;

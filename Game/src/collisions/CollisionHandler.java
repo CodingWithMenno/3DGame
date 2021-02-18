@@ -1,7 +1,7 @@
 package collisions;
 
-import entities.Entity;
-import entities.MovableEntity;
+import objects.entities.Entity;
+import objects.entities.MovableEntity;
 import org.lwjgl.util.vector.Vector3f;
 import toolbox.Maths;
 

@@ -8,9 +8,9 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
-import entities.Camera;
-import entities.Entity;
-import entities.Light;
+import objects.Camera;
+import objects.entities.Entity;
+import objects.Light;
 import models.TexturedModel;
 import user.Settings;
 

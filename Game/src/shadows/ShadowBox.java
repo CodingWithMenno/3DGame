@@ -5,7 +5,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
-import entities.Camera;
+import objects.Camera;
 import renderEngine.MasterRenderer;
 import user.Settings;
 
@@ -136,8 +136,8 @@ public class ShadowBox {
 
 	private Matrix4f calculateCameraRotationMatrix() {
 		Matrix4f rotation = new Matrix4f();
-		rotation.rotate((float) Math.toRadians(-cam.getYaw()), new Vector3f(0, 1, 0));
-		rotation.rotate((float) Math.toRadians(-cam.getPitch()), new Vector3f(1, 0, 0));
+		rotation.rotate((float) Math.toRadians(-cam.getRotY()), new Vector3f(0, 1, 0));
+		rotation.rotate((float) Math.toRadians(-cam.getRotX()), new Vector3f(1, 0, 0));
 		return rotation;
 	}
 

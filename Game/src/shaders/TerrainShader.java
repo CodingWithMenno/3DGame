@@ -1,7 +1,7 @@
 package shaders;
 
-import entities.Camera;
-import entities.Light;
+import objects.Camera;
+import objects.Light;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;

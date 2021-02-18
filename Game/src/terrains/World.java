@@ -1,6 +1,6 @@
 package terrains;
 
-import entities.Entity;
+import objects.entities.Entity;
 import org.lwjgl.util.vector.Vector3f;
 import toolbox.GameTimer;
 import toolbox.Maths;

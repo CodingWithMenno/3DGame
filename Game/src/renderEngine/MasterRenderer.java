@@ -1,8 +1,8 @@
 package renderEngine;
 
-import entities.Camera;
-import entities.Entity;
-import entities.Light;
+import objects.Camera;
+import objects.entities.Entity;
+import objects.Light;
 import models.TexturedModel;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;

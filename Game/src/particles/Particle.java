@@ -1,8 +1,8 @@
 package particles;
 
 
-import entities.Camera;
-import entities.Entity;
+import objects.Camera;
+import objects.entities.Entity;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.DisplayManager;

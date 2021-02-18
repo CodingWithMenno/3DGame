@@ -5,12 +5,13 @@ import collisions.Box;
 import collisions.OBB;
 import models.TexturedModel;
 
+import objects.GameObject;
 import org.lwjgl.util.vector.Vector3f;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Entity implements Cloneable {
+public class Entity extends GameObject implements Cloneable {
 
 	public static final float GRAVITY = -70;
 
@@ -18,21 +19,13 @@ public class Entity implements Cloneable {
 	private AnimatedModel animatedModel;
 	private final boolean isAnimated;
 
-	protected Vector3f position;
-	protected float rotX, rotY, rotZ;
 	protected float scale;
 
 	private List<OBB> collisionBoxes;
 
 	protected int textureIndex = 0;
 
-	private void init(Vector3f position, float rotX, float rotY, float rotZ,
-					float scale, OBB... collisionBoxes) {
-
-		this.position = position;
-		this.rotX = rotX;
-		this.rotY = rotY;
-		this.rotZ = rotZ;
+	private void init(float scale, OBB... collisionBoxes) {
 		this.scale = scale;
 
 		this.collisionBoxes = new ArrayList<>();
@@ -50,9 +43,10 @@ public class Entity implements Cloneable {
 
 	public Entity(TexturedModel staticModel, Vector3f position, float rotX, float rotY, float rotZ,
 				  float scale, OBB... collisionBoxes) {
+		super(position, rotX, rotY, rotZ);
 		this.staticModel = staticModel;
 		this.isAnimated = false;
-		init(position, rotX, rotY, rotZ, scale, collisionBoxes);
+		init(scale, collisionBoxes);
 	}
 
 	public Entity(TexturedModel staticModel, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ,
@@ -63,9 +57,10 @@ public class Entity implements Cloneable {
 
 	public Entity(AnimatedModel animatedModel, Vector3f position, float rotX, float rotY, float rotZ,
 				  float scale, OBB... collisionBoxes) {
+		super(position, rotX, rotY, rotZ);
 		this.animatedModel = animatedModel;
 		this.isAnimated = true;
-		init(position, rotX, rotY, rotZ, scale, collisionBoxes);
+		init(scale, collisionBoxes);
 	}
 
 	public Entity(AnimatedModel animatedModel, int textureIndex, Vector3f position, float rotX, float rotY, float rotZ,
@@ -135,20 +130,12 @@ public class Entity implements Cloneable {
 		this.staticModel = staticModel;
 	}
 
-	public Vector3f getPosition() {
-		return position;
-	}
-
 	public void setPosition(Vector3f position) {
 		for (OBB collisionBox : this.collisionBoxes) {
 			collisionBox.setNewCenter(new Vector3f(position.x, position.y + 2, position.z));
 		}
 
 		this.position = new Vector3f(position);
-	}
-
-	public float getRotX() {
-		return rotX;
 	}
 
 	public void setRotX(float rotX) {
@@ -159,20 +146,12 @@ public class Entity implements Cloneable {
 		}
 	}
 
-	public float getRotY() {
-		return rotY;
-	}
-
 	public void setRotY(float rotY) {
 		this.rotY = rotY;
 
 		for (OBB box : this.collisionBoxes) {
 			box.rotY(rotY);
 		}
-	}
-
-	public float getRotZ() {
-		return rotZ;
 	}
 
 	public void setRotZ(float rotZ) {

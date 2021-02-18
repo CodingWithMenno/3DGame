@@ -1,9 +1,8 @@
 package terrains;
 
-import audio.AudioMaster;
 import audio.AudioSource;
-import entities.Entity;
-import entities.MovableEntity;
+import objects.entities.Entity;
+import objects.entities.MovableEntity;
 import user.Settings;
 import org.lwjgl.util.vector.Vector3f;
 import particles.ParticleSystem;

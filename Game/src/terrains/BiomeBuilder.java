@@ -1,7 +1,6 @@
 package terrains;
 
-import audio.AudioSource;
-import entities.Entity;
+import objects.entities.Entity;
 import org.lwjgl.util.vector.Vector3f;
 import particles.ParticleSystem;
 import textures.TerrainTexture;

@@ -1,6 +1,6 @@
 package particles;
 
-import entities.Camera;
+import objects.Camera;
 import org.lwjgl.util.vector.Matrix4f;
 import renderEngine.Loader;
 
