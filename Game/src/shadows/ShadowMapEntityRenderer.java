@@ -28,6 +28,10 @@ public class ShadowMapEntityRenderer {
 
 	protected void render(Map<TexturedModel, List<Entity>> entities) {
 		for (TexturedModel model : entities.keySet()) {
+			if (model == null) {
+				continue;
+			}
+
 			RawModel rawModel = model.getRawModel();
 			bindModel(rawModel);
 			GL13.glActiveTexture(GL13.GL_TEXTURE0);

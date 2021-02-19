@@ -16,7 +16,7 @@ public class Camera extends GameObject {
 	private static float AUTO_ZOOM = 5;
 	private static float DEFAULT_PITCH = 12;
 	private static float MAX_ZOOM_IN = 8;
-	private static float MAX_ZOOM_OUT = 30;
+	private static float MAX_ZOOM_OUT = 200;
 	private static float ROTATION_SPEED = 15;
 
 	private float distanceFromEntity = 14;
@@ -104,14 +104,14 @@ public class Camera extends GameObject {
 	}
 
 	private void calculateAngleAroundPlayer() {
-		if (Keyboard.isKeyDown(Input.FREE_CAMERA_ANGLE)) {
+		if (Keyboard.isKeyDown(Input.FREE_CAMERA_ANGLE) || !((MovableEntity) this.entityToFollow).isMovingAbove(0.01f)) {
 			float angleChange = Mouse.getDX() * Input.SENSITIVITY * 3f;
 			this.angleAroundEntity -= angleChange;
-		}
-
-		if (this.entityToFollow instanceof MovableEntity) {
-			if (((MovableEntity) this.entityToFollow).isMovingAbove(0.01f)) {
-				this.angleAroundEntity = Maths.lerp(this.angleAroundEntity, 0, AUTO_ZOOM * DisplayManager.getDelta());
+		} else {
+			if (this.entityToFollow instanceof MovableEntity) {
+				if (((MovableEntity) this.entityToFollow).isMovingAbove(0.01f)) {
+					this.angleAroundEntity = Maths.lerp(this.angleAroundEntity, 0, AUTO_ZOOM * DisplayManager.getDelta());
+				}
 			}
 		}
 

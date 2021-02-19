@@ -12,7 +12,8 @@ import objects.Light;
 import objects.entities.elaborated.*;
 import guis.*;
 import models.TexturedModel;
-import objects.entities.inverseKinematic.KinematicPart;
+import objects.entities.inverseKinematic.Creature;
+import objects.entities.inverseKinematic.KinematicSegment;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.openal.AL10;
@@ -45,7 +46,7 @@ public class MainGameLoop implements Scene {
     private Loader loader;
 
     private Camera camera;
-    private Player player;
+    public static Player player;
     private World world;
 
     private GuiManager guiManager;
@@ -54,10 +55,6 @@ public class MainGameLoop implements Scene {
     private CollisionHandler collisionHandler;
 
     private List<Light> lights;
-
-    private KinematicPart leg;
-    private KinematicPart leg2;
-    private KinematicPart leg3;
 
 
     //Collision Box testing
@@ -95,20 +92,8 @@ public class MainGameLoop implements Scene {
         //Birds setup
         new BirdGroup(new Vector3f(400, 400, 400), 50, this.loader, this.world);
 
-        TexturedModel blackLegModel = new TexturedModel(ObjLoader.loadObjModel("leg/Leg", this.loader),
-                new ModelTexture(this.loader.loadTexture("leg/LegTexture")));
-        TexturedModel whiteLegModel = new TexturedModel(ObjLoader.loadObjModel("leg/Leg", this.loader),
-                new ModelTexture(this.loader.loadTexture("fox/FoxTexture")));
-
-        leg = new KinematicPart(null, blackLegModel, new Vector3f(400, this.world.getTerrain().getHeightOfTerrain(400, 400) + 10, 400), 1);
-        leg2 = new KinematicPart(leg, whiteLegModel, null, 1);
-        leg.setChild(leg2);
-//        leg3 = new KinematicPart(leg2, legModel, null, 1);
-//        leg2.setChild(leg3);
-
-        this.world.addEntityToCorrectBiome(leg);
-        this.world.addEntityToCorrectBiome(leg2);
-//        this.world.addEntityToCorrectBiome(leg3);
+        Creature creature = new Creature(this.loader, this.world, null, new Vector3f(0, 0, 0), 1);
+        this.world.addEntityToCorrectBiome(creature);
 
 
         //**********LIGHTS SETUP*****************
@@ -185,9 +170,6 @@ public class MainGameLoop implements Scene {
 //            this.testEntityBox.get(i).setRotZ(obb.getRotZ());
 //        }
 
-        leg.setRotX(leg.getRotX()+1);
-        leg.setRotY(leg.getRotY()+1);
-        leg.setRotZ(leg.getRotZ()+1);
 
         if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
             SceneManager.stackScene(new PauseScreen());

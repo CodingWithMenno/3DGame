@@ -136,4 +136,13 @@ public class Maths {
 		vector.y /= number;
 		return vector;
 	}
+
+	//Gets the angle in a x and y rotation
+	public static Vector3f getAngle(Vector3f from, Vector3f to) {
+		float rotX = (float) Math.toDegrees(Math.atan2(to.z - from.z, to.y - from.y));
+		float rotY = (float) Math.toDegrees(Math.atan2(to.x - from.x, to.z - from.z));
+		float rotZ = (float) Math.toDegrees(-Math.atan2(to.x - from.x, to.y - from.y));
+
+		return new Vector3f(rotX, rotY, rotZ);
+	}
 }
