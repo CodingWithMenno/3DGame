@@ -12,6 +12,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import objects.entities.Entity;
 import models.RawModel;
 import models.TexturedModel;
+import org.lwjgl.util.vector.Vector3f;
 import renderEngine.MasterRenderer;
 import toolbox.Maths;
 
@@ -55,7 +56,7 @@ public class ShadowMapEntityRenderer {
 	}
 
 	private void prepareInstance(Entity entity) {
-		Matrix4f modelMatrix = Maths.createTransformationMatrix(entity.getPosition(),
+		Matrix4f modelMatrix = Maths.createTransformationMatrix(entity.getTranslation(), entity.getPosition(),
 				entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());
 		Matrix4f mvpMatrix = Matrix4f.mul(projectionViewMatrix, modelMatrix, null);
 		shader.loadMvpMatrix(mvpMatrix);

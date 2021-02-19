@@ -12,6 +12,7 @@ import objects.Light;
 import objects.entities.elaborated.*;
 import guis.*;
 import models.TexturedModel;
+import objects.entities.inverseKinematic.KinematicPart;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.openal.AL10;
@@ -54,6 +55,10 @@ public class MainGameLoop implements Scene {
 
     private List<Light> lights;
 
+    private KinematicPart leg;
+    private KinematicPart leg2;
+    private KinematicPart leg3;
+
 
     //Collision Box testing
 //    private List<Entity> playerBox;
@@ -88,7 +93,22 @@ public class MainGameLoop implements Scene {
         this.world = setupWorld(terrain, this.loader, this.renderer, random, World.getWaterHeight(), Terrain.getSIZE());
 
         //Birds setup
-        new BirdGroup(new Vector3f(400, 400, 400), 100, this.loader, this.world);
+        new BirdGroup(new Vector3f(400, 400, 400), 50, this.loader, this.world);
+
+        TexturedModel blackLegModel = new TexturedModel(ObjLoader.loadObjModel("leg/Leg", this.loader),
+                new ModelTexture(this.loader.loadTexture("leg/LegTexture")));
+        TexturedModel whiteLegModel = new TexturedModel(ObjLoader.loadObjModel("leg/Leg", this.loader),
+                new ModelTexture(this.loader.loadTexture("fox/FoxTexture")));
+
+        leg = new KinematicPart(null, blackLegModel, new Vector3f(400, this.world.getTerrain().getHeightOfTerrain(400, 400) + 10, 400), 1);
+        leg2 = new KinematicPart(leg, whiteLegModel, null, 1);
+        leg.setChild(leg2);
+//        leg3 = new KinematicPart(leg2, legModel, null, 1);
+//        leg2.setChild(leg3);
+
+        this.world.addEntityToCorrectBiome(leg);
+        this.world.addEntityToCorrectBiome(leg2);
+//        this.world.addEntityToCorrectBiome(leg3);
 
 
         //**********LIGHTS SETUP*****************
@@ -165,6 +185,9 @@ public class MainGameLoop implements Scene {
 //            this.testEntityBox.get(i).setRotZ(obb.getRotZ());
 //        }
 
+        leg.setRotX(leg.getRotX()+1);
+        leg.setRotY(leg.getRotY()+1);
+        leg.setRotZ(leg.getRotZ()+1);
 
         if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
             SceneManager.stackScene(new PauseScreen());

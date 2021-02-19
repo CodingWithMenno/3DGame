@@ -14,6 +14,10 @@ public class GameObject {
         this.rotZ = rotZ;
     }
 
+    public Vector3f getTranslation() {
+        return position;
+    }
+
     public Vector3f getPosition() {
         return position;
     }

@@ -5,36 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1448daae-e5e5-4daf-966b-6006ecad8d18" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/objects/GameObject.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/objects/entities/inverseKinematic/InverseKinematicEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/objects/entities/inverseKinematic/KinematicPart.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/collisions/Collision.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/collisions/Collision.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/collisions/CollisionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/collisions/CollisionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/Camera.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/entities/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Light.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/Light.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/MovableEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/entities/MovableEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/elaborated/Bird.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/entities/elaborated/Bird.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/elaborated/BirdGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/entities/elaborated/BirdGroup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/elaborated/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/entities/elaborated/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameLoop/MainGameLoop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/particles/Particle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/particles/Particle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/particles/ParticleMaster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/particles/ParticleMaster.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/particles/ParticleRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/particles/ParticleRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/objects/GameObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/GameObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/objects/entities/inverseKinematic/InverseKinematicEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/objects/entities/inverseKinematic/KinematicPart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/entities/inverseKinematic/KinematicPart.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderEngine/EntityRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/EntityRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderEngine/MasterRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/MasterRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shaders/StaticShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shaders/StaticShader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shaders/TerrainShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shaders/TerrainShader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shadows/ShadowBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shadows/ShadowBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderEngine/TerrainRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderEngine/TerrainRenderer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shadows/ShadowMapEntityRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shadows/ShadowMapEntityRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shadows/ShadowMapMasterRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shadows/ShadowMapMasterRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/terrains/Biome.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/terrains/Biome.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/terrains/BiomeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/terrains/BiomeBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/terrains/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/terrains/World.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/toolbox/Maths.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/toolbox/Maths.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/water/WaterRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/water/WaterRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/water/WaterShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/water/WaterShader.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
