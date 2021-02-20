@@ -1,7 +1,6 @@
-package objects.entities.inverseKinematic;
+package objects.entities;
 
 import models.TexturedModel;
-import objects.entities.Entity;
 import org.lwjgl.util.vector.Vector3f;
 import toolbox.Maths;
 

@@ -12,8 +12,7 @@ import objects.Light;
 import objects.entities.elaborated.*;
 import guis.*;
 import models.TexturedModel;
-import objects.entities.inverseKinematic.Creature;
-import objects.entities.inverseKinematic.KinematicSegment;
+import objects.entities.elaborated.Creature;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.openal.AL10;
@@ -46,7 +45,7 @@ public class MainGameLoop implements Scene {
     private Loader loader;
 
     private Camera camera;
-    public static Player player;
+    private Player player;
     private World world;
 
     private GuiManager guiManager;
@@ -91,7 +90,11 @@ public class MainGameLoop implements Scene {
         //Birds setup
         new BirdGroup(new Vector3f(400, 400, 400), 50, this.loader, this.world);
 
-        Creature creature = new Creature(this.loader, this.world, null, new Vector3f(0, 0, 0), 1);
+
+        //Creature setup
+        TexturedModel spiderModel = new TexturedModel(ObjLoader.loadObjModel("spider/SpiderBody", this.loader),
+                new ModelTexture(this.loader.loadTexture("spider/LegTexture")));
+        Creature creature = new Creature(this.loader, this.world, spiderModel, new Vector3f(400, terrain.getHeightOfTerrain(400, 400) + 10, 400), 1);
         this.world.addEntityToCorrectBiome(creature);
 
 
