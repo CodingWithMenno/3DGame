@@ -40,17 +40,30 @@ public class KinematicSegment extends Entity {
     public void follow(Vector3f position) {
         Vector3f target = new Vector3f(position);
         Vector3f direction = Vector3f.sub(target, this.position, null);
-        Vector3f angle = Maths.getAngle(this.position, target);
 
-        //TODO toevoegen draaien op Y of Z as of kiezen tussen gebruiken van X of Z as
-        this.rotX = angle.x;
+        float yRotation = (float) Math.atan((target.z - this.position.z) / (target.x - this.position.x));
+
+        double sinTheta = Math.sin(-yRotation);
+        double cosTheta = Math.cos(-yRotation);
+
+        Vector3f rotatedTarget = new Vector3f(target);
+
+        double x = rotatedTarget.getX() - this.position.x;
+        double z = rotatedTarget.getZ() - this.position.z;
+
+        rotatedTarget.setX((float) (x * cosTheta - z * sinTheta + this.position.x));
+        rotatedTarget.setZ((float) (z * cosTheta + x * sinTheta + this.position.z));
+
+
+        Vector3f angle = Maths.getAngle(this.position, rotatedTarget);
+        this.rotZ = angle.z;
+        this.rotY = (float) Math.toDegrees(-yRotation);
 
         direction.normalise(direction);
         direction.scale(this.length);
         direction.negate();
 
         this.position = Vector3f.add(target, direction, null);
-        this.position.x = target.x;
     }
 
     public void update(Vector3f target) {
