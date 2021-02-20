@@ -8,33 +8,44 @@ import toolbox.Maths;
 public class KinematicSegment extends Entity {
 
     //With scale 1
-    private static final float DEFAULT_LENGTH = 11.2f;
+    private static final float DEFAULT_LENGTH = 2.3f;
 
     private Vector3f endPosition;
 
     private float length;
 
-    private KinematicSegment parent;
-
-    public KinematicSegment(KinematicSegment parent, TexturedModel model, Vector3f position, float length) {
+    public KinematicSegment(TexturedModel model, Vector3f position, float length) {
         super(model, position, 0, 0, 0, length/DEFAULT_LENGTH);
 
         this.length = length;
         calculateEndPos();
-
-        this.parent = parent;
-
-        if (this.parent != null) {
-            this.position = Vector3f.sub(this.parent.position, this.endPosition, null);
-        }
     }
 
     public void calculateEndPos() {
-        float dx = (float) (this.length * Math.cos(Math.toRadians(super.getRotX() - 90)));
-        float dy = (float) (this.length * Math.sin(Math.toRadians(super.getRotX() - 90)));
-        float dz = (float) (this.length * Math.cos(Math.toRadians(super.getRotZ() - 90)));
+        float dx = (float) (this.length * (Math.sin(Math.toRadians(super.getRotZ())) * Math.cos(Math.toRadians(super.getRotY()))));
+        float dy = (float) (this.length * (Math.cos(Math.toRadians(super.getRotZ()))));
+        float dz = (float) (this.length * (Math.sin(Math.toRadians(super.getRotZ())) * Math.sin(Math.toRadians(super.getRotY()))));
 
-        this.endPosition = new Vector3f(this.position.x + dx, this.position.y + dy, this.position.z + dz);
+        if (Float.isNaN(dx)) {
+            dx = 0;
+        }
+
+        if (Float.isNaN(dy)) {
+            dy = 0;
+        }
+
+        if (Float.isNaN(dz)) {
+            dz = 0;
+        }
+
+        this.endPosition = new Vector3f(this.position.x - dx, this.position.y + dy, this.position.z + dz);
+    }
+
+
+    @Override
+    public void setPosition(Vector3f position) {
+        this.position = new Vector3f(position);
+        calculateEndPos();
     }
 
     public void follow(Vector3f position) {
@@ -54,7 +65,6 @@ public class KinematicSegment extends Entity {
         rotatedTarget.setX((float) (x * cosTheta - z * sinTheta + this.position.x));
         rotatedTarget.setZ((float) (z * cosTheta + x * sinTheta + this.position.z));
 
-
         Vector3f angle = Maths.getAngle(this.position, rotatedTarget);
         this.rotZ = angle.z;
         this.rotY = (float) Math.toDegrees(-yRotation);
@@ -66,17 +76,7 @@ public class KinematicSegment extends Entity {
         this.position = Vector3f.add(target, direction, null);
     }
 
-    public void update(Vector3f target) {
-        if (this.parent != null) {
-            follow(this.parent.getPosition());
-        } else {
-            follow(new Vector3f(target));
-        }
-
-        calculateEndPos();
-    }
-
-    public KinematicSegment getParent() {
-        return parent;
+    public Vector3f getEndPosition() {
+        return endPosition;
     }
 }

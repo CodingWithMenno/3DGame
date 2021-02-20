@@ -13,7 +13,9 @@ import textures.ModelTexture;
 
 public class Creature extends MovableEntity {
 
-    private KinematicSegment leg;
+    private static final int PARTS = 50;
+    private KinematicSegment[] tentacle;
+    private Vector3f base;
 
     public Creature(Loader loader, World world, TexturedModel model, Vector3f position, float scale) {
         super(model, position, 0, 0, 0, scale);
@@ -24,31 +26,39 @@ public class Creature extends MovableEntity {
                 new ModelTexture(loader.loadTexture("fox/FoxTexture")));
 
 
-        KinematicSegment current = new KinematicSegment(null, blackLegModel,
-                new Vector3f(400, world.getTerrain().getHeightOfTerrain(400, 400) + 10, 400), 3);
-        world.addEntityToCorrectBiome(current);
+        this.tentacle = new KinematicSegment[PARTS];
 
-        for (int i = 1; i < 3; i++) {
-            KinematicSegment next = new KinematicSegment(current, i % 2 == 0 ? blackLegModel : whiteLegModel,
-                    new Vector3f(400, world.getTerrain().getHeightOfTerrain(400, 400) + 10, 400), 3);
-            world.addEntityToCorrectBiome(next);
+        this.tentacle[0] = new KinematicSegment(blackLegModel,
+                new Vector3f(400, world.getTerrain().getHeightOfTerrain(400, 400) + 10, 400), 1);
+        world.addEntityToCorrectBiome(this.tentacle[0]);
 
-            current = next;
+        for (int i = 1; i < this.tentacle.length; i++) {
+            this.tentacle[i] = new KinematicSegment(i % 2 == 0 ? blackLegModel : whiteLegModel, this.tentacle[i-1].getPosition(), 1);
+            this.tentacle[i].setPosition(Vector3f.sub(this.tentacle[i-1].getPosition(), this.tentacle[i].getEndPosition(), null));
+
+            world.addEntityToCorrectBiome(this.tentacle[i]);
         }
 
-        this.leg = current;
+        this.base = new Vector3f(400, world.getTerrain().getHeightOfTerrain(400, 400) + 10, 400);
     }
 
     @Override
     protected void update(Terrain terrain) {
 
-        KinematicSegment next = this.leg;
-        while (next != null) {
-            next.update(MainGameLoop.player.getPosition());
-            next = next.getParent();
+        KinematicSegment end = this.tentacle[this.tentacle.length - 1];
+        end.follow(new Vector3f(MainGameLoop.player.getPosition()));
+        end.calculateEndPos();
+
+        for (int i = this.tentacle.length - 2; i >= 0; i--) {
+            this.tentacle[i].follow(new Vector3f(this.tentacle[i+1].getPosition()));
+            this.tentacle[i].calculateEndPos();
         }
 
-        this.leg.update(MainGameLoop.player.getPosition());
+        this.tentacle[0].setPosition(this.base);
+
+        for (int i = 1; i < this.tentacle.length; i++) {
+            this.tentacle[i].setPosition(this.tentacle[i-1].getEndPosition());
+        }
     }
 
     @Override

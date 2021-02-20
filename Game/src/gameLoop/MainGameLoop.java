@@ -56,7 +56,6 @@ public class MainGameLoop implements Scene {
 
     private List<Light> lights;
 
-
     //Collision Box testing
 //    private List<Entity> playerBox;
 //    private Entity testEntity;
