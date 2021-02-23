@@ -7,10 +7,11 @@
 - Water with reflection and refraction
 - Shadows
 - An entity system
-- Birds with the boids algorithm
 - A particlesystem
 - Biomes in the terrain (with particles and background sound)
 - A lighting system
+- Birds with the boids algorithm
+- A simple inversed kinematics system
 
 ### Game idea:
 An open world forester/hunting game with a low poly look.
