@@ -11,7 +11,7 @@
 - Biomes in the terrain (with particles and background sound)
 - A lighting system
 - Birds with the boids algorithm
-- A simple inversed kinematics system
+- A simple inverse kinematics system
 
 ### Game idea:
 An open world forester/hunting game with a low poly look.
