@@ -1,10 +1,9 @@
 package objects.entities.elaborated;
 
 import collisions.Collision;
-import gameLoop.MainGameLoop;
 import models.TexturedModel;
 import objects.entities.MovableEntity;
-import objects.entities.KinematicSegment;
+import objects.entities.inversedKinematics.InKinematicSegment;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
@@ -21,10 +20,17 @@ public class Creature extends MovableEntity {
 
     private static final int PARTS_PER_LEG = 2;
     private static final int LEG_LENGTH = 3;
-    private Map<Vector3f, KinematicSegment[]> legs;
+    private Map<Vector3f, InKinematicSegment[]> legs;
     private boolean[] isGoingToTarget;
 
-    private float currentSpeed = 1;
+    private float currentSpeed = 5;
+
+
+    /**
+     * Deze klasse moet een totale remake krijgen.
+     * Misschien is het handig om het inverse kinematic handling in een aparte klasse op te delen.
+     */
+
 
     public Creature(Loader loader, World world, TexturedModel model, Vector3f position, float scale) {
         super(model, position, 0, 0, 0, scale);
@@ -39,9 +45,6 @@ public class Creature extends MovableEntity {
                 new ModelTexture(loader.loadTexture("fox/FoxTexture")));
 
         this.isGoingToTarget = new boolean[8];
-        for (boolean isGoing : this.isGoingToTarget) {
-            isGoing = false;
-        }
 
         this.legs = new HashMap<>();
         for (int i = 0; i < 8; i++) {
@@ -52,13 +55,13 @@ public class Creature extends MovableEntity {
                 base = new Vector3f(this.position.x + 1.5f * this.scale, this.position.y - 1.5f * this.scale, this.position.z + (i * 2 * this.scale) - 11f * this.scale);
             }
 
-            KinematicSegment[] leg = new KinematicSegment[PARTS_PER_LEG];
+            InKinematicSegment[] leg = new InKinematicSegment[PARTS_PER_LEG];
 
-            leg[0] = new KinematicSegment(whiteLegModel, new Vector3f(base), LEG_LENGTH * this.scale);
+            leg[0] = new InKinematicSegment(whiteLegModel, new Vector3f(base), LEG_LENGTH * this.scale, 2.3f);
             world.addEntityToCorrectBiome(leg[0]);
 
             for (int j = 1; j < PARTS_PER_LEG; j++) {
-                leg[j] = new KinematicSegment(i % 2 == 0 ? whiteLegModel : blackLegModel, leg[j-1].getPosition(), LEG_LENGTH * this.scale);
+                leg[j] = new InKinematicSegment(i + j % 2 == 0 ? whiteLegModel : blackLegModel, leg[j-1].getPosition(), LEG_LENGTH * this.scale, 2.3f);
                 leg[j].setPosition(Vector3f.sub(leg[j-1].getPosition(), leg[j].getEndPosition(), null));
                 world.addEntityToCorrectBiome(leg[j]);
             }
@@ -69,26 +72,36 @@ public class Creature extends MovableEntity {
 
     @Override
     protected void update(Terrain terrain) {
-        float dx = 0;
+        float dx = (float) (this.currentSpeed * Math.sin(Math.toRadians(super.getRotY())) * DisplayManager.getDelta());
         float dy = terrain.getHeightOfTerrain(this.position.x, this.position.z) + 5 - this.position.y;
-        float dz = this.currentSpeed * DisplayManager.getDelta();
+        float dz = (float) (this.currentSpeed * Math.cos(Math.toRadians(super.getRotY())) * DisplayManager.getDelta());
         increasePosition(dx, dy, dz);
-
 
         int counter = 0;
         for (Vector3f base : this.legs.keySet()) {
+            float offsetX;
+            float offsetZ;
+
             if (counter < this.legs.size() / 2) {
                 base.set(new Vector3f(this.position.x - 1.5f * this.scale, this.position.y - 1.5f * this.scale, this.position.z + (counter * 2 * this.scale) - 3f * this.scale));
+
+                offsetX = (float) (-2 * Math.cos(Math.toRadians(super.getRotY())));
+                offsetZ = (float) (-2 * Math.sin(Math.toRadians(super.getRotY())));
             } else {
                 base.set(new Vector3f(this.position.x + 1.5f * this.scale, this.position.y - 1.5f * this.scale, this.position.z + (counter * 2 * this.scale) - 11f * this.scale));
+
+                offsetX = (float) (2 * Math.cos(Math.toRadians(super.getRotY())));
+                offsetZ = (float) (2 * Math.sin(Math.toRadians(super.getRotY())));
             }
 
-            Vector3f optimalPosition = new Vector3f(base.x + (counter < this.legs.size() / 2.0 ? - 3 : + 3), terrain.getHeightOfTerrain(base.x, base.z), base.z);
+            float x = base.x + offsetX;
+            float z = base.z + offsetZ;
+            Vector3f optimalPosition = new Vector3f(x, terrain.getHeightOfTerrain(x, z) - 1, z);
 
-            KinematicSegment[] leg = this.legs.get(base);
-            KinematicSegment end = leg[leg.length - 1];
+            InKinematicSegment[] leg = this.legs.get(base);
+            InKinematicSegment end = leg[leg.length - 1];
 
-            if (Maths.getDistanceBetween(end.getEndPosition(), optimalPosition) > 3 || this.isGoingToTarget[counter]) {
+            if (Maths.getDistanceBetween(end.getEndPosition(), optimalPosition) > PARTS_PER_LEG * LEG_LENGTH * 0.75f || this.isGoingToTarget[counter]) {
                 this.isGoingToTarget[counter] = true;
                 end.follow(Maths.lerp(end.getEndPosition(), optimalPosition, 0.2f));
 
@@ -96,7 +109,7 @@ public class Creature extends MovableEntity {
                     this.isGoingToTarget[counter] = false;
                 }
             } else {
-                end.follow(new Vector3f(end.getEndPosition().x - dx, end.getEndPosition().y - dy, end.getEndPosition().z - dz));
+                end.follow(new Vector3f(end.getEndPosition().x - dx, end.getEndPosition().y, end.getEndPosition().z - dz));
             }
             end.calculateEndPos();
 

@@ -1,20 +1,17 @@
-package objects.entities;
+package objects.entities.inversedKinematics;
 
 import models.TexturedModel;
+import objects.entities.Entity;
 import org.lwjgl.util.vector.Vector3f;
 import toolbox.Maths;
 
-public class KinematicSegment extends Entity {
-
-    //With scale 1
-    private static final float DEFAULT_LENGTH = 2.3f;
+public class InKinematicSegment extends Entity {
 
     private Vector3f endPosition;
-
     private float length;
 
-    public KinematicSegment(TexturedModel model, Vector3f position, float length) {
-        super(model, position, 0, 0, 0, length/DEFAULT_LENGTH);
+    public InKinematicSegment(TexturedModel model, Vector3f position, float length, float defaultLength) {
+        super(model, position, 0, 0, 0, length / defaultLength);
 
         this.length = length;
         calculateEndPos();
@@ -39,7 +36,6 @@ public class KinematicSegment extends Entity {
 
         this.endPosition = new Vector3f(this.position.x - dx, this.position.y + dy, this.position.z + dz);
     }
-
 
     @Override
     public void setPosition(Vector3f position) {

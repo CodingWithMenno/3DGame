@@ -1,6 +1,6 @@
 package objects.entities;
 
-import animation.AnimatedModel;
+import models.animation.AnimatedModel;
 import collisions.OBB;
 import models.TexturedModel;
 

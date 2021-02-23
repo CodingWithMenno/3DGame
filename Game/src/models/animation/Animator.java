@@ -1,4 +1,4 @@
-package animation;
+package models.animation;
 
 import models.TexturedModel;
 import renderEngine.DisplayManager;

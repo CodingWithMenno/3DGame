@@ -1,7 +1,7 @@
 package gameLoop;
 
-import animation.AnimatedModel;
-import animation.Animation;
+import models.animation.AnimatedModel;
+import models.animation.Animation;
 import audio.AudioMaster;
 import collisions.Box;
 import collisions.CollisionHandler;
@@ -13,6 +13,7 @@ import objects.entities.elaborated.*;
 import guis.*;
 import models.TexturedModel;
 import objects.entities.elaborated.Creature;
+import objects.entities.inversedKinematics.InKinematicArm;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.openal.AL10;
@@ -60,6 +61,8 @@ public class MainGameLoop implements Scene {
 //    private Entity testEntity;
 //    private List<Entity> testEntityBox;
 
+    private InKinematicArm arm;
+
 
     @Override
     public void setup() {
@@ -92,10 +95,15 @@ public class MainGameLoop implements Scene {
 
 
         //Creature setup
-        TexturedModel spiderModel = new TexturedModel(ObjLoader.loadObjModel("spider/SpiderBody", this.loader),
-                new ModelTexture(this.loader.loadTexture("spider/LegTexture")));
-        Creature creature = new Creature(this.loader, this.world, spiderModel, new Vector3f(400, terrain.getHeightOfTerrain(400, 400) + 10, 400), 1);
-        this.world.addEntityToCorrectBiome(creature);
+//        TexturedModel spiderModel = new TexturedModel(ObjLoader.loadObjModel("spider/SpiderBody", this.loader),
+//                new ModelTexture(this.loader.loadTexture("spider/LegTexture")));
+//        Creature creature = new Creature(this.loader, this.world, spiderModel, new Vector3f(400, terrain.getHeightOfTerrain(400, 400) + 10, 400), 1);
+//        this.world.addEntityToCorrectBiome(creature);
+
+        TexturedModel blackLegModel = new TexturedModel(ObjLoader.loadObjModel("spider/Leg", loader),
+                new ModelTexture(loader.loadTexture("spider/LegTexture")));
+        this.arm = new InKinematicArm(this.world, 2, new Vector3f(this.player.getPosition()), false, 30, blackLegModel, 2.3f);
+
 
 
         //**********LIGHTS SETUP*****************
@@ -171,6 +179,8 @@ public class MainGameLoop implements Scene {
 //            this.testEntityBox.get(i).setRotX(obb.getRotX());
 //            this.testEntityBox.get(i).setRotZ(obb.getRotZ());
 //        }
+
+        this.arm.reachForPoint(new Vector3f(this.player.getPosition()));
 
 
         if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {

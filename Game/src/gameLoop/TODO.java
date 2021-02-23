@@ -4,7 +4,7 @@ public class TODO {
 
     /** TODO :
      *      Current:
-     *          -Inverse kinematics
+     *          -Inversed kinematic handler maken
      *      .
      *      .
      * 		Entities:

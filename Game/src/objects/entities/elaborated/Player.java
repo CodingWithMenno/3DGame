@@ -1,6 +1,6 @@
 package objects.entities.elaborated;
 
-import animation.AnimatedModel;
+import models.animation.AnimatedModel;
 import collisions.Collision;
 import collisions.OBB;
 import objects.Camera;
