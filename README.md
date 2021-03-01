@@ -2,6 +2,7 @@
 
 ### Features in game:
 - A 3D rotating collision detection system
+- A simple 2D UI system
 - An animation system
 - Random terrain generation with terrain color based on the height
 - Water with reflection and refraction
