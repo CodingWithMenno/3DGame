@@ -27,7 +27,7 @@ public class CollisionHandler {
 
     public void checkCollisions() {
         for (MovableEntity movableEntity : this.movableEntities) {
-            if (!movableEntity.isMovingAbove(0)) {
+            if (!movableEntity.isMovingAbove(0.01f)) {
                  continue;
             }
 
